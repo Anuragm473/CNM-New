@@ -6,6 +6,7 @@ import { toastMessage } from "../../../utility";
 
 export default function CreateDish() {
   const { catererId } = useContext(CatererContext);
+  const [deleted,setDeleted]=useState([])
   const [packages, setPackages] = useState([
     {
       name: "",
@@ -126,14 +127,31 @@ export default function CreateDish() {
 
   const removePackage = (packageIndex) => {
     const updatedPackages = [...packages];
-    updatedPackages.splice(packageIndex, 1); // Remove the package
+    
+    // Check if the package at `packageIndex` exists and has a defined `id`
+    const packageToRemove = updatedPackages[packageIndex];
+    if (packageToRemove && packageToRemove.id !== undefined) {
+        setDeleted(prev => [...prev, packageToRemove.id]);  // Add the `id` to deleted list
+    }
+
+    // Remove the package from `updatedPackages` and update the state
+    updatedPackages.splice(packageIndex, 1);
     setPackages(updatedPackages);
-  };
+};
+
 
   async function SubmitForm(e) {
     e.preventDefault();
 
     try {
+      if(deleted.length>0){
+        console.log(deleted)
+        const response = await Promise.all(
+          deleted.map(id => axios.delete(`http://3.6.41.54/api/dishes/${id}`)))
+          console.log('menu deleted',response)
+          
+      }
+
       const response = await axios.get(`http://3.6.41.54/api/caterer/${catererId}`);
       const caterersDish = response.data;
       let caterer;
