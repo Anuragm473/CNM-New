@@ -1,11 +1,13 @@
 import React from "react";
 import AboutUsSection from "../../components/AboutUsSection/AboutUsSection";
-import Ourspeciality1 from "../../components/OurSpeciality1/OurSpeciality1";
+// import Ourspeciality1 from "../../components/OurSpeciality1/OurSpeciality1";
 import useAuth from "../../hooks/useAuth";
 import CatererDashboard from "../CatererDashboard/CatererDashboard";
 import AboutUsNew from "../../components/AboutUsNew/AboutUsNew";
 import ArtGallery from "../../components/ArtGallery/ArtGallery";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
+import WhyCaterernearme from "../../components/WhyCaterernearme/WhyCaterernearme"
+import SuccessStories from "../../components/SuccessStories/SuccessStories";
 
 const HomePage = () => {
   const { user } = useAuth();
@@ -29,8 +31,13 @@ const HomePage = () => {
   return (
     <>
       <AboutUsSection />
-      <Ourspeciality1 />
+      {/* <Ourspeciality1 /> */}
       <AboutUsNew />
+      
+      <SuccessStories />
+      
+      <WhyCaterernearme />
+      
       <ArtGallery />
     </>
   );

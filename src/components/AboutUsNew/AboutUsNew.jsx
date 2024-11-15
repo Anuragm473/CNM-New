@@ -3,6 +3,7 @@ import styles from "./AboutUsNew.module.css";
 import SangeetDish from "../../assets/images/SangeetDish.jpeg";
 import { useNavigate } from "react-router-dom";
 import caterer2 from '../../assets/images/caterer2.jpg'
+import aboutusimg from '../../assets/images/aboutusimg.jpeg'
 
 const AboutUsNew = () => {
   const navigate = useNavigate();
@@ -13,12 +14,7 @@ const AboutUsNew = () => {
       <div className={styles.aboutUsLeft}>
         <h1>About Us</h1>
         <p>
-          Caterersnearme.in is an online platform where consumers can fulfill
-          their catering requirements for events, birthday parties, functions,
-          weddings, etc. We aim to become a one stop solution for all the
-          catering needs of the consumers by uplifting their catering
-          experience. At Caterersnearme, you can explore numerous caterers which
-          could cater to your personalized expectations.
+        At Caterersnearme, we’re dedicated to making exceptional catering accessible and hassle-free for everyone. Founded with a passion for culinary excellence and a commitment to quality service, we provide a seamless platform that connects you with trusted caterers who suit your event’s specific needs. Our network of professionals includes a diverse range of options—from traditional, pure vegetarian cuisine to modern and eclectic menus—ensuring there’s something for every taste.
         </p>
         <button
           onClick={() => navigate("/caterer")}
@@ -31,7 +27,7 @@ const AboutUsNew = () => {
         <div className={styles.aboutUsImageContainer}>
           <img
             className={styles.aboutUsImage}
-            src={caterer2}
+            src={aboutusimg}
             alt="Catering"
           />
         </div>

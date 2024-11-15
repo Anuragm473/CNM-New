@@ -17,10 +17,10 @@ export default function Footer1() {
                     <a className={styles.footerlink1} href="https://www.instagram.com/caterersnearme.in/"><ion-icon className={styles.sociallinks} name="logo-instagram"></ion-icon></a>
                 </li>
                 <li>
-                    <a className={styles.footerlink1} href="#"><ion-icon className={styles.sociallinks} name="logo-facebook"></ion-icon></a>
+                    <a className={styles.footerlink1} href="https://www.linkedin.com/company/caterersnearme"><ion-icon className={styles.sociallinks} name="logo-linkedin"></ion-icon></a>
                 </li>
                 <li>
-                    <a className={styles.footerlink1} href="#"><ion-icon className={styles.sociallinks} name="logo-twitter"></ion-icon></a>
+                    <a className={styles.footerlink1} href="#"><ion-icon className={styles.sociallinks} name="logo-facebook"></ion-icon></a>
                 </li>
             </ul>
             <p className={styles.copyright}>Copyright &copy; <span className={styles.year}>{curretDate}</span> by Caterersnearme, Inc. All rights reserved.</p>
@@ -40,21 +40,21 @@ export default function Footer1() {
                 <li><a className={styles.footerlink} href="#">Sign in</a></li>
             </ul>
         </nav>
-        <nav className={styles.navcol}>
+        {/* <nav className={styles.navcol}>
             <p className={styles.footerheading}>Company</p>
             <ul className={styles.footernav}>
                 <li><a className={styles.footerlink} href="#">About Caterersnearme</a></li>
                 <li><a className={styles.footerlink} href="#">For Business</a></li>
                 <li><a className={styles.footerlink} href="#">Catering partners</a></li>
             </ul>
-        </nav>
-        <nav className={styles.navcol}>
+        </nav> */}
+        {/* <nav className={styles.navcol}>
             <p className={styles.footerheading}>Resource</p>
             <ul className={styles.footernav}>
                 <li><a className={styles.footerlink} href="#">Help center</a></li>
                 <li><a className={styles.footerlink} href="#">Privacy & terms</a></li>
             </ul>
-        </nav>
+        </nav> */}
     </div>
 </footer>
   );

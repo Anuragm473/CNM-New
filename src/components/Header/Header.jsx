@@ -4,26 +4,27 @@ import CNMLogo from "../../assets/CNMLogo-NoBG.png";
 import LoginRegisterModal from "../loginRegisterModal/LoginRegisterModal";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import {CatererContext} from "../../CatererContext";
+import { CatererContext } from "../../CatererContext";
 import { toastMessage } from "../../../utility";
-import find from '../../assets/images/find.png'
-import booking from '../../assets/images/booking1.png'
-import profile from '../../assets/images/profile.jpg'
-import logout from '../../assets/images/logout.jpg'
+import find from "../../assets/images/find.png";
+import booking from "../../assets/images/booking1.png";
+import profile from "../../assets/images/profile.jpg";
+import logout from "../../assets/images/logout.jpg";
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [isLoggedName, setIsLoggedName] = useState(false);
-  const { isCaterer, setIsCaterer,catererId,setCatererId } = useContext(CatererContext);
+  const { isCaterer, setIsCaterer, catererId, setCatererId } =
+    useContext(CatererContext);
   const navigate = useNavigate();
   const { setUser } = useAuth();
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
-      setIsLoggedName(true)
-      if(user.firstName){
-        setFirstName(user.firstName)
+      setIsLoggedName(true);
+      if (user.firstName) {
+        setFirstName(user.firstName);
       }
       if (user.role.id == 3) {
         setIsCaterer(true);
@@ -80,8 +81,8 @@ const Header = () => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, [navigate, setIsCaterer]);
-  if(catererId==''){
-    setCatererId(JSON.parse(localStorage.getItem('catererId')))
+  if (catererId == "") {
+    setCatererId(JSON.parse(localStorage.getItem("catererId")));
   }
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -111,9 +112,14 @@ const Header = () => {
             <img className={styles.logoImg} src={CNMLogo} alt="CNM" />
           </div> */}
           <h1 className={styles.logoText} onClick={() => navigate("/")}>
-            <img className={styles.logoImg} src={CNMLogo} alt='caterersnearme logo'/>
+            <img
+              className={styles.logoImg}
+              src={CNMLogo}
+              alt="caterersnearme logo"
+            />
             CATERERSNEARME
           </h1>
+          <h5 className={styles.logoNumber}>📞+919321291563</h5>
         </div>
         <div className={styles.hamburger}>
           <div className={styles.dropdown} data-dropdown>
@@ -127,35 +133,36 @@ const Header = () => {
                     className={styles.findCaterers}
                     onClick={() => navigate("/caterer")}
                   >
-                    <img className={styles.findImg} src={find}/>
+                    <img className={styles.findImg} src={find} />
                     Find Caterers
                   </li>
                 )}
-                {isLoggedName && <li
-              className={styles.booking}
-              onClick={() => navigate("/my-orders")}
-            >
-              <img className={styles.findImg} src={booking}/>
-              Bookings
-            </li>}
+                {isLoggedName && (
+                  <li
+                    className={styles.booking}
+                    onClick={() => navigate("/my-orders")}
+                  >
+                    <img className={styles.findImg} src={booking} />
+                    Bookings
+                  </li>
+                )}
                 {!isLoggedName && (
                   <li className={styles.booking} onClick={openModal}>
-                    <img className={styles.findImg} src={profile}/>
-                    <span>
-                    Login/Register
-                    </span>
+                    <img className={styles.findImg} src={profile} />
+                    <span>Login/Register</span>
                   </li>
                 )}
                 {isLoggedName && (
-                  <li className={styles.booking}><img className={styles.findImg} src={profile}/><span>{firstName}</span></li>
+                  <li className={styles.booking}>
+                    <img className={styles.findImg} src={profile} />
+                    <span>{firstName}</span>
+                  </li>
                 )}
                 {isLoggedName && (
                   <li className={styles.booking} onClick={handleSignout}>
-                  <img className={styles.findImg} src={logout}/>
-                  <span>
-                  SignOut
-                  </span>
-                </li>
+                    <img className={styles.findImg} src={logout} />
+                    <span>SignOut</span>
+                  </li>
                 )}
               </ul>
             </div>
@@ -166,10 +173,9 @@ const Header = () => {
             <li
               className={styles.findCaterers}
               onClick={() => navigate("caterer")}
-            ><img className={styles.findImg} src={find}/>
-            <span>
-              Find Caterers
-              </span>
+            >
+              <img className={styles.findImg} src={find} />
+              <span>Find Caterers</span>
             </li>
           )}
           {isLoggedName && (
@@ -177,26 +183,27 @@ const Header = () => {
               className={styles.booking}
               onClick={() => navigate("/my-orders")}
             >
-              <img className={styles.findImg} src={booking}/>
+              <img className={styles.findImg} src={booking} />
               Bookings
             </li>
           )}
           {/* <li className={styles.navContact}>+91 123456789</li> */}
           {!isLoggedName && (
             <li className={styles.booking} onClick={openModal}>
-              <img className={styles.findImg} src={profile}/>
-              <span>
-              Login/Register
-              </span>
+              <img className={styles.findImg} src={profile} />
+              <span>Login/Register</span>
             </li>
           )}
-          {isLoggedName && <li className={styles.booking}><img className={styles.findImg} src={profile}/><span>{firstName}</span></li>}
+          {isLoggedName && (
+            <li className={styles.booking}>
+              <img className={styles.findImg} src={profile} />
+              <span>{firstName}</span>
+            </li>
+          )}
           {isLoggedName && (
             <li className={styles.booking} onClick={handleSignout}>
-              <img className={styles.findImg} src={logout}/>
-              <span>
-              SignOut
-              </span>
+              <img className={styles.findImg} src={logout} />
+              <span>SignOut</span>
             </li>
           )}
         </ul>
