@@ -8,6 +8,7 @@ import ArtGallery from "../../components/ArtGallery/ArtGallery";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
 import WhyCaterernearme from "../../components/WhyCaterernearme/WhyCaterernearme"
 import SuccessStories from "../../components/SuccessStories/SuccessStories";
+import HowtoOrder from "../../components/HowtoOrder/HowtoOrder";
 
 const HomePage = () => {
   const { user } = useAuth();
@@ -32,13 +33,14 @@ const HomePage = () => {
     <>
       <AboutUsSection />
       {/* <Ourspeciality1 /> */}
+      <HowtoOrder/>
       <AboutUsNew />
       
       <SuccessStories />
       
       <WhyCaterernearme />
       
-      <ArtGallery />
+      {/* <ArtGallery /> */}
     </>
   );
 };

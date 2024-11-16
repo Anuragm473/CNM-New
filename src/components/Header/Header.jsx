@@ -10,6 +10,8 @@ import find from "../../assets/images/find.png";
 import booking from "../../assets/images/booking1.png";
 import profile from "../../assets/images/profile.jpg";
 import logout from "../../assets/images/logout.jpg";
+import callIcon from "../../assets/images/callicon.png";
+
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
