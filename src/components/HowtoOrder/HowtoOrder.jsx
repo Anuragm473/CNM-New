@@ -11,6 +11,7 @@ const HowtoOrder = () => {
     <div className={styles.container}>
       <div className={styles.aboutUsSection}>
       <div className={styles.aboutUsRight}>
+        <h1 style={{textAlign:"center"}}>5-Step ordering process</h1>
         <div className={styles.aboutUsImageContainer}>
           <img
             className={styles.aboutUsImage}

@@ -1,0 +1,125 @@
+.sectionHow {
+    padding: 4rem 0 8rem 0;
+  }
+  
+  .container {
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 0 3.2rem;
+  }
+  
+  .grid {
+    display: flex;
+    flex-direction:column;
+    row-gap: 1rem;
+    column-gap: 6.4rem;
+    align-items: center;
+    max-width:120rem;
+  }
+  .grid3Cols{
+    display:flex;
+    flex-direction:column;
+    gap:12rem;
+  }
+  .box{
+    display:flex;
+    justify-content:space-between;
+    width:80rem;
+    gap:8rem;
+  }
+  .grid3c{
+    display:flex;
+    flex-direction:column;
+  }
+  
+  .subheading {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #cf711f;
+    text-align:start;
+    text-transform: uppercase;
+    letter-spacing: 0.75px;
+    margin-bottom: 1rem;
+  }
+  .topHeading{
+    max-width:80rem;
+    margin:0 auto;
+    align-self:start;
+  }
+  
+  .headingSecondary {
+    font-size: 2.2rem;
+    line-height: 1.2;
+    text-align:start;
+    margin-bottom: 8rem;
+    color: #555;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  
+  .stepImgBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    max-width:40rem;
+  }
+  
+  .stepImg {
+    width: 100%;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .stepImgBox::before {
+    content: "";
+    display: block;
+    width: 60%;
+    padding-bottom: 60%;
+    background-color: #fdf2e9;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -2;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+  }
+  
+  .stepImgBox::after {
+    content: "";
+    display: block;
+    width: 45%;
+    padding-bottom: 45%;
+    background-color: #fae5d3;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+  }
+  .stepNumber {
+    font-size: 5.6rem;
+    font-weight: 600;
+    color: #ddd;
+    margin-bottom: 0;
+    margin-top:2rem;
+  }
+  
+  .headingTertiary {
+    font-size: 2rem;
+    line-height: 1.2;
+    margin:0.6rem 0 0.2rem 0;
+    color: #333;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  
+  .stepDescription {
+    line-height: 1.8;
+    font-size: 1.1rem;
+  }
+  .stepImg:hover{
+    transform: scale(1.3);
+  }
+  

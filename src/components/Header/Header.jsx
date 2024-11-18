@@ -12,7 +12,6 @@ import profile from "../../assets/images/profile.jpg";
 import logout from "../../assets/images/logout.jpg";
 import callIcon from "../../assets/images/callicon.png";
 
-
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -121,7 +120,6 @@ const Header = () => {
             />
             CATERERSNEARME
           </h1>
-          <h5 className={styles.logoNumber}>📞+919321291563</h5>
         </div>
         <div className={styles.hamburger}>
           <div className={styles.dropdown} data-dropdown>
@@ -130,6 +128,10 @@ const Header = () => {
             </button>
             <div className={styles.dropdownMenu}>
               <ul className={styles.navLinks1}>
+                <h5 className={styles.logoNumber}>
+                  <img src={callIcon} />
+                  +919321291563
+                </h5>
                 {!isCaterer && (
                   <li
                     className={styles.findCaterers}
@@ -171,6 +173,12 @@ const Header = () => {
           </div>
         </div>
         <ul className={`${styles.navLinks2}`}>
+          <h5 className={styles.logoNumber}>
+            <img src={callIcon} />
+            <a href="tel:+919321291563">
+              <span>+919321291563</span>
+            </a>
+          </h5>
           {!isCaterer && (
             <li
               className={styles.findCaterers}

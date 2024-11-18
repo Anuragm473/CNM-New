@@ -355,6 +355,7 @@ const AddToCart = () => {
           selectedCategory={selectedCategory}
         />
         <div className={styles.accordionContainer}>
+          <h3>Preview Your Order</h3>
           <Accordion data={storageObject} />
         </div>
       </div>
@@ -364,7 +365,7 @@ const AddToCart = () => {
             handlePreview();
           }}
         >
-          Preview Order
+          Place Your Order
         </button>
       </div>
     </div>

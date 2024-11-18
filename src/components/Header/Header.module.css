@@ -44,7 +44,11 @@
 }
 
 .logoNumber{
-  font-size: 1.2rem;
+  font-size: 1.12rem;
+  font-weight:500;
+  color:#333;
+  display:flex;
+  align-items:center;
 }
 .logoText {
   font-size: 20px;
@@ -109,7 +113,10 @@
 .dropdown {
   position: relative;
 }
-
+.logoNumber>a{
+  text-decoration:none;
+  color:#444;
+}
 .dropdownMenu {
   position: absolute;
   min-width: 160px;
@@ -124,7 +131,10 @@
   background-color: white;
   border-radius: 1rem;
 }
-
+.logoNumber>img{
+  width:1.2rem;
+  padding:0 0.5rem 0 0;
+}
 .hamburgerBtn {
   background-color: transparent;
   border: none;

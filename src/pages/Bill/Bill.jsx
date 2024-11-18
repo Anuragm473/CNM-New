@@ -191,7 +191,7 @@ const Bill = () => {
   };
 
   const handleCouponBlur = () => {
-    if (couponCode === "caterer@10") {
+    if (couponCode === "Caterersnearme@10") {
       setDiscount(0.1);
     } else if (couponCode !== "") {
       setDiscount(0);
@@ -264,7 +264,7 @@ const Bill = () => {
               />
             </div>
             <div className={styles.dishQuantity}>
-              <h3>Dish Quantity:</h3>
+              <h3>Number Of People:</h3>
               <input
                 className={styles.dishQuantityInput}
                 type="number"

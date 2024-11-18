@@ -1,7 +1,12 @@
+.mainContainer{
+  background-color:#fdf2e9;
+  width:100%;
+}
 .container{
   max-width:87.25rem;
   margin:0 auto;
   padding:5rem 0;
+  
 }
 .container h1{
   text-align: center;

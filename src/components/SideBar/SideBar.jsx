@@ -28,7 +28,7 @@ const SideBar = ({
       <div className={styles.category}>
         <h3>Menu for {JSON.parse(localStorage.getItem("dishDetails")).name}</h3>
         <button className={styles.btn} onClick={openModal}>
-          &#43;
+          Add an Extra Item <span>&#43;</span>
         </button>
       </div>
       <ul>
@@ -41,7 +41,7 @@ const SideBar = ({
             <div className={styles.category}>
               {category}{" "}
               <span className={styles.quantity}>
-                {storageObject[index].quantity}
+              Select any {storageObject[index].quantity}
               </span>
             </div>
           </li>

@@ -8,6 +8,7 @@ import aboutusimg from '../../assets/images/aboutusimg.jpeg'
 const AboutUsNew = () => {
   const navigate = useNavigate();
   return (
+    <div className={styles.mainContainer}>
     <div className={styles.container}>
       <h1>About Caterersnearme</h1>
       <div className={styles.aboutUsSection}>
@@ -32,6 +33,7 @@ const AboutUsNew = () => {
           />
         </div>
       </div>
+    </div>
     </div>
     </div>
     

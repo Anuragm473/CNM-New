@@ -15,8 +15,8 @@ const SuccessStories = () => {
   const successStories = [
     {
       image: img1,
-    //   name: 'Apolline Deo',
-    //   title: 'Head Chef'
+      name: 'Apolline Deo',
+     title: 'Head Chef'
     },
     {
       image: img2,
