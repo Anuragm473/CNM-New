@@ -19,10 +19,12 @@
   max-width:75rem;
   margin:0 auto;
   padding:0 2rem;
+  display:flex;
+  justify-content:space-between;
 }
 .footer{
   padding:5rem 0;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #a9a8a8;
 }
 .footerheading{
   font-size: 1.125rem;
@@ -73,22 +75,23 @@
   display:flex;
   gap:0.5rem;
   font-size:1.2rem;
-  justify-content:center;
+  justify-content:start;
   text-decoration:none;
   align-items:center;
   font-weight:500;
   color:#555;
+  text-align:start;
 }
 .logocol{
   display:flex;
   flex-direction: column;
 }
 .copyright{
-  font-size: 0.9rem;
+  font-size: 1rem;
   color:#767676;
   line-height: 1.6;
   font-weight: 400;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 .contacts{
   font-style: normal;
@@ -99,7 +102,8 @@
   flex-direction:column;
 }
 .address{
-  margin-bottom: 1.2rem;
+  margin-top:0.2rem;
+  margin-bottom: 0.7rem;
 }
 @media(max-width:1061px){
   .gridcols{

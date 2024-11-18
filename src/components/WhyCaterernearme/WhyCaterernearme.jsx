@@ -10,7 +10,7 @@ const AboutUsNew = () => {
   const navigate = useNavigate();
   return (
     <div className={styles.container}>
-      <h1>Why Caterernearme</h1>
+      <h1>Why Caterersnearme</h1>
       <div className={styles.aboutUsSection}>
         <div className={styles.aboutUsLeft}>
           {/* <h1>Why Caterernearme</h1> */}

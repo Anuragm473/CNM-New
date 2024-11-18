@@ -15,8 +15,8 @@ const SuccessStories = () => {
   const successStories = [
     {
       image: img1,
-      name: 'Apolline Deo',
-     title: 'Head Chef'
+    //   name: 'Apolline Deo',
+    //  title: 'Head Chef'
     },
     {
       image: img2,
@@ -55,7 +55,7 @@ const SuccessStories = () => {
       <div className={styles.storyContainer}>
         <div className={styles.storyHeadline}>
           {/* <h3>- Our Stories -</h3> */}
-          <h2>- Our Success Stories -</h2>
+          <h2>- Taste, Trust, and Triumph: Our Event Journey -</h2>
         </div>
         <Carousel
           showArrows={true}

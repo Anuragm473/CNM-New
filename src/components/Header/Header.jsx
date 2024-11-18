@@ -13,7 +13,7 @@ import logout from "../../assets/images/logout.jpg";
 import callIcon from "../../assets/images/callicon.png";
 
 const Header = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {isModalOpen, setIsModalOpen}= useContext(CatererContext);
   const [firstName, setFirstName] = useState("");
   const [isLoggedName, setIsLoggedName] = useState(false);
   const { isCaterer, setIsCaterer, catererId, setCatererId } =

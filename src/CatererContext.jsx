@@ -7,9 +7,10 @@ export const CatererContext = createContext();
 export const CatererProvider = ({ children }) => {
   const [catererId, setCatererId] = useState("");
   const [isCaterer, setIsCaterer] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <CatererContext.Provider value={{ catererId, setCatererId, isCaterer, setIsCaterer }}>
+    <CatererContext.Provider value={{ catererId, setCatererId, isCaterer, setIsCaterer,isModalOpen,setIsModalOpen }}>
       {children}
     </CatererContext.Provider>
   );

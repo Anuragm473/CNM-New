@@ -10,6 +10,7 @@ import WhyCaterernearme from "../../components/WhyCaterernearme/WhyCaterernearme
 import SuccessStories from "../../components/SuccessStories/SuccessStories";
 import HowtoOrder from "../../components/HowtoOrder/HowtoOrder";
 import Howitwork from "../../components/Howitwork/Howitwork";
+import TestimonialSection from "../../components/TestimonialSecton/TestimonialSection";
 
 const HomePage = () => {
   const { user } = useAuth();
@@ -38,9 +39,9 @@ const HomePage = () => {
       <Howitwork/>
       <AboutUsNew />
       
-      <SuccessStories />
-      
       <WhyCaterernearme />
+      <TestimonialSection/>
+      <SuccessStories />
       
       {/* <ArtGallery /> */}
     </>
