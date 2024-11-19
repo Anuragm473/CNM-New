@@ -71,6 +71,8 @@ const Header = () => {
           setFirstName("");
           setIsLoggedName(false);
           navigate("/");
+          setIsModalOpen(true);
+
         }
       }
     };

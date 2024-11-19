@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
 import styles from "./Footer1.module.css";
 import CNMlogo from '../../assets/CNMLogo-NoBG.png'
+import {CatererContext} from "../../CatererContext"
 
 export default function Footer1() {
+    const {setIsModalOpen}=useContext(CatererContext)
     const curretDate=new Date().getFullYear()
   return (
     <footer className={styles.footer}>
@@ -33,8 +35,8 @@ export default function Footer1() {
         <nav className={styles.navcol}>
             <p className={styles.footerheading}>Account</p>
             <ul className={styles.footernav}>
-                <li><a className={styles.footerlink} href="#">Create account</a></li>
-                <li><a className={styles.footerlink} href="#">Sign in</a></li>
+                <li onClick={()=>setIsModalOpen(true)}><a className={styles.footerlink} href="#">Create account</a></li>
+                <li onClick={()=>setIsModalOpen(true)}><a className={styles.footerlink} href="#">Sign in</a></li>
             </ul>
         </nav>
         {/* <nav className={styles.navcol}>
