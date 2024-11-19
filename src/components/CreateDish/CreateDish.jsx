@@ -6,70 +6,45 @@ import { toastMessage } from "../../../utility";
 
 export default function CreateDish() {
   const { catererId } = useContext(CatererContext);
-  const [deleted,setDeleted]=useState([])
-  const [packages, setPackages] = useState([
-    {
-      name: "",
-      price: 0,
-      dishType: "",
-      items: [{ id: "", item: "", price: 0, quantity: "" }],
-    },
-  ]);
+  const [deleted, setDeleted] = useState([]);
+  const [packages, setPackages] = useState([]);
   const [catererDish, setCatererDish] = useState([]);
   const [categoryType, setCategoryType] = useState([]); // To store fetched catering types
   const [dishData, setDishData] = useState([]);
 
   // Fetch menu data based on catererId
   useEffect(() => {
-    async function getMenu() {
+    async function fetchInitialData() {
       try {
-        const response = await fetch(
-          "http://3.6.41.54/api/Menus?limit=100000"
-        );
-        const data = await response.json();
-        const catererData = data.data.filter(
+        const [menuResponse, catererResponse] = await Promise.all([
+          fetch("http://3.6.41.54/api/Menus?limit=100000"),
+          axios.get(`http://3.6.41.54/api/caterer/${catererId}`)
+        ]);
+
+        const menuData = await menuResponse.json();
+        const catererDishes = menuData.data.filter(
           (dish) => dish.catererId === catererId
         );
-        setCatererDish(catererData);
-      } catch (error) {
-        console.error("Error fetching menu data:", error);
-      }
-    }
-    
+        setCatererDish(catererDishes);
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    const catererid = user.catererId;
-    if (catererid) {
-      async function getPreviousData() {
-        const caterer = await axios.get(
-          `http://3.6.41.54/api/caterer/${catererid}`
+        const catererData = catererResponse.data;
+        setCategoryType(catererData.cateringType || []);
+        setDishData(catererData.dishes || []);
+        setPackages(
+          (catererData.dishes || []).map((dish) => ({
+            ...dish,
+            items: dish.items.map((item) => ({
+              ...item,
+              price: Number(item.price),
+              quantity: Number(item.quantity),
+            })),
+          }))
         );
-        const dishesData = caterer.data.dishes;
-        setDishData(JSON.parse(JSON.stringify(dishesData)));
-        setPackages((prev) => [
-          ...JSON.parse(JSON.stringify(dishesData)),
-          ...prev,
-        ]);
-      }
-      getPreviousData();
-    }
-    getMenu();
-  }, [catererId]);
-
-  // Fetch catering types based on catererId
-  useEffect(() => {
-    async function fetchCateringTypes() {
-      try {
-        const response = await axios.get(
-          `http://3.6.41.54/api/caterer/${catererId}`
-        );
-        const cateringData = response.data;
-        setCategoryType(cateringData.cateringType || []);
       } catch (error) {
-        console.error("Error fetching catering types:", error);
+        console.error("Error fetching initial data:", error);
       }
     }
-    fetchCateringTypes();
+    fetchInitialData();
   }, [catererId]);
 
   const handlePackageChange = (index, event) => {
@@ -127,120 +102,76 @@ export default function CreateDish() {
 
   const removePackage = (packageIndex) => {
     const updatedPackages = [...packages];
-    
-    // Check if the package at `packageIndex` exists and has a defined `id`
     const packageToRemove = updatedPackages[packageIndex];
     if (packageToRemove && packageToRemove.id !== undefined) {
-        setDeleted(prev => [...prev, packageToRemove.id]);  // Add the `id` to deleted list
+      setDeleted((prev) => [...prev, packageToRemove.id]); // Add the `id` to deleted list
     }
-
-    // Remove the package from `updatedPackages` and update the state
     updatedPackages.splice(packageIndex, 1);
     setPackages(updatedPackages);
-};
-
+  };
 
   async function SubmitForm(e) {
     e.preventDefault();
 
     try {
-      if(deleted.length>0){
-        console.log(deleted)
-        const response = await Promise.all(
-          deleted.map(id => axios.delete(`http://3.6.41.54/api/dishes/${id}`)))
-          console.log('menu deleted',response)
-          
+      if (deleted.length > 0) {
+        await Promise.all(
+          deleted.map((id) => axios.delete(`http://3.6.41.54/api/dishes/${id}`))
+        );
       }
 
-      const response = await axios.get(`http://3.6.41.54/api/caterer/${catererId}`);
-      const caterersDish = response.data;
-      let caterer;
-  
-      if (caterersDish.dishes) {
-        caterer = { ...caterersDish, dishes: caterersDish.dishes.map(dish => ({ ...dish, _id: dish.id })) };
-      }
-  
-      // Prepare the updated packages with the catererId
-      const updatedPackages = packages.map((pkg) =>
-        pkg.catererId === undefined
-          ? {
-              ...pkg,
-              catererId, // Attach the catererId correctly to each package
-            }
-          : { ...pkg }
-      );
-
-      // Filter and create new dish data by comparing with existing dishes
-      const updateDish = updatedPackages.filter((pkg) => {
-        // Check if the package exists in the initial dishData
+      const updateDish = packages.filter((pkg) => {
         const existingPackage = dishData.find((dish) => dish.id === pkg.id);
-
-        // Only add to updateDish if there's a change between the current package and the existing one
         return (
-          !existingPackage || // If package doesn't exist, it's a new package
-          JSON.stringify(existingPackage) !== JSON.stringify(pkg) // Check for changes in existing package
+          !existingPackage ||
+          JSON.stringify(existingPackage) !== JSON.stringify(pkg)
         );
       });
 
-      // Process each package, handling POST and PATCH logic
       const results = await Promise.all(
         updateDish.map(async (pkg) => {
-          const existingPackage = dishData.find(
-            (existing) => existing.id === pkg.id
-          );
-
-          // If package exists and has an id, patch it
-          if (pkg.id && existingPackage) {
+          if (pkg.id) {
             const updatedPackage = await axios.patch(
               `http://3.6.41.54/api/dishes/${pkg.id}`,
               {
                 items: pkg.items.map((item) => ({
                   ...item,
-                  price: Number(item.price), // Ensure prices are numbers
-                  quantity: Number(item.quantity), // Ensure quantities are numbers
+                  price: Number(item.price),
+                  quantity: Number(item.quantity),
                 })),
                 dishType: pkg.dishType,
                 price: Number(pkg.price),
                 name: pkg.name,
-                catererId: pkg.catererId,
+                catererId,
               }
             );
-            return updatedPackage.data; // Return the updated package data
+            return updatedPackage.data;
           } else {
-            // If no id exists, create a new package (POST)
             const newPackage = await axios.post(
               `http://3.6.41.54/api/dishes`,
-              pkg
+              { ...pkg, catererId }
             );
-            return { ...newPackage.data, _id: newPackage.data.id }; // Return the new package with an id
+            return { ...newPackage.data, _id: newPackage.data.id };
           }
         })
       );
 
-      // Only create newCaterer and send PATCH if new dishes were added via POST
       const newDishes = results.filter(
         (result) => !dishData.some((existing) => existing.id === result.id)
       );
 
-      // If there are new dishes from POST, merge them with existing dishes
       if (newDishes.length > 0) {
-        const newCaterer = caterer?.dishes
-          ? { dishes: [...caterer.dishes, ...newDishes] } // Merge only new dishes
-          : { dishes: [...newDishes] };
-
-        // PATCH request to update the caterer with the new dishes
-        await axios.patch(
-          `http://3.6.41.54/api/caterer/${catererId}`,
-          newCaterer
-        );
+        const dishes=[...dishData.map(el=>el.id), ...newDishes.map(el=>el.id)]
+        console.log(dishes)
+        const res=await axios.patch(`http://3.6.41.54/api/caterer/${catererId}`, {
+          dishes: [...dishData.map(el=>el.id), ...newDishes.map(el=>el.id)],
+        });
       }
-  
-      toastMessage('Packages submitted successfully!');
+
+      toastMessage("Packages submitted successfully!");
     } catch (error) {
       console.error("Error submitting form:", error);
-      toastMessage(
-        "There was an error submitting the packages. Please try again."
-      );
+      toastMessage("There was an error submitting the packages. Please try again.");
     }
   }
 
@@ -262,7 +193,7 @@ export default function CreateDish() {
             <div className={styles.inputGroup}>
               <label>Package Price:</label>
               <input
-                type="text"
+                type="number"
                 name="price"
                 value={pkg.price}
                 onChange={(event) => handlePackageChange(pkgIndex, event)}
@@ -310,7 +241,7 @@ export default function CreateDish() {
                 <div className={styles.inputGroup}>
                   <label>Dish Price:</label>
                   <input
-                    type="text"
+                    type="number"
                     name="price"
                     value={dish.price}
                     onChange={(event) =>
@@ -321,7 +252,7 @@ export default function CreateDish() {
                 <div className={styles.inputGroup}>
                   <label>Dish Quantity:</label>
                   <input
-                    type="text"
+                    type="number"
                     name="quantity"
                     value={dish.quantity}
                     onChange={(event) =>
@@ -354,17 +285,17 @@ export default function CreateDish() {
             </button>
           </div>
         ))}
-        <button type="button" onClick={addPackage} className={styles.addButton}>
+        <button
+          type="button"
+          onClick={addPackage}
+          className={`${styles.addButton} ${styles.greenButton}`}
+        >
           Add Package
         </button>
+        <button type="submit" onClick={SubmitForm}>
+          Submit Packages
+        </button>
       </form>
-      <button
-        type="button"
-        onClick={(e) => SubmitForm(e)}
-        className={styles.addButton}
-      >
-        Submit
-      </button>
     </>
   );
 }
