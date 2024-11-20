@@ -156,21 +156,21 @@
 //                 // Check if the menu has an id for PATCH request or use POST for a new menu
 //                 if (menu.id) {
 //                     const originalMenu = initialMenus.find(m => m.id === menu.id);
-//                     console.log(menu,originalMenu)
+//                    
                     
                     
 //                     if (!isMenuDataEqual(menu, originalMenu)) {
 //                         const response = await axios.patch(`http://3.6.41.54/api/menus/${menu.id}`, payload);
-//                         console.log('Menu Updated:', response.data);
+//                         
 //                         return response.status >= 200 && response.status < 300;
 //                     } else {
 //                         // No need to update, as data is unchanged
-//                         console.log('Menu not changed:', menu.menuName);
+//                       
 //                         return true;
 //                     }
 //                 } else {
 //                     const response = await axios.post('http://3.6.41.54/api/menus', payload);
-//                     console.log('Menu Created:', response.data);
+//                     
 //                     return response.status >= 200 && response.status < 300;
 //                 }
 //             });
@@ -394,7 +394,7 @@ export default function MenuCreation({ setCurrentStep }) {
       // Delete menus
       for (const id of deletedMenuIds) {
         await axios.delete(`http://3.6.41.54/api/menus/${id}`);
-        console.log('Menu Deleted:', id);
+       
       }
 
       // Create or update menus
@@ -415,15 +415,15 @@ export default function MenuCreation({ setCurrentStep }) {
           const originalMenu = initialMenus.find(m => m.id === menu.id);
           if (!isMenuDataEqual(menu, originalMenu)) {
             const response = await axios.patch(`http://3.6.41.54/api/menus/${menu.id}`, payload);
-            console.log('Menu Updated:', response.data);
+          
             return response.status >= 200 && response.status < 300;
           } else {
-            console.log('Menu not changed:', menu.menuName);
+           
             return true;
           }
         } else {
           const response = await axios.post('http://3.6.41.54/api/menus', payload);
-          console.log('Menu Created:', response.data);
+          
           return response.status >= 200 && response.status < 300;
         }
       });

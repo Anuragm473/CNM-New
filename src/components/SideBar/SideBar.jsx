@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SideBar.module.css";
 import Modal from "../Modal/Modal";
 import IncreaseQuantity from "../IncreaseQuantity/IncreaseQuantity";
@@ -9,17 +9,32 @@ const SideBar = ({
   onCategorySelect,
   storageObject,
   setStorageObject,
-  menusData
+  menusData,
+  duplicate
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [updatedQuantities, setUpdatedQuantities] = useState([]);
+
+  useEffect(() => {
+    // Update `updatedQuantities` whenever `storageObject` changes
+    if (storageObject && storageObject.length > 0) {
+      setUpdatedQuantities(storageObject.map(el=>el.addon));
+    }
+  }, [storageObject]);
+
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+
+
+
   return (
     <div className={styles.sidebar}>
-      {/* <Modal isOpen={isModalOpen} onClose={closeModal}><IncreaseQuantity closeModal={closeModal} initialState={initialState} setStorageObject={setStorageObject} storageObject={storageObject}/></Modal> */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <IncreaseQuantity
-        menusData={menusData}
+        duplicate={duplicate}
+          menusData={menusData}
+          updatedQuantities={updatedQuantities}
+          setUpdatedQuantities={setUpdatedQuantities}
           closeModal={closeModal}
           setStorageObject={setStorageObject}
           storageObject={storageObject}
@@ -41,7 +56,7 @@ const SideBar = ({
             <div className={styles.category}>
               {category}{" "}
               <span className={styles.quantity}>
-              Select any {storageObject[index].quantity}
+                Select any {storageObject[index]?.quantity || 0}
               </span>
             </div>
           </li>

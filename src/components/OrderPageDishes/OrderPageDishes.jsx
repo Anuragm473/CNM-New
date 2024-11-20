@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const OrderPageDishes = ({ dishes }) => {
   const navigate = useNavigate();
   const handleDishClick = (dish) => {
-    console.log("Clicked Dish:", dish);
     localStorage.setItem("dishDetails", JSON.stringify(dish));
     navigate(`/add-to-cart/${dish.id}`);
   };

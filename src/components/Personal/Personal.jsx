@@ -162,7 +162,7 @@ export default function Personal({ setCurrentStep }) {
     if (!typeofcusin) {
       formData.cuisinesOffered = formData?.cuisinesOffered?.split(",");
     }
-    console.log("Form Data:", formData);
+    
 
     try {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -171,7 +171,7 @@ export default function Personal({ setCurrentStep }) {
         const response = await axios.post("http://3.6.41.54/api/caterer", {
           ...formData,
         });
-        console.log(response.data);
+        
         setCatererId(response.data.id);
         const userObj = JSON.parse(localStorage.getItem("user"));
         const userId = userObj.id;
@@ -180,7 +180,6 @@ export default function Personal({ setCurrentStep }) {
           `http://3.6.41.54/api/users/${userId}`,
           { catererId: response.data.id }
         );
-        console.log(catererIdSet.data);
         localStorage.setItem(
           "user",
           JSON.stringify({ ...catererIdSet.data, catererId: response.data.id })
@@ -192,7 +191,6 @@ export default function Personal({ setCurrentStep }) {
         setCurrentStep(2);
       } else {
         const updatedFields = getUpdatedFields(formData, initial);
-        console.log(updatedFields);
         const response = await axios.patch(
           `http://3.6.41.54/api/caterer/${catererid}`,
           {
@@ -200,7 +198,6 @@ export default function Personal({ setCurrentStep }) {
           }
         );
         setCatererId(response.data.id);
-        console.log(response);
         toastMessage("updated");
         setCurrentStep(2);
       }

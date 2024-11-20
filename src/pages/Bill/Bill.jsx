@@ -208,9 +208,7 @@ const Bill = () => {
         quantity: item.quantity,
         menuItem: item.dishes,
       }));
-      console.log(cartItem);
       const cartItems = cartItem.filter((cartItem) => cartItem.quantity !== 0);
-      console.log(cartItems);
 
       const myorder = {
         catererId: JSON.parse(localStorage.getItem("catererId")),

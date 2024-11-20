@@ -57,6 +57,7 @@ function App() {
         {
           path: "/caterer/:id",
           element: (
+            
             <Suspense fallback={<Spinner />}>
               <OrderPage />
             </Suspense>

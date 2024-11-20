@@ -162,7 +162,6 @@ export default function CreateDish() {
 
       if (newDishes.length > 0) {
         const dishes=[...dishData.map(el=>el.id), ...newDishes.map(el=>el.id)]
-        console.log(dishes)
         const res=await axios.patch(`http://3.6.41.54/api/caterer/${catererId}`, {
           dishes: [...dishData.map(el=>el.id), ...newDishes.map(el=>el.id)],
         });

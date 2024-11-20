@@ -37,7 +37,6 @@ const HowItWorks = () => {
     },
     [width]
   );
-  // console.log(width)
   const steps = [
     { id: 1, title: "Search", icon: searchIcon },
     { id: 2, title: "Discover", icon: discoverIcon },

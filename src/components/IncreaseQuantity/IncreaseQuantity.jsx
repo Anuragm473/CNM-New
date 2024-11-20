@@ -1,31 +1,39 @@
-import React, { useState } from 'react';
-import Styles from './IncreaseQuantity.module.css';
-import Table from '../table/Table';
+import React from "react";
+import Styles from "./IncreaseQuantity.module.css";
+import Table from "../table/Table";
 
-export default function IncreaseQuantity({closeModal, storageObject, setStorageObject,menusData}) {
-  const itemCounts = menusData.map(category => {
-    return category.items.reduce((acc, item) => acc + item.items.length, 0);
-  });
-  console.log(itemCounts)
-  const [updatedQuantities, setUpdatedQuantities] = useState(storageObject.map(item =>item=0));
-  const handleQuantityChange = (index, newValue) => {
-    const updatedQuantitiesCopy = [...updatedQuantities];
-    updatedQuantitiesCopy[index] =Number(newValue);
-    setUpdatedQuantities(updatedQuantitiesCopy);
-  };
+export default function IncreaseQuantity({
+  duplicate,
+  updatedQuantities,
+  setUpdatedQuantities,
+  closeModal,
+  storageObject,
+  setStorageObject,
+  menusData,
+}) {
+  // Calculate the total item counts for each menu category
+  const itemCounts = menusData.map((category) =>
+    category.items.reduce((acc, item) => acc + item.items.length, 0)
+  );
 
+
+  // Handle form submission
   const handleSubmit = () => {
     const updatedStorageObject = storageObject.map((item, index) => ({
       ...item,
-      addon:itemCounts[index]>=item.addon+updatedQuantities[index]?item.addon+updatedQuantities[index]:item.addon,
-      quantity:itemCounts[index]>=item.quantity+updatedQuantities[index]?item.quantity+updatedQuantities[index]:item.quantity
+      addon: updatedQuantities[index]+item.quantity <= itemCounts[index] 
+        ? updatedQuantities[index] 
+        : item.addon,
+      quantity:duplicate[index].quantity+updatedQuantities[index]
+      
+      
     }));
     setStorageObject(updatedStorageObject);
-    setUpdatedQuantities(updatedQuantities=>updatedQuantities=storageObject.map(item =>item=0))
-    closeModal()
+    closeModal();
   };
+
   return (
-    <>
+    <div>
       <h3>Add on Menus</h3>
       <table className={Styles.menutable}>
         <thead>
@@ -42,14 +50,15 @@ export default function IncreaseQuantity({closeModal, storageObject, setStorageO
               key={item._id}
               index={index}
               item={item}
-              value={updatedQuantities[index]}
-              onValueChange={(newValue) => handleQuantityChange(index, newValue)}
+              value={updatedQuantities[index] || 0} // Default to 0 if value is undefined
+              setUpdatedQuantities={setUpdatedQuantities}
             />
           ))}
         </tbody>
       </table>
-      <button className={Styles.botn} onClick={handleSubmit}>Submit</button>
-    </>
+      <button className={Styles.botn} onClick={handleSubmit}>
+        Submit
+      </button>
+    </div>
   );
 }
-

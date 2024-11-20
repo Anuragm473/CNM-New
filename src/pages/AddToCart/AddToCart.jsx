@@ -27,7 +27,7 @@
 //       try {
 //         const menuResponse = await fetch("http://3.6.41.54//api/menus/");
 //         const menuData = await menuResponse.json();
-//         // console.log(menuData);
+//       
 
 //         const categoryNames = menuData.data.map((section) => section.name);
 //         setAllDishes(menuData.data);
@@ -41,21 +41,21 @@
 //           `http://3.6.41.54/api/caterer/${catererId}`
 //         );
 //         const dishData = await dishResponse.json();
-//         // console.log(dishData);
+//      
 //         const specificDish = dishData.dishes.find((dish) => dish.id === dishId);
-//         // console.log(specificDish);
+//      
 
 //         if (specificDish) {
 //           const availableCategories = specificDish.items.map(
 //             (item) => item.item
 //           );
-//           // console.log(availableCategories);
+//           
 //           const finalStorageObject = specificDish.items.map((item) => {
 //             const newItem = { ...item, addon: 0, name: item.item, dishes: [] };
 //             delete newItem.item;
 //             return newItem;
 //           });
-//           // console.log(finalStorageObject);
+//           
 //           setInitialState(finalStorageObject);
 //           setStorageObject(finalStorageObject);
 
@@ -69,7 +69,7 @@
 //         //   `http://3.6.41.54//api/dishes/${dishId}`
 //         // );
 //         // const menuData = await menuResponse.data;
-//         // console.log(menuData, "menuData");
+//        
 //       } catch (error) {
 //         console.error("Error fetching data:", error);
 //       }
@@ -119,7 +119,7 @@
 //     const categoryData = storageObject.find(
 //       (item) => item.name === selectedCategory
 //     );
-//     // console.log(categoryData, "categoryData");
+//    
 //     setSelectedDishes(categoryData ? categoryData.dishes : []);
 
 //     localStorage.setItem("cartData", JSON.stringify(storageObject));
@@ -131,18 +131,7 @@
 //       ?.items.map((item) => item.items)
 //       .flat() || [];
 
-//   console.log(filteredDishes, "filteredDishes");
 
-//   // console.log(categories, "categories");
-
-//   // console.log(selectedCategory, "selectedCategory");
-//   // console.log(selectedDishes, "selectedDishes");
-//   // console.log(storageObject, "storageObject");
-//   // console.log(initialState, "initialState");
-
-//   // console.log(filteredDishes, "dishes");
-
-//   // console.log(allDishes, "allDishes");
 
 //   return (
 //     <div className={styles.addtocartContainer}>
@@ -200,6 +189,7 @@ const AddToCart = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDishes, setSelectedDishes] = useState([]);
   const [allDishes, setAllDishes] = useState([]);
+  const [duplicate,setDuplicate]=useState([])
 
   const navigate = useNavigate();
 
@@ -223,7 +213,7 @@ const AddToCart = () => {
               .map((response) => response.data)
               .filter((menu) => menu.items[0] !== "-");
           setMenusData(menus);
-          console.log(menus, "menus");
+
 
           const categoriesArray = [];
 
@@ -243,7 +233,7 @@ const AddToCart = () => {
               dishes: currentDishes,
             };
 
-            // console.log(currentDishesObject, "current dishes object");
+        
 
             const isDuplicate = allDishes.some(
               (dish) =>
@@ -267,7 +257,7 @@ const AddToCart = () => {
           });
 
           setStorageObject(transformedStorageObject);
-          console.log(storageObject, "storage object");
+          setDuplicate(JSON.parse(JSON.stringify(transformedStorageObject)))
           setCategories(categoriesArray);
           if (categoriesArray.length > 0) {
             setSelectedCategory(categoriesArray[0]);
@@ -328,18 +318,19 @@ const AddToCart = () => {
     }
   }
 
-  //   console.log(allDishes, "all dishes");
+
 
   const filteredDishes =
     allDishes.find((section) => section.name === selectedCategory)?.dishes ||
     [];
 
-  //   console.log(filteredDishes, "filtered dishes");
+
 
   return (
     <div className={styles.addtocartContainer}>
       <div className={styles.addtocart}>
         <SideBar
+        duplicate={duplicate}
           categories={categories}
           storageObject={storageObject}
           setStorageObject={setStorageObject}

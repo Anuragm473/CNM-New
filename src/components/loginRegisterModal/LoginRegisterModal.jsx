@@ -328,10 +328,11 @@ const LoginRegisterModal = ({
 
   // Password validation function
   const validatePassword = (password) => {
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
     return passwordRegex.test(password);
   };
+  
+  
 
   // Phone number validation function
   const validatePhone = (phone) => {
@@ -387,7 +388,7 @@ const LoginRegisterModal = ({
 
     if (!validatePassword(password)) {
       toastMessage(
-        "Password must be at least 8 characters long, contain one uppercase, one lowercase, one number, and one special character"
+        "Password must be at least 8 characters long with one alphabet and one number"
       );
       return;
     }
@@ -415,8 +416,6 @@ const LoginRegisterModal = ({
         body: JSON.stringify(registerData),
       });
 
-      console.log(response);
-      console.log(registerData);
 
       if (!response.ok) {
         toastMessage("Email ,username or phonenumber already exists");
