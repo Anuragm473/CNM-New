@@ -5,6 +5,8 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Spinner from "./components/Spinner/Spinner";
 import AuthProvider from "./context/AuthProvider";
 import { CatererProvider } from "./CatererContext";
+import ForgotPass from "./components/ForgotPass/ForgotPass";
+import { ToastContainer } from "react-toastify";
 
 const CreateMenu = React.lazy(() => import("./pages/CreateMenu/CreateMenu"));
 const CatererDashboard = React.lazy(() =>
@@ -101,6 +103,14 @@ function App() {
         },
       ],
     },
+    {
+    path: "/forgot/password/:hash/:expeires",
+      element: (
+        <Suspense fallback={<Spinner />}>
+          <ForgotPass />
+        </Suspense>
+      )
+    }
   ]);
 
   return (

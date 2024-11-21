@@ -1,130 +1,3 @@
-// import React, { useState, useRef } from "react";
-// import styles from "./Bill.module.css";
-
-// const detailsList = [
-//   {
-//     name: "Main Course",
-//     dishes: ["Mix Veg"],
-//   },
-//   {
-//     name: "Dal",
-//     dishes: ["Makhani Dal", "Dal Tadka"],
-//   },
-//   {
-//     name: "Rice",
-//     dishes: ["Jeera Rice"],
-//   },
-//   {
-//     name: "Breads",
-//     dishes: ["Naan", "Butter Naan", "Garlic Naan"],
-//   },
-// ];
-
-// const Bill = () => {
-//   const [selected, setSelected] = useState(null);
-//   const accordionContentRefs = useRef([]);
-
-//   const toggle = (index) => {
-//     if (selected === index) {
-//       setSelected(null);
-//     } else {
-//       setSelected(index);
-//     }
-//   };
-
-//   return (
-//     <div className={styles.billContainer}>
-//       <div className={styles.mainHeading}>
-//         <h2>Order Summary</h2>
-//       </div>
-//       <div className={styles.mainBill}>
-//         <div className={styles.billLeft}>
-//           <div className={styles.leftHeading}>
-//             <h3>Dish Details:</h3>
-//           </div>
-//           {detailsList.map((detail, index) => {
-//             const isSelected = selected === index;
-//             const contentRef = accordionContentRefs.current[index];
-//             const contentHeight =
-//               isSelected && contentRef ? contentRef.scrollHeight : 0;
-
-//             return (
-//               <div
-//                 className={styles.detailAccordion}
-//                 onClick={() => toggle(index)}
-//                 key={index}
-//                 style={{
-//                   height: isSelected ? `${contentHeight + 110}px` : "90px",
-//                   overflow: "hidden",
-//                   transition: "height 0.3s ease",
-//                 }}
-//               >
-//                 <div className={styles.accordionHeading}>
-//                   <h4>{detail.name}</h4>
-//                   <i
-//                     className={`fa-solid fa-caret-up ${styles.accordionIcon} ${
-//                       isSelected ? "" : styles.flip
-//                     }`}
-//                   ></i>
-//                 </div>
-//                 <div
-//                   className={styles.accordionContent}
-//                   ref={(el) => (accordionContentRefs.current[index] = el)}
-//                 >
-//                   {detail.dishes.map((dish, index) => (
-//                     <p key={index}>{`${index + 1}. ${dish}`}</p>
-//                   ))}
-//                 </div>
-//               </div>
-//             );
-//           })}
-//         </div>
-//         <div className={styles.billRight}>
-//           <div className={styles.rightHeading}>
-//             <h3>Order Summary:</h3>
-//             <div className={styles.deliveryDate}>
-//               <h3>Delivery Date</h3>
-//               <input className={styles.deliveryDateInput} type="date" />
-//             </div>
-//             <div className={styles.dishQuantity}>
-//               <h3>Dish Quantity:</h3>
-//               <input className={styles.dishQuantityInput} type="number" />
-//             </div>
-//             <div className={styles.totalPrice}>
-//               <h3>Total Price: 400</h3>
-//             </div>
-//             <div className={styles.addAnItem}>
-//               <h3>Add An Item Price: 200</h3>
-//             </div>
-//             <div className={styles.addAnItem}>
-//               <h3>Final Dish Price: 200</h3>
-//             </div>
-//             <div className={styles.addAnItem}>
-//               <h3>Final Price: 0</h3>
-//             </div>
-//             <div className={styles.addAnItem}>
-//               <h3>Total: 30</h3>
-//             </div>
-//             <div className={styles.couponCode}>
-//               <input
-//                 className={styles.couponCodeInput}
-//                 type="text"
-//                 placeholder="Coupon Code"
-//               />
-//               <button className={styles.couponButton}>Apply</button>
-//             </div>
-//             <button className={styles.placeOrder}>Place Order</button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Bill;
-
-// Bill.jsx
-
 import React, { useContext, useEffect, useState } from "react";
 import Accordion from "../../components/Accordion/Accordion";
 import styles from "./Bill.module.css";
@@ -142,6 +15,8 @@ const Bill = () => {
   const [discount, setDiscount] = useState(0);
   const { catererId } = useContext(CatererContext);
   const [deliveryDate, setDeliveryDate] = useState("");
+  const [address, setAddress] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -218,6 +93,8 @@ const Bill = () => {
         totalAmount: Number(totalPrice),
         dishQuantity: Number(dishQuantity) || 1,
         paymentStatus: "Accepted",
+        address,
+        message,
         orderDate: new Date().toISOString(),
         deliveryDate: deliveryDate,
         status: {
@@ -227,42 +104,74 @@ const Bill = () => {
       console.log(myorder);
 
       const response = await axiosPrivate.post(
-        "http://3.6.41.54/api/orders",
+        "http://localhost:3000/api/orders",
         myorder
       );
-      // console.log(response);
+      console.log(response, myorder);
       navigate("/my-orders");
     } catch (error) {
       console.error("Order submission failed:", error);
     }
   };
 
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
+
   return (
     <div className={styles.billContainer}>
       <div className={styles.mainHeading}>
-        <h2>Order Summary</h2>
+        <h2 style={{margin:'0',marginBottom:'10px'}}>Order Summary</h2>
       </div>
       <div className={styles.mainBill}>
         <div className={styles.billLeft}>
           <div className={styles.leftHeading}>
-            <h3>Dish Details:</h3>
+            <h3 style={{margin:'0',marginBottom:'5px'}}>Dish Details:</h3>
           </div>
           <Accordion data={cartData} />
         </div>
         <div className={styles.billRight}>
           <div className={styles.rightHeading}>
-            <h3>Order Summary:</h3>
+            <h3 style={{marginTop:'10px',marginBottom:'20px'}}>Order Summary:</h3>
             <div className={styles.deliveryDate}>
-              <h3>Delivery Date</h3>
+              <h3 style={{margin:'0',marginBottom:'5px'}}>Event Date</h3>
               <input
                 value={deliveryDate}
+                style={{margin:'0',marginBottom:'15px'}}
                 onChange={(e) => setDeliveryDate(e.target.value)}
                 className={styles.deliveryDateInput}
                 type="date"
+                min={today} // Restrict to today or future dates
               />
             </div>
+            <div className={styles.address}>
+              <h3 style={{margin:'0',marginBottom:'10px'}}>Event Address</h3>
+              <textarea
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className={styles.deliveryAddressInput}
+                type="text"
+                placeholder="Enter Event Address"
+              />
+            </div>
+            <div className={styles.message}>
+              <h3 style={{margin:'0',marginBottom:'10px'}}>Message</h3>
+              <textarea
+                value={message}
+                onChange={(e) => {
+                  if (e.target.value.length <= 250) {
+                    setMessage(e.target.value);
+                  }
+                }}
+                className={styles.messaegInput}
+                max={250}
+                placeholder="Enter Any Special Instructions"
+              />
+              <p className={styles.characterCount}>
+                {message.length}/250 characters
+              </p>
+            </div>
             <div className={styles.dishQuantity}>
-              <h3>Number Of People:</h3>
+              <h3 style={{margin:'0',marginBottom:'5px'}}>Number Of People:</h3>
               <input
                 className={styles.dishQuantityInput}
                 type="number"
@@ -271,43 +180,6 @@ const Bill = () => {
                 onBlur={handleQuantityBlur}
                 min={1}
               />
-            </div>
-            <div className={styles.addAnItem}>
-              <h3>Dish Price: {dishDetails?.price || 0}</h3>
-            </div>
-            <div className={styles.totalPrice}>
-              <h3>
-                Add On Item Price:{" "}
-                {cartData.reduce(
-                  (sum, item) => sum + item.price * item.addon,
-                  0
-                )}
-              </h3>
-            </div>
-            <div className={styles.totalPrice}>
-              <h3>
-                Final Per Dish Price:{" "}
-                {dishDetails
-                  ? dishDetails.price +
-                    cartData.reduce(
-                      (sum, item) => sum + item.price * item.addon,
-                      0
-                    )
-                  : 0}
-              </h3>
-            </div>
-            <div className={styles.totalPrice}>
-              <h3>
-                Final Price:{" "}
-                {dishDetails
-                  ? (dishDetails.price +
-                      cartData.reduce(
-                        (sum, item) => sum + item.price * item.addon,
-                        0
-                      )) *
-                    (dishQuantity || 1)
-                  : 0}
-              </h3>
             </div>
             <div className={styles.totalPrice}>
               <h3>Total: {totalPrice.toFixed(2)}</h3>

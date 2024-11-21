@@ -57,7 +57,7 @@
 //     };
 
 //     try {
-//       const response = await fetch("http://3.6.41.54/api/auth/email/login", {
+//       const response = await fetch("http://localhost:3000/api/auth/email/login", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -105,7 +105,7 @@
 //     };
 
 //     try {
-//       const response = await fetch("http://3.6.41.54/api/auth/email/register", {
+//       const response = await fetch("http://localhost:3000/api/auth/email/register", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -282,6 +282,8 @@ import useAuth from "../../hooks/useAuth";
 import styles from "./LoginRegisterModal.module.css";
 import { CatererContext } from "../../CatererContext";
 import { toastMessage } from "../../../utility";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginRegisterModal = ({
   setIsLoggedName,
@@ -290,13 +292,14 @@ const LoginRegisterModal = ({
   isOpen,
   onClose,
 }) => {
-  const [isLogin, setIsLogin] = useState(true); // State to toggle between login and register
+  const [isLogin, setIsLogin] = useState("Register"); // State to toggle between login and register
   const [email, setEmail] = useState(""); // State for email input
   const [password, setPassword] = useState(""); // State for password input
   const [lastName, setLastName] = useState(""); // State for last name input (registration)
   const [phone, setPhone] = useState(""); // State for phone input (registration)
   const [role, setRole] = useState("USER"); // State to select between User or Caterer role
   const [confirmPassword, setConfirmPassword] = useState(""); // State for confirm password input (registration)
+  const [pending,setPending]=useState(false)
   const { setIsCaterer } = useContext(CatererContext);
 
   const { setUser } = useAuth();
@@ -331,8 +334,6 @@ const LoginRegisterModal = ({
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
     return passwordRegex.test(password);
   };
-  
-  
 
   // Phone number validation function
   const validatePhone = (phone) => {
@@ -348,7 +349,7 @@ const LoginRegisterModal = ({
     };
 
     try {
-      const response = await fetch("http://3.6.41.54/api/auth/email/login", {
+      const response = await fetch("http://localhost:3000/api/auth/email/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -376,7 +377,21 @@ const LoginRegisterModal = ({
       console.error("Error:", error);
     }
   };
-
+  const handleForgotPassword=async (event)=>{
+    event.preventDefault();
+    try{
+      setPending(true)
+    const request=await axios.post('http://localhost:3000/api/auth/forgot/password',{
+      email
+    })
+    setPending(false)
+    toast('Check you mail inbox')
+    }catch(err){
+      setPending(false)
+      toast("Email doesn't exist or enter valid email")
+    }
+    
+  }
   // Handle registration form submission
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
@@ -408,7 +423,7 @@ const LoginRegisterModal = ({
     };
 
     try {
-      const response = await fetch("http://3.6.41.54/api/auth/email/register", {
+      const response = await fetch("http://localhost:3000/api/auth/email/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -416,14 +431,13 @@ const LoginRegisterModal = ({
         body: JSON.stringify(registerData),
       });
 
-
       if (!response.ok) {
         toastMessage("Email ,username or phonenumber already exists");
         throw new Error("Registration failed");
       }
 
       toastMessage("Registration successful");
-      setIsLogin(true); // Switch to login mode after successful registration
+      setIsLogin("Login"); // Switch to login mode after successful registration
     } catch (error) {
       console.error("Error:", error);
     }
@@ -435,22 +449,26 @@ const LoginRegisterModal = ({
         <button className={styles.closeButton} onClick={onClose}>
           &times;
         </button>
-        <h2>{isLogin ? "Login" : "Register"}</h2>
+        <h2>{isLogin === "Login" ? "Login" :isLogin==="Register"? "Register":"Forgot Password"}</h2>
         <div className={styles.tabButtons}>
           <button
-            className={`${styles.tabButton} ${isLogin ? styles.active : ""}`}
-            onClick={() => setIsLogin(true)}
+            className={`${styles.tabButton} ${
+              isLogin === "Login" ? styles.active : ""
+            }`}
+            onClick={() => setIsLogin("Login")}
           >
             Login
           </button>
           <button
-            className={`${styles.tabButton} ${!isLogin ? styles.active : ""}`}
-            onClick={() => setIsLogin(false)}
+            className={`${styles.tabButton} ${
+              isLogin === "Register" ? styles.active : ""
+            }`}
+            onClick={() => setIsLogin("Register")}
           >
             Register
           </button>
         </div>
-        {isLogin ? (
+        {isLogin === "Login" && (
           <form onSubmit={handleLoginSubmit}>
             <div className={styles.formGroup}>
               <label>Email address</label>
@@ -472,11 +490,13 @@ const LoginRegisterModal = ({
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            <a style={{color:"blue",cursor:"pointer"}} onClick={() => setIsLogin("Forgot")}>Forgot Password?</a>
             <button type="submit" className={styles.submitButton}>
               Login
             </button>
           </form>
-        ) : (
+        )}
+        {isLogin === "Register" && (
           <form
             className={styles.registrationForm}
             onSubmit={handleRegisterSubmit}
@@ -571,6 +591,26 @@ const LoginRegisterModal = ({
             <button type="submit" className={styles.submitButton}>
               Register
             </button>
+          </form>
+        )}
+        {isLogin === "Forgot" && (
+          <form
+            className={styles.registrationForm}
+          >
+            <div className={styles.formGroup}>
+              <label>Enter your registerd email</label>
+              <input
+                type="email"
+                placeholder="Enter email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <button className={styles.button} style={{padding:"5px",border:"none", borderRadius:"4px",color:"white",backgroundColor:"#e67e22",marginBottom:"10px"}} disabled={pending} onClick={handleForgotPassword}>{pending ? <div className={styles.spinner}></div> : "Submit"}</button>
+
+            <button style={{padding:"5px",width:"50px",border:"none", borderRadius:"4px",color:"white",backgroundColor:"#e65046"}} onClick={()=>setIsLogin("Register")}>Back</button>
+
           </form>
         )}
       </div>

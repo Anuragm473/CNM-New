@@ -17,8 +17,8 @@ export default function CreateDish() {
     async function fetchInitialData() {
       try {
         const [menuResponse, catererResponse] = await Promise.all([
-          fetch("http://3.6.41.54/api/Menus?limit=100000"),
-          axios.get(`http://3.6.41.54/api/caterer/${catererId}`)
+          fetch("http://localhost:3000/api/Menus?limit=100000"),
+          axios.get(`http://localhost:3000/api/caterer/${catererId}`)
         ]);
 
         const menuData = await menuResponse.json();
@@ -116,7 +116,7 @@ export default function CreateDish() {
     try {
       if (deleted.length > 0) {
         await Promise.all(
-          deleted.map((id) => axios.delete(`http://3.6.41.54/api/dishes/${id}`))
+          deleted.map((id) => axios.delete(`http://localhost:3000/api/dishes/${id}`))
         );
       }
 
@@ -132,7 +132,7 @@ export default function CreateDish() {
         updateDish.map(async (pkg) => {
           if (pkg.id) {
             const updatedPackage = await axios.patch(
-              `http://3.6.41.54/api/dishes/${pkg.id}`,
+              `http://localhost:3000/api/dishes/${pkg.id}`,
               {
                 items: pkg.items.map((item) => ({
                   ...item,
@@ -148,7 +148,7 @@ export default function CreateDish() {
             return updatedPackage.data;
           } else {
             const newPackage = await axios.post(
-              `http://3.6.41.54/api/dishes`,
+              `http://localhost:3000/api/dishes`,
               { ...pkg, catererId }
             );
             return { ...newPackage.data, _id: newPackage.data.id };
@@ -162,7 +162,7 @@ export default function CreateDish() {
 
       if (newDishes.length > 0) {
         const dishes=[...dishData.map(el=>el.id), ...newDishes.map(el=>el.id)]
-        const res=await axios.patch(`http://3.6.41.54/api/caterer/${catererId}`, {
+        const res=await axios.patch(`http://localhost:3000/api/caterer/${catererId}`, {
           dishes: [...dishData.map(el=>el.id), ...newDishes.map(el=>el.id)],
         });
       }

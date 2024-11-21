@@ -18,7 +18,7 @@
 //     useEffect(() => {
 //       const fetchCateringTypes = async () => {
 //         try {
-//           const response = await axios.get(`http://3.6.41.54/api/caterer/${catererId}`);
+//           const response = await axios.get(`http://localhost:3000/api/caterer/${catererId}`);
 //           const fetchedCateringTypes = response.data.cateringType || [];
 //           setCateringTypes(fetchedCateringTypes);
     
@@ -42,7 +42,7 @@
     
 //       const fetchMenuData = async () => {
 //         try {
-//           const response = await axios.get(`http://3.6.41.54/api/menus?limit=1000000`);
+//           const response = await axios.get(`http://localhost:3000/api/menus?limit=1000000`);
 //           const data = response.data.data;
 //           const fetchedMenus = data
 //             .filter(dish => dish.catererId === catererId)
@@ -160,7 +160,7 @@
                     
                     
 //                     if (!isMenuDataEqual(menu, originalMenu)) {
-//                         const response = await axios.patch(`http://3.6.41.54/api/menus/${menu.id}`, payload);
+//                         const response = await axios.patch(`http://localhost:3000/api/menus/${menu.id}`, payload);
 //                         
 //                         return response.status >= 200 && response.status < 300;
 //                     } else {
@@ -169,7 +169,7 @@
 //                         return true;
 //                     }
 //                 } else {
-//                     const response = await axios.post('http://3.6.41.54/api/menus', payload);
+//                     const response = await axios.post('http://localhost:3000/api/menus', payload);
 //                     
 //                     return response.status >= 200 && response.status < 300;
 //                 }
@@ -275,7 +275,7 @@ export default function MenuCreation({ setCurrentStep }) {
     useEffect(() => {
       const fetchCateringTypes = async () => {
         try {
-          const response = await axios.get(`http://3.6.41.54/api/caterer/${catererId}`);
+          const response = await axios.get(`http://localhost:3000/api/caterer/${catererId}`);
           const fetchedCateringTypes = response.data.cateringType || [];
           setCateringTypes(fetchedCateringTypes);
     
@@ -298,7 +298,7 @@ export default function MenuCreation({ setCurrentStep }) {
     
       const fetchMenuData = async () => {
         try {
-          const response = await axios.get(`http://3.6.41.54/api/menus?limit=1000000`);
+          const response = await axios.get(`http://localhost:3000/api/menus?limit=1000000`);
           const data = response.data.data;
           const fetchedMenus = data
             .filter(dish => dish.catererId === catererId)
@@ -393,7 +393,7 @@ export default function MenuCreation({ setCurrentStep }) {
     try {
       // Delete menus
       for (const id of deletedMenuIds) {
-        await axios.delete(`http://3.6.41.54/api/menus/${id}`);
+        await axios.delete(`http://localhost:3000/api/menus/${id}`);
        
       }
 
@@ -414,7 +414,7 @@ export default function MenuCreation({ setCurrentStep }) {
         if (menu.id) {
           const originalMenu = initialMenus.find(m => m.id === menu.id);
           if (!isMenuDataEqual(menu, originalMenu)) {
-            const response = await axios.patch(`http://3.6.41.54/api/menus/${menu.id}`, payload);
+            const response = await axios.patch(`http://localhost:3000/api/menus/${menu.id}`, payload);
           
             return response.status >= 200 && response.status < 300;
           } else {
@@ -422,7 +422,7 @@ export default function MenuCreation({ setCurrentStep }) {
             return true;
           }
         } else {
-          const response = await axios.post('http://3.6.41.54/api/menus', payload);
+          const response = await axios.post('http://localhost:3000/api/menus', payload);
           
           return response.status >= 200 && response.status < 300;
         }

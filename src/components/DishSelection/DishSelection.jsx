@@ -12,7 +12,6 @@ const DishSelection = ({
     (item) => item.name === selectedCategory
   );
 
-
   return (
     <div className={styles.dishSelection}>
       <h3>Choose your dish</h3>

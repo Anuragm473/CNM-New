@@ -16,13 +16,13 @@
 
 //     if (userData.role.id == 1) {
 //       // Admin (role.id === 1): Fetch all orders
-//       apiUrl = `http://3.6.41.54/api/orders`;
+//       apiUrl = `http://localhost:3000/api/orders`;
 //     } else if (userData.role.id == 2) {
 //       // Caterer (role.id === 2): Fetch orders for that particular caterer
-//       apiUrl = `http://3.6.41.54/api/orders?filters=[{"userId":"${userData.id}"}]`;
+//       apiUrl = `http://localhost:3000/api/orders?filters=[{"userId":"${userData.id}"}]`;
 //     } else if (userData.role.id == 3) {
 //       // User (role.id === 3): Fetch orders for that particular user
-//       apiUrl = `http://3.6.41.54/api/orders?filters=[{"catererId":"${userData.id}"}]`;
+//       apiUrl = `http://localhost:3000/api/orders?filters=[{"catererId":"${userData.id}"}]`;
 //     }
 //     // Log the URL to verify it's correct
 //     console.log("API URL:", apiUrl);
@@ -158,13 +158,13 @@ const MyOrder = () => {
     // Modify the URL based on user role and add pagination parameters (limit, page)
     if (userData.role.id == 1) {
       // Admin (role.id === 1): Fetch all orders
-      apiUrl = `http://3.6.41.54/api/orders?limit=${limit}&page=${page}`;
+      apiUrl = `http://localhost:3000/api/orders?limit=${limit}&page=${page}`;
     } else if (userData.role.id == 2) {
       // Caterer (role.id === 2): Fetch orders for that particular caterer
-      apiUrl = `http://3.6.41.54/api/orders?filters=[{"userId":"${userData.id}"}]&limit=${limit}&page=${page}`;
+      apiUrl = `http://localhost:3000/api/orders?filters=[{"userId":"${userData.id}"}]&limit=${limit}&page=${page}`;
     } else if (userData.role.id == 3) {
       // User (role.id === 3): Fetch orders for that particular user
-      apiUrl = `http://3.6.41.54/api/orders?filters=[{"catererId":"${userData.id}"}]&limit=${limit}&page=${page}`;
+      apiUrl = `http://localhost:3000/api/orders?filters=[{"catererId":"${userData.id}"}]&limit=${limit}&page=${page}`;
     }
 
     console.log("API URL:", apiUrl);
@@ -230,6 +230,12 @@ const MyOrder = () => {
                   <h4 className={styles.catererName}>
                     contact no:{order.catererId?.mobileNo}
                   </h4>
+                  <h5 className={styles.catererName}>
+                    address:{order.address}
+                  </h5>
+                  <h5 className={styles.catererName}>
+                    message:{order.message}
+                  </h5>
                   <p>
                     Dish Items: {order.items.length} | Order Quantity:{" "}
                     {order.dishQuantity}
@@ -283,6 +289,8 @@ const MyOrder = () => {
                 {selectedOrder.userId.lastName}
               </p>
               <p>Contact number: {selectedOrder.userId.phone}</p>
+              <p><span style={{fontWeight:'550'}}>address:</span> {selectedOrder.address}</p>
+              <p>message: {selectedOrder.message}</p>
             </div>
           </div>
 

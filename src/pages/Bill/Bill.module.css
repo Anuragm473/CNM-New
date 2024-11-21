@@ -101,6 +101,81 @@
   border-radius: 4px;
 }
 
+.deliveryAddress {
+  margin-top: 20px;
+}
+
+.deliveryAddress label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.deliveryAddressInput {
+  width: 96%;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom:15px;
+}
+.messaegInput {
+  width: 96%;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom:3px;
+}
+.characterCount {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 5px;
+  text-align: right;
+  margin-bottom:8px;
+}
+
+
+.deliveryAddressInput:focus {
+  outline: none;
+  border-color: #ff6f00;
+  box-shadow: 0 0 8px rgba(255, 111, 0, 0.4);
+}
+
+.messageContainer {
+  margin-top: 10px;
+}
+
+.messageContainer label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.messageInput {
+  width: 96%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  min-height: 80px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  resize: vertical;
+}
+
+.messageInput:focus {
+  outline: none;
+  border-color: #ff6f00;
+  box-shadow: 0 0 8px rgba(255, 111, 0, 0.4);
+}
+
+
 .couponButton {
   background-color: var(--buttonColor);
   color: white;
