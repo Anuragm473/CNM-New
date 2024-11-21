@@ -181,6 +181,43 @@ const Bill = () => {
                 min={1}
               />
             </div>
+            <div className={styles.addAnItem}>
+              <h3>Dish Price: {dishDetails?.price || 0}</h3>
+            </div>
+            <div className={styles.totalPrice}>
+              <h3>
+                Add On Item Price:{" "}
+                {cartData.reduce(
+                  (sum, item) => sum + item.price * item.addon,
+                  0
+                )}
+              </h3>
+            </div>
+            <div className={styles.totalPrice}>
+              <h3>
+                Final Per Dish Price:{" "}
+                {dishDetails
+                  ? dishDetails.price +
+                    cartData.reduce(
+                      (sum, item) => sum + item.price * item.addon,
+                      0
+                    )
+                  : 0}
+              </h3>
+            </div>
+            <div className={styles.totalPrice}>
+              <h3>
+                Final Price:{" "}
+                {dishDetails
+                  ? (dishDetails.price +
+                      cartData.reduce(
+                        (sum, item) => sum + item.price * item.addon,
+                        0
+                      )) *
+                    (dishQuantity || 1)
+                  : 0}
+              </h3>
+            </div>
             <div className={styles.totalPrice}>
               <h3>Total: {totalPrice.toFixed(2)}</h3>
             </div>
