@@ -37,7 +37,7 @@ export default function ForgotPass() {
     // Proceed with API call if validations pass
     try {
       setIsPending(true);
-      await axios.post("http://localhost:3000/api/auth/reset/password", {
+      await axios.post("http://3.6.41.54/api/auth/reset/password", {
         password,
         hash,
       });

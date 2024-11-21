@@ -16,13 +16,13 @@
 
 //     if (userData.role.id == 1) {
 //       // Admin (role.id === 1): Fetch all orders
-//       apiUrl = `http://localhost:3000/api/orders`;
+//       apiUrl = `http://3.6.41.54/api/orders`;
 //     } else if (userData.role.id == 2) {
 //       // Caterer (role.id === 2): Fetch orders for that particular caterer
-//       apiUrl = `http://localhost:3000/api/orders?filters=[{"userId":"${userData.id}"}]`;
+//       apiUrl = `http://3.6.41.54/api/orders?filters=[{"userId":"${userData.id}"}]`;
 //     } else if (userData.role.id == 3) {
 //       // User (role.id === 3): Fetch orders for that particular user
-//       apiUrl = `http://localhost:3000/api/orders?filters=[{"catererId":"${userData.id}"}]`;
+//       apiUrl = `http://3.6.41.54/api/orders?filters=[{"catererId":"${userData.id}"}]`;
 //     }
 //     // Log the URL to verify it's correct
 //     console.log("API URL:", apiUrl);
@@ -158,13 +158,13 @@ const MyOrder = () => {
     // Modify the URL based on user role and add pagination parameters (limit, page)
     if (userData.role.id == 1) {
       // Admin (role.id === 1): Fetch all orders
-      apiUrl = `http://localhost:3000/api/orders?limit=${limit}&page=${page}`;
+      apiUrl = `http://3.6.41.54/api/orders?limit=${limit}&page=${page}`;
     } else if (userData.role.id == 2) {
       // Caterer (role.id === 2): Fetch orders for that particular caterer
-      apiUrl = `http://localhost:3000/api/orders?filters=[{"userId":"${userData.id}"}]&limit=${limit}&page=${page}`;
+      apiUrl = `http://3.6.41.54/api/orders?filters=[{"userId":"${userData.id}"}]&limit=${limit}&page=${page}`;
     } else if (userData.role.id == 3) {
       // User (role.id === 3): Fetch orders for that particular user
-      apiUrl = `http://localhost:3000/api/orders?filters=[{"catererId":"${userData.id}"}]&limit=${limit}&page=${page}`;
+      apiUrl = `http://3.6.41.54/api/orders?filters=[{"catererId":"${userData.id}"}]&limit=${limit}&page=${page}`;
     }
 
     console.log("API URL:", apiUrl);

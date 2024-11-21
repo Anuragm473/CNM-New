@@ -23,7 +23,7 @@ const OrderPage = () => {
   useEffect(() => {
     const fetchCatererData = async () => {
       // try {
-      //   const response = await fetch(`http://localhost:3000/api/caterer/${id}`);
+      //   const response = await fetch(`http://3.6.41.54/api/caterer/${id}`);
       //   const data = await response.json();
       //   setCatererData(data);
       // } catch (error) {
@@ -31,7 +31,7 @@ const OrderPage = () => {
       // }
       try {
         const response = await axiosPrivate.get(
-          `http://localhost:3000/api/caterer/${id}`
+          `http://3.6.41.54/api/caterer/${id}`
         );
         if (response.data) {
           setCatererData(response.data);
