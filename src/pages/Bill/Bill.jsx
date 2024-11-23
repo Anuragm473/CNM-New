@@ -104,7 +104,7 @@ const Bill = () => {
       console.log(myorder);
 
       const response = await axiosPrivate.post(
-        "https://www.caterersnearme.in/api/orders",
+        "https://caterersnearme.in/api/orders",
         myorder
       );
       console.log(response, myorder);

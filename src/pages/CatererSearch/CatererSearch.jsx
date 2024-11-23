@@ -48,14 +48,14 @@ const CatererSearch = () => {
         console.log(lat, lng);
 
         const response = await axios.get(
-          `https://www.caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
+          `https://caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
         );
         if (response.data) {
           setCaterers(response.data);
           setFilteredCaterers(response.data);
         } else {
           const fallbackResponse = await axios.get(
-            "https://www.caterersnearme.in/api/caterer"
+            "https://caterersnearme.in/api/caterer"
           );
           setCaterers(fallbackResponse.data);
           setFilteredCaterers(fallbackResponse.data);
@@ -103,7 +103,7 @@ const CatererSearch = () => {
   const fetchNearbyCaterers = async (lat, lng) => {
     try {
       const response = await axiosPrivate.get(
-        `https://www.caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
+        `https://caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
       );
       console.log(response);
       if (Array.isArray(response.data)) {

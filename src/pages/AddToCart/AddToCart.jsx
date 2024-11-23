@@ -25,7 +25,7 @@
 //   useEffect(() => {
 //     const fetchMenuData = async () => {
 //       try {
-//         const menuResponse = await fetch("https://www.caterersnearme.in//api/menus/");
+//         const menuResponse = await fetch("https://caterersnearme.in//api/menus/");
 //         const menuData = await menuResponse.json();
 //       
 
@@ -38,7 +38,7 @@
 //         }));
 
 //         const dishResponse = await fetch(
-//           `https://www.caterersnearme.in/api/caterer/${catererId}`
+//           `https://caterersnearme.in/api/caterer/${catererId}`
 //         );
 //         const dishData = await dishResponse.json();
 //      
@@ -66,7 +66,7 @@
 //         }
 
 //         // const menuResponse = await axiosPrivate.get(
-//         //   `https://www.caterersnearme.in//api/dishes/${dishId}`
+//         //   `https://caterersnearme.in//api/dishes/${dishId}`
 //         // );
 //         // const menuData = await menuResponse.data;
 //        
@@ -206,7 +206,7 @@ const AddToCart = () => {
           const itemIds = dish.items.map((item) => item.id);
 
           const menuPromises = itemIds.map((id) =>
-            axiosPrivate.get(`https://www.caterersnearme.in/api/menus/${id}`)
+            axiosPrivate.get(`https://caterersnearme.in/api/menus/${id}`)
           );
 
           const menusResponses = await Promise.all(menuPromises);

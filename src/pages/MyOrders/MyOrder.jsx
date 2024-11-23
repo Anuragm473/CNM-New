@@ -16,13 +16,13 @@
 
 //     if (userData.role.id == 1) {
 //       // Admin (role.id === 1): Fetch all orders
-//       apiUrl = `https://www.caterersnearme.in/api/orders`;
+//       apiUrl = `https://caterersnearme.in/api/orders`;
 //     } else if (userData.role.id == 2) {
 //       // Caterer (role.id === 2): Fetch orders for that particular caterer
-//       apiUrl = `https://www.caterersnearme.in/api/orders?filters=[{"userId":"${userData.id}"}]`;
+//       apiUrl = `https://caterersnearme.in/api/orders?filters=[{"userId":"${userData.id}"}]`;
 //     } else if (userData.role.id == 3) {
 //       // User (role.id === 3): Fetch orders for that particular user
-//       apiUrl = `https://www.caterersnearme.in/api/orders?filters=[{"catererId":"${userData.id}"}]`;
+//       apiUrl = `https://caterersnearme.in/api/orders?filters=[{"catererId":"${userData.id}"}]`;
 //     }
 //     // Log the URL to verify it's correct
 //     console.log("API URL:", apiUrl);
@@ -158,13 +158,13 @@ const MyOrder = () => {
     // Modify the URL based on user role and add pagination parameters (limit, page)
     if (userData.role.id == 1) {
       // Admin (role.id === 1): Fetch all orders
-      apiUrl = `https://www.caterersnearme.in/api/orders?limit=${limit}&page=${page}`;
+      apiUrl = `https://caterersnearme.in/api/orders?limit=${limit}&page=${page}`;
     } else if (userData.role.id == 2) {
       // Caterer (role.id === 2): Fetch orders for that particular caterer
-      apiUrl = `https://www.caterersnearme.in/api/orders?filters=[{"userId":"${userData.id}"}]&limit=${limit}&page=${page}`;
+      apiUrl = `https://caterersnearme.in/api/orders?filters=[{"userId":"${userData.id}"}]&limit=${limit}&page=${page}`;
     } else if (userData.role.id == 3) {
       // User (role.id === 3): Fetch orders for that particular user
-      apiUrl = `https://www.caterersnearme.in/api/orders?filters=[{"catererId":"${userData.catererId}"}]&limit=${limit}&page=${page}`;
+      apiUrl = `https://caterersnearme.in/api/orders?filters=[{"catererId":"${userData.catererId}"}]&limit=${limit}&page=${page}`;
     }
 
     console.log("API URL:", apiUrl);

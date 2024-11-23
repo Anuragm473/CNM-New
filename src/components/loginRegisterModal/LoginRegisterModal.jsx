@@ -57,7 +57,7 @@
 //     };
 
 //     try {
-//       const response = await fetch("https://www.caterersnearme.in/api/auth/email/login", {
+//       const response = await fetch("https://caterersnearme.in/api/auth/email/login", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -105,7 +105,7 @@
 //     };
 
 //     try {
-//       const response = await fetch("https://www.caterersnearme.in/api/auth/email/register", {
+//       const response = await fetch("https://caterersnearme.in/api/auth/email/register", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -349,7 +349,7 @@ const LoginRegisterModal = ({
     };
 
     try {
-      const response = await fetch("https://www.caterersnearme.in/api/auth/email/login", {
+      const response = await fetch("https://caterersnearme.in/api/auth/email/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -381,7 +381,7 @@ const LoginRegisterModal = ({
     event.preventDefault();
     try{
       setPending(true)
-    const request=await axios.post('https://www.caterersnearme.in/api/auth/forgot/password',{
+    const request=await axios.post('https://caterersnearme.in/api/auth/forgot/password',{
       email
     })
     setPending(false)
@@ -423,7 +423,7 @@ const LoginRegisterModal = ({
     };
 
     try {
-      const response = await fetch("https://www.caterersnearme.in/api/auth/email/register", {
+      const response = await fetch("https://caterersnearme.in/api/auth/email/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

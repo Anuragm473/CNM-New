@@ -31,7 +31,7 @@ const AddToCart2 = () => {
           const itemIds = dish.items.map((item) => item.id);
 
           const menuPromises = itemIds.map((id) =>
-            axiosPrivate.get(`https://www.caterersnearme.in/api/menus/${id}`)
+            axiosPrivate.get(`https://caterersnearme.in/api/menus/${id}`)
           );
 
           const menusResponses = await Promise.all(menuPromises);
