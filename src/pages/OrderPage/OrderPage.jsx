@@ -23,7 +23,7 @@ const OrderPage = () => {
   useEffect(() => {
     const fetchCatererData = async () => {
       // try {
-      //   const response = await fetch(`http://3.6.41.54/api/caterer/${id}`);
+      //   const response = await fetch(`https://www.caterersnearme.in/api/caterer/${id}`);
       //   const data = await response.json();
       //   setCatererData(data);
       // } catch (error) {
@@ -31,7 +31,7 @@ const OrderPage = () => {
       // }
       try {
         const response = await axiosPrivate.get(
-          `http://3.6.41.54/api/caterer/${id}`
+          `https://www.caterersnearme.in/api/caterer/${id}`
         );
         if (response.data) {
           setCatererData(response.data);
