@@ -298,7 +298,8 @@ const LoginRegisterModal = ({
   const [lastName, setLastName] = useState(""); // State for last name input (registration)
   const [phone, setPhone] = useState(""); // State for phone input (registration)
   const [role, setRole] = useState("USER"); // State to select between User or Caterer role
-  const [confirmPassword, setConfirmPassword] = useState(""); // State for confirm password input (registration)
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordToggle,setPasswordToggle]=useState(false)
   const [pending,setPending]=useState(false)
   const { setIsCaterer } = useContext(CatererContext);
 
@@ -483,12 +484,13 @@ const LoginRegisterModal = ({
             <div className={styles.formGroup}>
               <label>Password</label>
               <input
-                type="password"
+                type={passwordToggle?'text':'password'}
                 placeholder="Password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <div className={styles.toggle} onClick={()=>setPasswordToggle(prev=>!prev)}>{passwordToggle?<ion-icon name="eye-off-outline"></ion-icon>:<ion-icon name="eye-outline"></ion-icon>}</div>
             </div>
             <a style={{color:"blue",cursor:"pointer"}} onClick={() => setIsLogin("Forgot")}>Forgot Password?</a>
             <button type="submit" className={styles.submitButton}>

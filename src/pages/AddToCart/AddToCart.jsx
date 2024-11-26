@@ -192,7 +192,7 @@ const AddToCart = () => {
   const [duplicate,setDuplicate]=useState([])
 
   const navigate = useNavigate();
-  const cartData=JSON.parse(localStorage.getItem("cartData"))
+  const cartData=JSON.parse(localStorage.getItem(`${dishId}`))
 
   useEffect(() => {
     
@@ -227,7 +227,7 @@ const AddToCart = () => {
             if (menu.items && menu.items.length > 0) {
               currentDishes = menu.items.flatMap((menuItem) => [
                 ...menuItem.items,
-              ]);
+              ]).filter(item=>item!='-');
             }
 
             const currentDishesObject = {
@@ -283,7 +283,7 @@ const AddToCart = () => {
     );
     setSelectedDishes(categoryData ? categoryData.dishes : []);
 
-    localStorage.setItem("cartData", JSON.stringify(storageObject));
+    localStorage.setItem(dishId, JSON.stringify(storageObject));
   }, [storageObject, selectedCategory]);
 
   const handleCategorySelect = (category) => {
@@ -352,6 +352,7 @@ const AddToCart = () => {
           selectedCategory={selectedCategory}
         />
         <div className={styles.accordionContainer}>
+        <div className={styles.steps}>Step-3</div>
           <h3>Preview Your Order</h3>
           <Accordion data={storageObject} />
         </div>

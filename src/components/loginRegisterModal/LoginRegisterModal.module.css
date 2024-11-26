@@ -25,7 +25,12 @@
   justify-content: center;
   align-items: center;
 }
-
+.toggle{
+  position:absolute;
+  right:7%;
+  font-size:1.2rem;
+  bottom:29%;
+}
 .button:hover {
   background-color: #cf6d1a;
 }
@@ -142,6 +147,7 @@
 .formGroup {
   margin-bottom: 15px;
   max-height: 50vh;
+  display:relative;
 }
 
 .formGroup label {

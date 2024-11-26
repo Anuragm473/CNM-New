@@ -174,6 +174,9 @@ const MyOrder = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched Orders:", data);
+        if(userData.role.id==1){
+        setOrders(data.data.reverse());
+        }
         setOrders(data.data);
         setTotalPages(data.totalPages || 1); // Assuming API returns total pages
       })

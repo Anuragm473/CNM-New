@@ -29,6 +29,8 @@ const SideBar = ({
 
   return (
     <div className={styles.sidebar}>
+      <div className={styles.steps}>Step-1</div>
+      <div className={styles.container}>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <IncreaseQuantity
         duplicate={duplicate}
@@ -62,6 +64,7 @@ const SideBar = ({
           </li>
         ))}
       </ul>
+      </div>
     </div>
   );
 };

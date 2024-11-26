@@ -1,8 +1,17 @@
 .dishSelection {
   width: 40%;
-  padding: 1rem;
+  padding: 10px 0 0 0;
 }
-
+.container{
+  padding:10px;
+}
+.steps{
+  width:100%;
+  font-size:1.6rem;
+  font-weight:900;
+  padding:10px 0;
+  border-bottom:1px solid #888;
+}
 .dishItem {
   margin: 10px 0;
   display: -webkit-box;

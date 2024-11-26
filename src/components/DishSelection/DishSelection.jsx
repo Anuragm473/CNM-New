@@ -14,6 +14,8 @@ const DishSelection = ({
 
   return (
     <div className={styles.dishSelection}>
+      <div className={styles.steps}>Step-2</div>
+      <div className={styles.container}>
       <h3>Choose your dish</h3>
       {dishes.map((dish, index) => (
         <div key={index} className={styles.dishItem}>
@@ -32,6 +34,7 @@ const DishSelection = ({
           <label htmlFor={`dish-${index}`}>{dish}</label>
         </div>
       ))}
+      </div>
     </div>
   );
 };

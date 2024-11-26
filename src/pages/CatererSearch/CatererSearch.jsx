@@ -28,6 +28,7 @@ const CatererSearch = () => {
   const [filteredCaterers, setFilteredCaterers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("default");
+  const [isPureVeg, setIsPureVeg] = useState(false);
   const [foodType, setFoodType] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -50,15 +51,15 @@ const CatererSearch = () => {
         const response = await axios.get(
           `https://www.caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
         );
-        if (response.data) {
+        if (response.data.length > 0) {
           setCaterers(response.data);
           setFilteredCaterers(response.data);
         } else {
           const fallbackResponse = await axios.get(
             "https://www.caterersnearme.in/api/caterer"
           );
-          setCaterers(fallbackResponse.data);
-          setFilteredCaterers(fallbackResponse.data);
+          setCaterers(fallbackResponse.data.data);
+          setFilteredCaterers(fallbackResponse.data.data);
         }
       } catch (error) {
         console.error("Error fetching caterers:", error);
@@ -78,8 +79,11 @@ const CatererSearch = () => {
 
     fetchCaterers();
     loadGoogleMapsScript();
-
   }, []);
+
+  const handleToggle = () => {
+    setIsPureVeg(!isPureVeg);
+  };
 
   const initAutocomplete = () => {
     autocompleteRef.current = new window.google.maps.places.Autocomplete(
@@ -105,7 +109,6 @@ const CatererSearch = () => {
       const response = await axiosPrivate.get(
         `https://www.caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
       );
-      console.log(response);
       if (Array.isArray(response.data)) {
         setCaterers(response.data);
         setFilteredCaterers(response.data);
@@ -120,7 +123,7 @@ const CatererSearch = () => {
 
   const handleSearch = () => {
     if (isAddressSearch) {
-      setIsAddressSearch(false);
+      setIsAddressSearch(true);
     } else {
       handleFilterAndSort();
     }
@@ -150,6 +153,16 @@ const CatererSearch = () => {
     } else if (sortOrder === "popularity") {
       filtered.sort((a, b) => b.minPrice - a.minPrice);
     }
+    if(isPureVeg===true){
+      filtered=filtered.filter(
+        (item) => !item.cateringType.includes('nonVeg')
+      );
+      console.log(filtered)
+    }
+    else if(isPureVeg===false){
+      filtered=caterers
+      console.log(filtered)
+    }
 
     setFilteredCaterers(filtered);
     setCurrentPage(1);
@@ -159,7 +172,7 @@ const CatererSearch = () => {
     if (!isAddressSearch) {
       handleFilterAndSort();
     }
-  }, [searchQuery, sortOrder, foodType, caterers]);
+  }, [searchQuery, sortOrder, foodType, caterers,isPureVeg]);
 
   const handleDetailClick = (id) => {
     navigate(`/caterer/${id}`);
@@ -189,7 +202,7 @@ const CatererSearch = () => {
             <input
               id="unified-search-input"
               type="text"
-              placeholder="Enter address or filter caterers"
+              placeholder="Enter Event's Location"
               className={styles.searchInput}
               value={searchQuery}
               onChange={(e) => {
@@ -237,7 +250,7 @@ const CatererSearch = () => {
                 >
                   <option value="all">All</option>
                   <option value="north-indian">North Indian</option>
-                  <option value="south-indian">South Indian</option>
+                  <option value="south indian">South Indian</option>
                   <option value="gujarati">Gujarati</option>
                   <option value="chinese">Chinese</option>
                   <option value="kathiyawadi">Kathiyawadi</option>
@@ -247,6 +260,18 @@ const CatererSearch = () => {
                   <option value="Mexican">Mexican</option>
                 </select>
               </div>
+              <div className={`${styles.filterItem} ${styles.foodType}`}>
+              <div className={styles.containerToggle}>
+                <button
+                  onClick={handleToggle}
+                  className={`${styles.buttonToggle} ${
+                    isPureVeg ? styles.noFilter:styles.pureVeg 
+                  }`}
+                >
+                  {isPureVeg ? "Pure Veg" : "Veg Mode"}
+                </button>
+              </div>
+            </div>
             </div>
             <div className={styles.resultsCount}>
               Showing {indexOfFirstItem + 1} -{" "}

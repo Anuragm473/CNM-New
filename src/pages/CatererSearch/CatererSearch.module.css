@@ -271,10 +271,34 @@ select:hover {
 
 .catererUpper {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
+.buttonToggle {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.noFilter {
+  background-color: gray;
+}
+
+.pureVeg {
+  background-color: green;
+}
+
+.containerToggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
 
 .catererUpperLeft{
   padding: 0.2rem;

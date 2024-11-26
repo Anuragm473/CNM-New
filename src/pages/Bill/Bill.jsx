@@ -20,8 +20,8 @@ const Bill = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cartData"));
     const storedDishDetails = JSON.parse(localStorage.getItem("dishDetails"));
+    const cart = JSON.parse(localStorage.getItem(`${storedDishDetails.id}`));
 
     if (cart) {
       setCartData(cart);

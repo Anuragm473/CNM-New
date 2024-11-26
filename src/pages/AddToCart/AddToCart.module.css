@@ -7,13 +7,23 @@
 
 .accordionContainer {
   width: 40%;
+  padding-top:10px;
+}
+.accordionContainer>h3{
+  padding-top:10px;
 }
 
 .addtocart {
   display: flex;
-  padding: 1rem;
+  padding: 0 1rem 0 1rem;
 }
-
+.steps{
+  width:100%;
+  font-size:1.6rem;
+  font-weight:900;
+  padding:10px 0;
+  border-bottom:1px solid #888;
+}
 .previewOrderButton {
   text-align: right;
   padding: 1rem;
