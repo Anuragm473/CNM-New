@@ -46,11 +46,11 @@ const TestimonialSection = () => {
         </div>
         <div className={styles.gallery}>
         <video
-        height="800"
         controls
         autoPlay
         muted
         loop
+        className={styles.videoTag}
         style={{ borderRadius: "10px" }}
       >
         <source src={video2} type="video/mp4" />

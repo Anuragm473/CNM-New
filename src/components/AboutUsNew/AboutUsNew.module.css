@@ -92,11 +92,13 @@
     gap: 2rem;
   }
   .aboutUsRight {
-    width: 70%;
+    width: 80%;
     padding: 0;
+    display:flex;
+    justify-content:center;
   }
   .aboutUsLeft {
-    width: 100%;
+    width: 80%;
     padding: 0;
   }
   .locationInput {
@@ -109,5 +111,35 @@
   }
   .container{
     padding-top:1.3rem;
+  }
+  .aboutUsImageContainer{
+    height:25rem;
+  }
+  .aboutUsImage{
+    height:100%;
+  }
+}
+@media(max-width:450px){
+  .container>h1{
+    font-size:1.7rem;
+  }
+  .container{
+    padding-bottom:3rem;
+  }
+  .aboutUsRight{
+    width:100%;
+  }
+  .aboutUsImageContainer{
+    height:18rem;
+    padding:1rem 0.5rem;
+  }
+  .aboutUsSection{
+    .padding:0;
+  }
+  .aboutUsLeft>h1{
+    font-size:1.6rem;
+  }
+  .aboutUsLeft>p{
+    font-size:1rem;
   }
 }

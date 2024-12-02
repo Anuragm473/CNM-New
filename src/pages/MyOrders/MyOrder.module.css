@@ -152,3 +152,26 @@ h2{
   margin-bottom: 0.8rem;
   padding: 0;
 }
+@media(max-width:1050px){
+  .orderCard{
+    width:70%;
+  }
+}
+@media(max-width:864px){
+  .orderCard{
+    width:80%;
+  }
+  .catererName{
+    font-size:1.4rem;
+    font-weight:500;
+  }
+}
+@media(max-width:718px){
+  .orderCard{
+    width:90%;
+  }
+  .catererName{
+    font-size:1.2rem;
+    font-weight:500;
+  }
+}

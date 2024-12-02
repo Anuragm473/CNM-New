@@ -185,7 +185,17 @@
     pointer-events: none;
   }
 }
-@media(max-width:840px){
+@media(max-width:1366px){
+  .primaryHeader{
+    font-size:1.7rem;
+  }
+}
+@media(max-width:1200px){
+  .navLinks2{
+    gap:1.2rem;
+  }
+}
+@media(max-width:1040px){
   .navLinks2{
     display:none;
   }
@@ -195,7 +205,13 @@
   .hamburger{
     display:block;
   }
+  .navLinks1>.logoNumber{
+    margin:0;
+    height:1rem;
+  }
+
 }
+
 @media (max-width: 450px) {
   .logoText {
     font-size: 16px;
@@ -203,5 +219,8 @@
   }
   .navbar{
     padding:0.2rem 1.2rem;
+  }
+  .logoText{
+    margin-left:0;
   }
 }

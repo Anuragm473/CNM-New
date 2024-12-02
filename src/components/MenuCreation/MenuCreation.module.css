@@ -76,3 +76,15 @@
     font-weight: 500;
     width: 25%;
 }
+@media(max-width:756px){
+    .addMenuButton,.removeMenuButton{
+        padding:10px 10px;
+        width:40%;
+    }
+}
+@media(max-width:756px){
+    .addMenuButton,.removeMenuButton{
+        padding:10px 10px;
+        width:60%;
+    }
+}

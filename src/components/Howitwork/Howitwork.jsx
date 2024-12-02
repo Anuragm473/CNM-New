@@ -13,7 +13,7 @@ const Howitwork = () => {
         </div>
         <div className={`${styles.grid} ${styles.grid3Cols} ${styles.gridStart}`}>
           {/* Step 1 */}
-          <div className={styles.box}>
+          <div className={styles.box1}>
             <div className={styles.grid3c}>
             <p className={styles.stepNumber}>01</p>
             <h3 className={styles.headingTertiary}>Navigate to “Find Caterers” at the top of our page.</h3>
@@ -30,7 +30,7 @@ const Howitwork = () => {
             </div>
           </div>
           {/* Step 2 */}
-          <div className={styles.box}>
+          <div className={styles.box2}>
 
             <div className={styles.stepImgBox}>
               <img
@@ -48,7 +48,7 @@ const Howitwork = () => {
             </div>
           </div>
           {/* Step 3 */}
-          <div className={styles.box}>
+          <div className={styles.box3}>
             
             <div className={styles.grid3c}>
             <p className={styles.stepNumber}>03</p>
@@ -65,7 +65,7 @@ const Howitwork = () => {
               />
             </div>
           </div>
-          <div className={styles.box}>
+          <div className={styles.box4}>
 
             <div className={styles.stepImgBox}>
               <img

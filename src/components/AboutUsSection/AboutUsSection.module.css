@@ -88,10 +88,17 @@
 
 @media screen and (max-width: 968px) {
   .aboutUsSection {
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    padding-bottom:5rem;
+  }
+  .primaryHeader{
+    font-size:2rem;
+  }
+  .aboutUsLeft{
+    width:80%;
   }
   .aboutUsRight {
     width: 100%;
@@ -102,7 +109,6 @@
   }
   .aboutUsImage1{
     width:70%;
-    height:50;
   }
   .aboutUsImageContainer{
     display:flex;
@@ -110,3 +116,27 @@
     justify-content:center;
   }
 }
+@media(max-width:614px){
+  .primaryHeader{
+    font-size:1.6rem;
+  }
+  .aboutUsImage1{
+    width:80%;
+  }
+}
+@media(max-width:450px){
+  .aboutUsLeft{
+    padding:0.5rem;
+  }
+  .primaryHeader{
+    font-size:1.4rem;
+  }
+  .description{
+    font-size:1rem;
+  }
+  .aboutUsBtn{
+    padding:0.7rem 1.4rem;
+    font-size:1rem;
+  }
+}
+

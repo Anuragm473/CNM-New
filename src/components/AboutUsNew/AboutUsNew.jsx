@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./AboutUsNew.module.css";
-import SangeetDish from "../../assets/images/SangeetDish.jpeg";
 import { useNavigate } from "react-router-dom";
-import caterer2 from '../../assets/images/caterer2.jpg'
 import aboutusimg from '../../assets/images/aboutusimg.jpeg'
 
 const AboutUsNew = () => {

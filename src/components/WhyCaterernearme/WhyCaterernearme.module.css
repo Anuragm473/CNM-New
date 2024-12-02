@@ -83,17 +83,17 @@
   
   @media screen and (max-width: 968px) {
     .aboutUsSection {
-      flex-direction: column;
+      flex-direction: column-reverse;
       justify-content: center;
       align-items: center;
       gap: 2rem;
     }
     .aboutUsRight {
-      width: 70%;
+      width: 80%;
       padding: 0;
     }
     .aboutUsLeft {
-      width: 100%;
+      width: 80%;
       padding: 0;
     }
     .locationInput {
@@ -106,5 +106,23 @@
     }
     .container{
       padding-top:1.3rem;
+    }
+  }
+  @media(max-width:480px){
+    .container>h1{
+      font-size:1.8rem;
+    }
+    .container{
+      padding-top:3rem;
+    }
+    .aboutUsLeft>p{
+      font-size:1rem;
+    }
+    .aboutUsImageContainer{
+      width:100%;
+      padding:0.5rem 0;
+    }
+    .aboutUsLeft{
+      width:90%;
     }
   }

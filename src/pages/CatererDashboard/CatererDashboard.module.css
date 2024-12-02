@@ -47,3 +47,14 @@
   background-color: #ff7a45;
   color: #fff;
 }
+@media(max-width:550px){
+  .catererDashboard{
+    flex-direction:column;
+    gap:1rem;
+    min-height:0;
+  }
+  .catererDashLeft,.catererDashRight{
+    width:100%;
+    padding:0 0 1.5rem 0;
+  }
+}

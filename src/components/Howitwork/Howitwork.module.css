@@ -21,10 +21,9 @@
     flex-direction:column;
     gap:12rem;
   }
-  .box{
+  .box1,.box2,.box3,.box4{
     display:flex;
     justify-content:space-between;
-    width:80rem;
     gap:8rem;
   }
   .grid3c{
@@ -122,4 +121,79 @@
   .stepImg:hover{
     transform: scale(1.3);
   }
-  
+@media(max-width:1276px){
+  .headingTertiary{
+    font-size:1.6rem;
+  }
+  .stepImgBox{
+    width:35rem;
+  }
+  .box1,.box2,.box3,.box4{
+    gap:3rem;
+    max-width:70rem;
+  }
+  .stepNumber{
+    font-size:4.8rem;
+  }
+}
+@media(max-width:1100px){
+  .headingTertiary{
+    font-size:1.4rem;
+  }
+  .stepImgBox{
+    width:32rem;
+  }
+  .box1,.box2,.box3,.box4{
+    gap:2.5rem;
+  }
+  .stepNumber{
+    font-size:4.5rem;
+  }
+}
+@media(max-width:1050px){
+  .grid3Cols{
+    gap:8rem;
+  }
+}
+@media(max-width:680px){
+  .box1,.box2,.box3,.box4{
+    flex-direction:column-reverse;
+    gap:2rem;
+  }
+  .box2,.box4{
+    flex-direction:column;
+  }
+  .grid3Cols{
+    gap:10rem;
+  }
+  .stepNumber{
+    font-size:3.6rem;
+  }
+  .headingTertiary{
+    font-size:1.2rem;
+  }
+}
+@media(max-width:544px){
+  .stepImgBox{
+    width:25rem;
+  }
+  .container{
+    padding:0 2rem;
+  }
+}
+@media(max-width:415px){
+  .stepImgBox{
+    width:20rem;
+  }
+  .grid{
+    gap:7rem;
+  }
+  .headingSecondary{
+    font-size:1.35rem;
+    margin-bottom:0.5rem;
+    margin-top:2rem;
+  }
+  .container{
+    padding:0 1rem;
+  }
+}
