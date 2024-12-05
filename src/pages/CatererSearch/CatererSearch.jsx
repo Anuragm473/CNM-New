@@ -48,7 +48,6 @@ const CatererSearch = () => {
     const fetchCaterers = async () => {
       try {
         const { lat, lng } = await getCurrentUserLocation();
-        console.log(lat, lng);
 
         const response = await axios.get(
           `http://localhost:3000/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
@@ -117,7 +116,6 @@ const CatererSearch = () => {
     setIsAddressSearch(true);
 
     const { lat, lng } = addressObject.geometry.location;
-    console.log(`lat:${lat()},lng:${lng()}`);
     fetchNearbyCaterers(lat(), lng());
   };
 
@@ -271,15 +269,16 @@ const CatererSearch = () => {
                   onChange={(e) => setFoodType(e.target.value)}
                 >
                   <option value="all">All</option>
-                  <option value="north-indian">North Indian</option>
-                  <option value="south indian">South Indian</option>
-                  <option value="gujarati">Gujarati</option>
-                  <option value="chinese">Chinese</option>
-                  <option value="kathiyawadi">Kathiyawadi</option>
-                  <option value="punjabi">Punjabi</option>
-                  <option value="jain">Jain</option>
-                  <option value="kokani">Kokani</option>
+                  <option value="North Indian">North Indian</option>
+                  <option value="South Indian">South Indian</option>
+                  <option value="Gujarati">Gujarati</option>
+                  <option value="Chinese">Chinese</option>
+                  <option value="Kathiyawadi">Kathiyawadi</option>
+                  <option value="Punjabi">Punjabi</option>
+                  <option value="Jain">Jain</option>
+                  <option value="Kokani">Kokani</option>
                   <option value="Mexican">Mexican</option>
+                  <option value="Maharashtrian">Maharashtrian</option>
                 </select>
               </div>
               <div className={`${styles.filterItem} ${styles.foodType}`}>

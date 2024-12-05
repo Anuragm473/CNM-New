@@ -142,13 +142,11 @@ const Bill = () => {
           id: 0,
         },
       };
-      console.log(myorder);
 
       const response = await axiosPrivate.post(
         "http://localhost:3000/api/orders",
         myorder
       );
-      console.log(response, myorder);
       toast('Order Placed Successfully')
       navigate("/my-orders");
     } catch (error) {

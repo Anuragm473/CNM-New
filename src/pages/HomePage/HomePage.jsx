@@ -15,7 +15,6 @@ import TestimonialSection from "../../components/TestimonialSecton/TestimonialSe
 const HomePage = () => {
   const { user } = useAuth();
 
-  console.log(user);
 
   if (user.user) {
     if (user.user.role && user.user.role.id === "3") {

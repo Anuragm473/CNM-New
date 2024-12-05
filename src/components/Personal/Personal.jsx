@@ -7,13 +7,27 @@ import { formatDate } from "../../../utility";
 
 export default function Personal({ setCurrentStep }) {
   const { catererId, setCatererId } = useContext(CatererContext);
-  const [initial,setInitial]=useState()
+  const [initial, setInitial] = useState();
   const [serviceLocat, setServiceLocat] = useState([
     {
       location: "",
       PinCode: 0,
     },
   ]);
+
+  const cuisinesOptions = [
+    "North Indian",
+    "South Indian",
+    "Maharashtrian",
+    "Chinese",
+    "Italian",
+    "Gujarati",
+    "Kathiyawadi",
+    "Punjabi",
+    "Jain",
+    "Kokani",
+    "Mexican"
+  ]; // Example options
 
   const [formData, setFormData] = useState({
     name: "",
@@ -42,7 +56,6 @@ export default function Personal({ setCurrentStep }) {
 
   const addressInputRef = useRef(null);
 
-  // Function to dynamically load Google Maps API
   const loadGoogleMapsScript = () => {
     if (!window.google) {
       const script = document.createElement("script");
@@ -61,7 +74,7 @@ export default function Personal({ setCurrentStep }) {
         addressInputRef.current,
         {
           types: ["geocode"],
-          componentRestrictions: { country: "in" }, // Optional: Restrict to a country
+          componentRestrictions: { country: "in" },
         }
       );
 
@@ -83,7 +96,7 @@ export default function Personal({ setCurrentStep }) {
 
   useEffect(() => {
     loadGoogleMapsScript();
-  }, []); // Load only once when the component mounts
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,112 +112,23 @@ export default function Personal({ setCurrentStep }) {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    setFormData((prevState) => {
+      const updatedCuisines = checked
+        ? [...prevState.cuisinesOffered, value]
+        : prevState.cuisinesOffered.filter((cuisine) => cuisine !== value);
+      return { ...prevState, cuisinesOffered: updatedCuisines };
+    });
+  };
+
   useEffect(() => {
     const storage = localStorage.getItem("catererData");
     if (catererId === "" && storage) {
       setCatererId(JSON.parse(storage));
     }
   }, [catererId]);
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (user) {
-    const catererId = user.catererId;
-    setCatererId(catererId);
-  }
 
-  const handleCheckboxChange = (e) => {
-    const { value, checked } = e.target;
-
-    if (checked) {
-      setFormData((prevState) => {
-        const isAlreadySelected = prevState.cateringType.includes(value);
-        if (!isAlreadySelected) {
-          return {
-            ...prevState,
-            cateringType: [...prevState.cateringType, value],
-          };
-        }
-
-        return prevState;
-      });
-    } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        cateringType: prevState.cateringType.filter((type) => type !== value),
-      }));
-    }
-  };
-
-  const handleChangeLoc = (e) => {
-    setServiceLocat({ ...serviceLocat, location: e.target.value });
-  };
-
-  const handleChangePin = (e) => {
-    setServiceLocat({ ...serviceLocat, PinCode: e.target.value });
-  };
-  const getUpdatedFields = (formData, initialState) => {
-    let updatedFields = {};
-    Object.keys(formData).forEach((key) => {
-      // If the current formData value is different from the initial value, include it in updatedFields
-      if (formData[key] !== "name") {
-        if (
-          JSON.stringify(formData[key]) !== JSON.stringify(initialState[key])
-        ) {
-          updatedFields[key] = formData[key];
-        }
-      }
-    });
-    return updatedFields;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const typeofcusin = Array.isArray(formData.cuisinesOffered);
-    if (!typeofcusin) {
-      formData.cuisinesOffered = formData?.cuisinesOffered?.split(",");
-    }
-    
-
-    try {
-      const user = JSON.parse(localStorage.getItem("user"));
-      const catererid = user.catererId;
-      if (!catererid) {
-        const response = await axios.post("http://localhost:3000/api/caterer", {
-          ...formData,
-        });
-        
-        setCatererId(response.data.id);
-        const userObj = JSON.parse(localStorage.getItem("user"));
-        const userId = userObj.id;
-
-        const catererIdSet = await axios.patch(
-          `http://localhost:3000/api/users/${userId}`,
-          { catererId: response.data.id }
-        );
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...catererIdSet.data, catererId: response.data.id })
-        );
-        localStorage.setItem("catererData", JSON.stringify(response.data.id));
-        toastMessage("Caterer registered successfully!");
-        setCatererId(response.data.id);
-        localStorage.setItem("catererData", JSON.stringify(response.data.id));
-        setCurrentStep(2);
-      } else {
-        const updatedFields = getUpdatedFields(formData, initial);
-        const response = await axios.patch(
-          `http://localhost:3000/api/caterer/${catererid}`,
-          {
-            ...updatedFields
-          }
-        );
-        setCatererId(response.data.id);
-        toastMessage("updated");
-        setCurrentStep(2);
-      }
-    } catch (error) {
-      console.error("Error submitting form", error);
-    }
-  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -214,66 +138,10 @@ export default function Personal({ setCurrentStep }) {
           const response = await axios.get(
             `http://localhost:3000/api/caterer/${catererid}`
           );
-          let {
-            name,
-            gstNo,
-            address,
-            mobileNo,
-            extraInformation,
-            maxPrice,
-            minPrice,
-            cateringType,
-            maximumServingCapacity,
-            inServiceFrom,
-            cuisinesOffered,
-            specialistIn,
-            googleLocation,
-            dishes,
-            serviceLocation,
-            review,
-            status,
-          } = response.data;
-          inServiceFrom = formatDate(inServiceFrom);
-          setInitial(JSON.parse(JSON.stringify({
-            name,
-            gstNo,
-            address,
-            mobileNo,
-            extraInformation,
-            maxPrice,
-            minPrice,
-            cateringType,
-            maximumServingCapacity,
-            inServiceFrom,
-            cuisinesOffered,
-            specialistIn,
-            googleLocation,
-            dishes,
-            serviceLocation,
-            review,
-            status
-          })))
-
-          setFormData((prev) => ({
-            ...prev,
-            name,
-            gstNo,
-            address,
-            mobileNo,
-            extraInformation,
-            maxPrice,
-            minPrice,
-            cateringType,
-            inServiceFrom,
-            maximumServingCapacity,
-            cuisinesOffered,
-            specialistIn,
-            googleLocation,
-            dishes,
-            serviceLocation,
-            review,
-            status
-          }));
+          let data = response.data;
+          data.inServiceFrom = formatDate(data.inServiceFrom);
+          setInitial(JSON.parse(JSON.stringify(data)));
+          setFormData((prev) => ({ ...prev, ...data }));
         }
       } catch (error) {
         console.error("Error fetching caterer data:", error);
@@ -282,6 +150,33 @@ export default function Personal({ setCurrentStep }) {
 
     fetchData();
   }, [catererId]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const user=JSON.parse(localStorage.getItem('user'))
+      const {catererId}=user
+      const updatedFields = getUpdatedFields(formData, initial);
+      const response = await axios.patch(
+        `http://localhost:3000/api/caterer/${catererId}`,
+        updatedFields
+      );
+      toastMessage("Updated successfully!");
+      setCurrentStep(2);
+    } catch (error) {
+      console.error("Error submitting form", error);
+    }
+  };
+
+  const getUpdatedFields = (formData, initialState) => {
+    let updatedFields = {};
+    Object.keys(formData).forEach((key) => {
+      if (JSON.stringify(formData[key]) !== JSON.stringify(initialState[key])) {
+        updatedFields[key] = formData[key];
+      }
+    });
+    return updatedFields;
+  };
 
   return (
     <form className={styles.catererForm} onSubmit={handleSubmit}>
@@ -369,16 +264,21 @@ export default function Personal({ setCurrentStep }) {
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="cuisinesOffered">Cuisines Offered</label>
-        <input
-          type="text"
-          id="cuisinesOffered"
-          name="cuisinesOffered"
-          placeholder="Ex: North Indian, South Indian, Maharashtrian"
-          value={formData.cuisinesOffered}
-          onChange={handleChange}
-        />
-      </div>
+        <label>Cuisines Offered</label>
+        <div className={styles.checkboxGroupcusine}>
+          {cuisinesOptions.map((cuisine) => (
+            <div key={cuisine} className={styles.checkboxItemcusine}>
+              <input
+                type="checkbox"
+                value={cuisine}
+                onChange={handleCheckboxChange}
+                checked={formData.cuisinesOffered.includes(cuisine)}
+              />
+              <label>{cuisine}</label>
+            </div>
+          ))}
+        </div>
+        </div>
 
       <div className={styles.formGroup}>
         <label htmlFor="inServiceFrom">In Service From</label>

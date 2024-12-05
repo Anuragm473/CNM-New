@@ -38,13 +38,11 @@ const AddToCart2 = () => {
 
           const menus = menusResponses.map((response) => response.data);
           setMenusData(menus);
-          console.log(menus, "menus");
 
           const categoriesArray = [];
 
           const transformedStorageObject = dish.items.map((item) => {
             const menu = menus.find((menu) => menu.id === item.id) || {};
-            console.log(menu, "menu");
             let currentDishes = [];
             categoriesArray.push(item.item);
 
@@ -58,8 +56,6 @@ const AddToCart2 = () => {
               name: menu.name,
               dishes: currentDishes,
             };
-
-            // console.log(currentDishesObject, "current dishes object");
 
             const isDuplicate = allDishes.some(
               (dish) =>
@@ -83,14 +79,13 @@ const AddToCart2 = () => {
           });
 
           setStorageObject(transformedStorageObject);
-          console.log(storageObject, "storage object");
           setCategories(categoriesArray);
           if (categoriesArray.length > 0) {
             setSelectedCategory(categoriesArray[0]);
           }
         }
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
 
@@ -144,13 +139,11 @@ const AddToCart2 = () => {
     }
   }
 
-  //   console.log(allDishes, "all dishes");
 
   const filteredDishes =
     allDishes.find((section) => section.name === selectedCategory)?.dishes ||
     [];
 
-  //   console.log(filteredDishes, "filtered dishes");
 
   return (
     <div className={styles.addtocartContainer}>

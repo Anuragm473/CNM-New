@@ -1,13 +1,3 @@
-// import React from 'react'
-// import styles from './SelectedItems.module.css'
-
-// export const SelectedItems = () => {
-//   return (
-//     <div className={styles.SelectedItems}>SelectedItems</div>
-//   )
-// }
-
-
 import React from 'react';
 import styles from './SelectedItems.module.css';
 

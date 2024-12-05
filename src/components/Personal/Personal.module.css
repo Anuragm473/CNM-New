@@ -66,6 +66,29 @@ textarea:focus {
   grid-column: 1 / -1;
 }
 
+.checkboxGroupcusine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.checkboxItemcusine {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkboxItemcusine input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.checkboxItemcusine label {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 .submitButton:hover {
   background-color: #e65c00;
 }

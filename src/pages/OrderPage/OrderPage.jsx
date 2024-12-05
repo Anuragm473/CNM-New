@@ -23,13 +23,6 @@ const OrderPage = () => {
 
   useEffect(() => {
     const fetchCatererData = async () => {
-      // try {
-      //   const response = await fetch(`http://localhost:3000/api/caterer/${id}`);
-      //   const data = await response.json();
-      //   setCatererData(data);
-      // } catch (error) {
-      //   console.error("Error fetching caterer data:", error);
-      // }
       try {
         const response = await axiosPrivate.get(
           `http://localhost:3000/api/caterer/${id}`
