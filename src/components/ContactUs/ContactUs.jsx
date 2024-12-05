@@ -1,43 +1,118 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './ContactUs.module.css';
+import emailjs from 'emailjs-com';
+import { toast } from 'react-toastify';
 
 export default function ContactUs() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    contact:"",
+    message: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const templateParams = {
+      name:`${formData.firstName} ${formData.lastName}`,
+      email:formData.email,
+      message:formData.message,
+      contact:formData.contact
+    };
+
+    emailjs.send(import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      templateParams,
+      import.meta.env.VITE_EMAILJS_USER_ID)
+      .then((response) => {
+        console.log('Email sent successfully!', response.status, response.text);
+        toast('Message sent successfully!'); // Notify user
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          contact:"",
+          message: "",
+        });
+      })
+      .catch((error) => {
+        toast('Something went wrong, please try again.');
+      });
+  };
+
   return (
-    <div className={styles.contactUsContainer}>
-      <h1 className={styles.heading}>Contact Us</h1>
-      <form className={styles.contactForm}>
-        <div className={styles.formGroup}>
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Enter your name" required />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="Enter your email" required />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="contactNumber">Contact Number</label>
+    <>
+    <h1 className={styles.heading}>Contact Us</h1>
+    <div className={styles.container}>
+      <div className={styles.description}>
+        <p className={styles.paragraph}>Caterersnearme.in is a one stop solution for all your catering needs. From small get-togethers to weddings we cover all your precious occasions. Today with more than 25 registered caterers, we allow you to compare, taste, order, rate and review your experience.</p>
+
+        <p className={styles.paragraph}>Meals starting at Rs 99/- Per Person</p>
+
+        <p className={styles.paragraph}>For Orders and Enquires Call or Whatsapp us on +91 9321291563 or fill the form below.</p>
+
+          <p className={styles.paragraph}>Looking forward to providing you a delightful experience!</p>
+      </div>
+      <div className={styles.formContainer}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.row}>
+            <input
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleInputChange}
+              placeholder="First name (required)"
+              required
+              className={styles.input}
+            />
+            <input
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleInputChange}
+              placeholder="Last name (required)"
+              required
+              className={styles.input}
+            />
+          </div>
           <input
             type="tel"
-            id="contactNumber"
-            name="contactNumber"
-            placeholder="Enter your contact number"
+            name="contact"
+            value={formData.contact}
+            onChange={handleInputChange}
+            placeholder="Contact Number (required)"
             required
+            className={styles.input}
           />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="message">Message</label>
-          <textarea
-            id="message"
-            name="message"
-            placeholder="Enter your message"
-            rows="5"
+          <input
+            type="input"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Your email (required)"
             required
+            className={styles.input}
+          />
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleInputChange}
+            placeholder="Message"
+            className={styles.textarea}
           ></textarea>
-        </div>
-        <button type="submit" className={styles.submitButton}>
-          Submit
-        </button>
-      </form>
+          <button type="submit" className={styles.submitButton}>
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
+    </>
   );
 }

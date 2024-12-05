@@ -41,7 +41,7 @@ const CatererSearch = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const autocompleteRef = useRef(null);
-  const mapApiKey = "AIzaSyAUD63maRlEe3fqMDi4ZTrspkP_vVVgcGo";
+  const mapApiKey = import.meta.env.VITE_GOOGLE_MAPS_KEY;
   const {selectedPeopleRange,setSelectedPeopleRange}=useContext(CatererContext)
 
   useEffect(() => {
@@ -139,7 +139,6 @@ const CatererSearch = () => {
   const handleSearch = () => {
     if (isAddressSearch) {
       setIsAddressSearch(true);
-      handleFilterAndSort();
     } else {
       handleFilterAndSort();
     }
@@ -192,7 +191,7 @@ const CatererSearch = () => {
     
       handleFilterAndSort();
     
-  }, [searchQuery, sortOrder, foodType, caterers,isPureVeg]);
+  }, [searchQuery, sortOrder, foodType, caterers,isPureVeg,selectedPeopleRange]);
 
   const handleDetailClick = (id) => {
     navigate(`/caterer/${id}`);

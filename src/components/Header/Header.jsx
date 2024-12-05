@@ -11,6 +11,7 @@ import booking from "../../assets/images/booking1.png";
 import profile from "../../assets/images/profile.jpg";
 import logout from "../../assets/images/logout.jpg";
 import callIcon from "../../assets/images/callicon.png";
+import contactus from "../../assets/images/contactus.png";
 
 const Header = () => {
   const {isModalOpen, setIsModalOpen}= useContext(CatererContext);
@@ -158,6 +159,10 @@ const Header = () => {
                     <span>Login/Register</span>
                   </li>
                 )}
+                <li className={styles.booking} onClick={()=>navigate('contactus')}>
+                    <img className={styles.findImg} src={contactus} />
+                    <span>Contact Us</span>
+                  </li>
                 {isLoggedName && (
                   <li className={styles.booking}>
                     <img className={styles.findImg} src={profile} />
@@ -206,6 +211,10 @@ const Header = () => {
               <span>Login/Register</span>
             </li>
           )}
+          <li className={styles.booking} onClick={()=>navigate('contactus')}>
+                    <img className={styles.findImg} src={contactus} />
+                    <span>Contact Us</span>
+                  </li>
           {isLoggedName && (
             <li className={styles.booking}>
               <img className={styles.findImg} src={profile} />

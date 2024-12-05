@@ -18,6 +18,8 @@
     "@vis.gl/react-google-maps": "^1.2.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.3",
+    "emailjs": "^4.0.3",
+    "emailjs-com": "^3.2.0",
     "leaflet": "^1.9.4",
     "postcss": "^8.4.41",
     "postcss-loader": "^8.1.1",
