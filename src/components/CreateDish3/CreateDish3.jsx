@@ -17,8 +17,8 @@ export default function CreateDish3() {
     async function fetchInitialData() {
       try {
         const [menuResponse, catererResponse] = await Promise.all([
-          fetch("http://localhost:3000/api/Menus?limit=100000"),
-          axios.get(`http://localhost:3000/api/caterer/${catererId}`)
+          fetch("https://www.caterersnearme.in/api/Menus?limit=100000"),
+          axios.get(`https://www.caterersnearme.in/api/caterer/${catererId}`)
         ]);
 
         const menuData = await menuResponse.json();
@@ -116,7 +116,7 @@ export default function CreateDish3() {
     try {
       if (deleted.length > 0) {
         await Promise.all(
-          deleted.map((id) => axios.delete(`http://localhost:3000/api/dishes/${id}`))
+          deleted.map((id) => axios.delete(`https://www.caterersnearme.in/api/dishes/${id}`))
         );
       }
 
@@ -132,7 +132,7 @@ export default function CreateDish3() {
         updateDish.map(async (pkg) => {
           if (pkg.id) {
             const updatedPackage = await axios.patch(
-              `http://localhost:3000/api/dishes/${pkg.id}`,
+              `https://www.caterersnearme.in/api/dishes/${pkg.id}`,
               {
                 items: pkg.items.map((item) => ({
                   ...item,
@@ -148,7 +148,7 @@ export default function CreateDish3() {
             return updatedPackage.data;
           } else {
             const newPackage = await axios.post(
-              `http://localhost:3000/api/dishes`,
+              `https://www.caterersnearme.in/api/dishes`,
               { ...pkg, catererId }
             );
             return { ...newPackage.data, _id: newPackage.data.id };
@@ -161,7 +161,7 @@ export default function CreateDish3() {
       );
 
       if (newdishes.length > 0) {
-        const res=await axios.patch(`http://localhost:3000/api/caterer/${catererId}`, {
+        const res=await axios.patch(`https://www.caterersnearme.in/api/caterer/${catererId}`, {
           dishesfor50_100: [...dishData.map(el=>el.id), ...newdishes.map(el=>el.id)],
         });
       }

@@ -25,7 +25,7 @@ const OrderPage = () => {
     const fetchCatererData = async () => {
       try {
         const response = await axiosPrivate.get(
-          `http://localhost:3000/api/caterer/${id}`
+          `https://www.caterersnearme.in/api/caterer/${id}`
         );
         if (response.data) {
           setCatererData(response.data);

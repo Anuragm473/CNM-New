@@ -144,7 +144,7 @@ const Bill = () => {
       };
 
       const response = await axiosPrivate.post(
-        "http://localhost:3000/api/orders",
+        "https://www.caterersnearme.in/api/orders",
         myorder
       );
       toast('Order Placed Successfully')

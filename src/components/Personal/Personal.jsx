@@ -136,7 +136,7 @@ export default function Personal({ setCurrentStep }) {
         const catererid = user.catererId;
         if (catererid) {
           const response = await axios.get(
-            `http://localhost:3000/api/caterer/${catererid}`
+            `https://www.caterersnearme.in/api/caterer/${catererid}`
           );
           let data = response.data;
           data.inServiceFrom = formatDate(data.inServiceFrom);
@@ -158,7 +158,7 @@ export default function Personal({ setCurrentStep }) {
       const {catererId}=user
       const updatedFields = getUpdatedFields(formData, initial);
       const response = await axios.patch(
-        `http://localhost:3000/api/caterer/${catererId}`,
+        `https://www.caterersnearme.in/api/caterer/${catererId}`,
         updatedFields
       );
       toastMessage("Updated successfully!");
