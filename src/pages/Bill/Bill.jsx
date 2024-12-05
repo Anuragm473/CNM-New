@@ -4,17 +4,47 @@ import styles from "./Bill.module.css";
 import { CatererContext } from "../../CatererContext";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { toast } from "react-toastify";
 
 const Bill = () => {
+  const { selectedPeopleRange } = useContext(CatererContext);
+  let numberOfPeople;
+  switch (selectedPeopleRange) {
+    case "10-25":
+      numberOfPeople = {
+        min: 10,
+        max: 25,
+      };
+      break;
+    case "25-50":
+      numberOfPeople = {
+        min: 25,
+        max: 50,
+      };
+      break;
+    case "50-100":
+      numberOfPeople = {
+        min: 50,
+        max: 100,
+      };
+      break;
+    case "100+":
+      numberOfPeople = {
+        min: 100,
+        max: 3000,
+      };
+      break;
+  }
   const axiosPrivate = useAxiosPrivate();
   const [cartData, setCartData] = useState([]);
   const [dishDetails, setDishDetails] = useState(null);
-  const [dishQuantity, setDishQuantity] = useState("");
+  const [dishQuantity, setDishQuantity] = useState(numberOfPeople.min);
   const [totalPrice, setTotalPrice] = useState(0);
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
-  const { catererId } = useContext(CatererContext);
   const [deliveryDate, setDeliveryDate] = useState("");
+  const [deliveryTime, setDeliveryTime] = useState(""); // State for time input
+  const [timePeriod, setTimePeriod] = useState("AM");
   const [address, setAddress] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -76,6 +106,16 @@ const Bill = () => {
 
   const handleOrder = async () => {
     try {
+      if(dishQuantity<numberOfPeople.min || dishQuantity>numberOfPeople.max){
+        toast(`Please select number of people between ${numberOfPeople.min} to ${numberOfPeople.max}`)
+        return
+      }else if(!address){
+        toast(`Please Enter Addreess before proceding further`)
+        return
+      }else if(!deliveryTime || !timePeriod){
+        toast(`Please Enter Time`)
+        return
+      }
       const dish = JSON.parse(localStorage.getItem("dishDetails"));
       const user = JSON.parse(localStorage.getItem("user"));
       const cartItem = cartData.map((item) => ({
@@ -96,7 +136,8 @@ const Bill = () => {
         address,
         message,
         orderDate: new Date().toISOString(),
-        deliveryDate: deliveryDate,
+        deliveryDate,
+        time: `${deliveryTime} ${timePeriod}`,
         status: {
           id: 0,
         },
@@ -104,13 +145,15 @@ const Bill = () => {
       console.log(myorder);
 
       const response = await axiosPrivate.post(
-        "https://www.caterersnearme.in/api/orders",
+        "http://localhost:3000/api/orders",
         myorder
       );
       console.log(response, myorder);
+      toast('Order Placed Successfully')
       navigate("/my-orders");
     } catch (error) {
       console.error("Order submission failed:", error);
+      toast('Something went wrong')
     }
   };
 
@@ -120,41 +163,61 @@ const Bill = () => {
   return (
     <div className={styles.billContainer}>
       <div className={styles.mainHeading}>
-        <h2 style={{margin:'0',marginBottom:'10px'}}>Order Summary</h2>
+        <h2 style={{ margin: "0", marginBottom: "10px" }}>Order Summary</h2>
       </div>
       <div className={styles.mainBill}>
         <div className={styles.billLeft}>
           <div className={styles.leftHeading}>
-            <h3 style={{margin:'0',marginBottom:'5px'}}>Dish Details:</h3>
+            <h3 style={{ margin: "0", marginBottom: "5px" }}>Dish Details:</h3>
           </div>
           <Accordion data={cartData} />
         </div>
         <div className={styles.billRight}>
           <div className={styles.rightHeading}>
-            <h3 style={{marginTop:'10px',marginBottom:'20px'}}>Order Summary:</h3>
+            <h3 style={{ marginTop: "10px", marginBottom: "20px" }}>
+              Order Summary:
+            </h3>
             <div className={styles.deliveryDate}>
-              <h3 style={{margin:'0',marginBottom:'5px'}}>Event Date</h3>
+              <h3 style={{ margin: "0", marginBottom: "5px" }}>Event Date</h3>
               <input
                 value={deliveryDate}
-                style={{margin:'0',marginBottom:'15px'}}
+                style={{ margin: "0", marginBottom: "15px" }}
                 onChange={(e) => setDeliveryDate(e.target.value)}
                 className={styles.deliveryDateInput}
                 type="date"
-                min={today} // Restrict to today or future dates
+                min={today}
               />
             </div>
+            <div className={styles.deliveryTime}>
+              <h3 style={{ margin: "0", marginBottom: "5px" }}>Event Time</h3>
+              <input
+                value={deliveryTime}
+                onChange={(e) => setDeliveryTime(e.target.value)}
+                className={styles.deliveryTimeInput}
+                type="time"
+              />
+              <select
+                value={timePeriod}
+                onChange={(e) => setTimePeriod(e.target.value)}
+                className={styles.timePeriodSelect}
+              >
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+            </div>
             <div className={styles.address}>
-              <h3 style={{margin:'0',marginBottom:'10px'}}>Event Address</h3>
+              <h3 style={{ margin: "0", marginBottom: "10px" }}>
+                Event Address
+              </h3>
               <textarea
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className={styles.deliveryAddressInput}
-                type="text"
                 placeholder="Enter Event Address"
               />
             </div>
             <div className={styles.message}>
-              <h3 style={{margin:'0',marginBottom:'10px'}}>Message</h3>
+              <h3 style={{ margin: "0", marginBottom: "10px" }}>Message</h3>
               <textarea
                 value={message}
                 onChange={(e) => {
@@ -171,14 +234,21 @@ const Bill = () => {
               </p>
             </div>
             <div className={styles.dishQuantity}>
-              <h3 style={{margin:'0',marginBottom:'5px'}}>Number Of People:</h3>
+              <h3 style={{ margin: "0", marginBottom: "5px" }}>
+                Number Of People:
+              </h3>
               <input
                 className={styles.dishQuantityInput}
                 type="number"
                 value={dishQuantity}
                 onChange={handleQuantityChange}
                 onBlur={handleQuantityBlur}
-                min={1}
+                min={numberOfPeople.min}
+                max={
+                  numberOfPeople.max === Infinity
+                    ? undefined
+                    : numberOfPeople.max
+                }
               />
             </div>
             <div className={styles.addAnItem}>

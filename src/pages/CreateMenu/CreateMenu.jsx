@@ -54,7 +54,8 @@ import Styles from "./CreateMenu.module.css";
 import Steps from "../../components/Steps/Steps";
 import Personal from "../../components/Personal/Personal";
 import MenuCreation from "../../components/MenuCreation/MenuCreation"; // Assuming you have this component
-import CreateDish from "../../components/CreateDish/CreateDish";
+import CreateDish from "../../components/CreateDish1/CreateDish1";
+import ManageCreatedish from "../../components/ManageCreatedish/ManageCreatedish";
 
 export default function CreateMenu() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -78,7 +79,7 @@ export default function CreateMenu() {
       case 2:
         return <MenuCreation setCurrentStep={setCurrentStep}/>;
       case 3:
-        return <CreateDish/>;
+        return <ManageCreatedish/>;
       default:
         return null;
     }

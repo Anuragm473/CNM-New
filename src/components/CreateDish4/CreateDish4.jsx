@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import styles from "./CreateDish.module.css";
+import styles from "./CreateDish4.module.css";
 import axios from "axios";
 import { CatererContext } from "../../CatererContext";
 import { toastMessage } from "../../../utility";
 
-export default function CreateDish() {
+export default function CreateDish4() {
   const { catererId } = useContext(CatererContext);
   const [deleted, setDeleted] = useState([]);
   const [packages, setPackages] = useState([]);
@@ -17,21 +17,21 @@ export default function CreateDish() {
     async function fetchInitialData() {
       try {
         const [menuResponse, catererResponse] = await Promise.all([
-          fetch("https://www.caterersnearme.in/api/Menus?limit=100000"),
-          axios.get(`https://www.caterersnearme.in/api/caterer/${catererId}`)
+          fetch("http://localhost:3000/api/Menus?limit=100000"),
+          axios.get(`http://localhost:3000/api/caterer/${catererId}`)
         ]);
 
         const menuData = await menuResponse.json();
-        const catererDishes = menuData.data.filter(
+        const catererdishes = menuData.data.filter(
           (dish) => dish.catererId === catererId
         );
-        setCatererDish(catererDishes);
+        setCatererDish(catererdishes);
 
         const catererData = catererResponse.data;
         setCategoryType(catererData.cateringType || []);
-        setDishData(catererData.dishes || []);
+        setDishData(catererData.dishesforabove100 || []);
         setPackages(
-          (catererData.dishes || []).map((dish) => ({
+          (catererData.dishesforabove100 || []).map((dish) => ({
             ...dish,
             items: dish.items.map((item) => ({
               ...item,
@@ -116,7 +116,7 @@ export default function CreateDish() {
     try {
       if (deleted.length > 0) {
         await Promise.all(
-          deleted.map((id) => axios.delete(`https://www.caterersnearme.in/api/dishes/${id}`))
+          deleted.map((id) => axios.delete(`http://localhost:3000/api/dishes/${id}`))
         );
       }
 
@@ -132,7 +132,7 @@ export default function CreateDish() {
         updateDish.map(async (pkg) => {
           if (pkg.id) {
             const updatedPackage = await axios.patch(
-              `https://www.caterersnearme.in/api/dishes/${pkg.id}`,
+              `http://localhost:3000/api/dishes/${pkg.id}`,
               {
                 items: pkg.items.map((item) => ({
                   ...item,
@@ -148,7 +148,7 @@ export default function CreateDish() {
             return updatedPackage.data;
           } else {
             const newPackage = await axios.post(
-              `https://www.caterersnearme.in/api/dishes`,
+              `http://localhost:3000/api/dishes`,
               { ...pkg, catererId }
             );
             return { ...newPackage.data, _id: newPackage.data.id };
@@ -156,14 +156,13 @@ export default function CreateDish() {
         })
       );
 
-      const newDishes = results.filter(
+      const newdishes = results.filter(
         (result) => !dishData.some((existing) => existing.id === result.id)
       );
 
-      if (newDishes.length > 0) {
-        const dishes=[...dishData.map(el=>el.id), ...newDishes.map(el=>el.id)]
-        const res=await axios.patch(`https://www.caterersnearme.in/api/caterer/${catererId}`, {
-          dishes: [...dishData.map(el=>el.id), ...newDishes.map(el=>el.id)],
+      if (newdishes.length > 0) {
+        const res=await axios.patch(`http://localhost:3000/api/caterer/${catererId}`, {
+          dishesforabove100: [...dishData.map(el=>el.id), ...newdishes.map(el=>el.id)],
         });
       }
 
@@ -215,7 +214,7 @@ export default function CreateDish() {
                 ))}
               </select>
             </div>
-            <h4>Dishes</h4>
+            <h4>dishes for people above 100</h4>
             {pkg.items.map((dish, dishIndex) => (
               <div key={dishIndex} className={styles.dish}>
                 <div className={styles.inputGroup}>

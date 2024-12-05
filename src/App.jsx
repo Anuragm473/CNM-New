@@ -7,6 +7,7 @@ import AuthProvider from "./context/AuthProvider";
 import { CatererProvider } from "./CatererContext";
 import ForgotPass from "./components/ForgotPass/ForgotPass";
 import { ToastContainer } from "react-toastify";
+import ContactUs from "./components/ContactUs/ContactUs";
 
 const CreateMenu = React.lazy(() => import("./pages/CreateMenu/CreateMenu"));
 const CatererDashboard = React.lazy(() =>
@@ -45,6 +46,14 @@ function App() {
           element: (
             <Suspense fallback={<Spinner />}>
               <CatererSearch />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/contactus",
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <ContactUs />
             </Suspense>
           ),
         },

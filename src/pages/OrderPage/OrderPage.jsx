@@ -16,6 +16,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const OrderPage = () => {
   const axiosPrivate = useAxiosPrivate();
   const { setCatererId, catererId } = useContext(CatererContext);
+  const {selectedPeopleRange}=useContext(CatererContext)
   const { id } = useParams();
 
   const [catererData, setCatererData] = useState(null);
@@ -23,7 +24,7 @@ const OrderPage = () => {
   useEffect(() => {
     const fetchCatererData = async () => {
       // try {
-      //   const response = await fetch(`https://www.caterersnearme.in/api/caterer/${id}`);
+      //   const response = await fetch(`http://localhost:3000/api/caterer/${id}`);
       //   const data = await response.json();
       //   setCatererData(data);
       // } catch (error) {
@@ -31,7 +32,7 @@ const OrderPage = () => {
       // }
       try {
         const response = await axiosPrivate.get(
-          `https://www.caterersnearme.in/api/caterer/${id}`
+          `http://localhost:3000/api/caterer/${id}`
         );
         if (response.data) {
           setCatererData(response.data);
@@ -63,6 +64,21 @@ const OrderPage = () => {
   const serviceStartYear = new Date(
     catererData.dishes[0].createdAt
   ).getFullYear();
+  let dishes
+  switch(selectedPeopleRange){
+    case '10-25':
+      dishes=catererData.dishesfor10_25;
+      break;
+    case '25-50':
+      dishes=catererData.dishesfor25_50;
+      break;
+    case '50-100':
+      dishes=catererData.dishesfor50_100;
+      break;
+    case '100+':
+      dishes=catererData.dishesforabove100;
+      break;
+  }
   const catererInfo = catererData.extraInformation;
   const serviceSpecialist = catererData.specialistIn;
   const cuisines = catererData.cuisinesOffered;
@@ -82,7 +98,7 @@ const OrderPage = () => {
             tagline="Flavors that bring people together, crafted with care"
             serviceStartYear={serviceStartYear}
           />
-          <OrderPageDishes dishes={catererData.dishes} />
+          <OrderPageDishes dishes={dishes} />
           <CatererInfo
             info={catererInfo}
             serviceSpecialist={serviceSpecialist}

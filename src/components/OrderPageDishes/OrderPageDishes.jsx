@@ -14,7 +14,7 @@ const OrderPageDishes = ({ dishes }) => {
     <div className={styles.orderPageDishes}>
       <h3>Provided Dishes</h3>
       <div className={styles.dishes}>
-        {dishes.map((dish, index) => (
+        {dishes?.map((dish, index) => (
           <div
             className={styles.dish}
             key={index}

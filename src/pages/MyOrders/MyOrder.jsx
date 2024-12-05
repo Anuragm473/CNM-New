@@ -16,13 +16,13 @@
 
 //     if (userData.role.id == 1) {
 //       // Admin (role.id === 1): Fetch all orders
-//       apiUrl = `https://www.caterersnearme.in/api/orders`;
+//       apiUrl = `http://localhost:3000/api/orders`;
 //     } else if (userData.role.id == 2) {
 //       // Caterer (role.id === 2): Fetch orders for that particular caterer
-//       apiUrl = `https://www.caterersnearme.in/api/orders?filters=[{"userId":"${userData.id}"}]`;
+//       apiUrl = `http://localhost:3000/api/orders?filters=[{"userId":"${userData.id}"}]`;
 //     } else if (userData.role.id == 3) {
 //       // User (role.id === 3): Fetch orders for that particular user
-//       apiUrl = `https://www.caterersnearme.in/api/orders?filters=[{"catererId":"${userData.id}"}]`;
+//       apiUrl = `http://localhost:3000/api/orders?filters=[{"catererId":"${userData.id}"}]`;
 //     }
 //     // Log the URL to verify it's correct
 //     console.log("API URL:", apiUrl);
@@ -158,13 +158,13 @@ const MyOrder = () => {
     // Modify the URL based on user role and add pagination parameters (limit, page)
     if (userData.role.id == 1) {
       // Admin (role.id === 1): Fetch all orders
-      apiUrl = `https://www.caterersnearme.in/api/orders?limit=${limit}&page=${page}`;
+      apiUrl = `http://localhost:3000/api/orders?limit=${limit}&page=${page}`;
     } else if (userData.role.id == 2) {
       // Caterer (role.id === 2): Fetch orders for that particular caterer
-      apiUrl = `https://www.caterersnearme.in/api/orders?filters=[{"userId":"${userData.id}"}]&limit=${limit}&page=${page}`;
+      apiUrl = `http://localhost:3000/api/orders?filters=[{"userId":"${userData.id}"}]&limit=${limit}&page=${page}`;
     } else if (userData.role.id == 3) {
       // User (role.id === 3): Fetch orders for that particular user
-      apiUrl = `https://www.caterersnearme.in/api/orders?filters=[{"catererId":"${userData.catererId}"}]&limit=${limit}&page=${page}`;
+      apiUrl = `http://localhost:3000/api/orders?filters=[{"catererId":"${userData.catererId}"}]&limit=${limit}&page=${page}`;
     }
 
     console.log("API URL:", apiUrl);
@@ -174,10 +174,7 @@ const MyOrder = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched Orders:", data);
-        if(userData.role.id==1){
         setOrders(data.data.reverse());
-        }
-        setOrders(data.data);
         setTotalPages(data.totalPages || 1); // Assuming API returns total pages
       })
       .catch((error) => console.error("Error fetching orders:", error.message));
@@ -231,7 +228,7 @@ const MyOrder = () => {
                     {order.catererId?.name}
                   </h2>
                   <h4 className={styles.catererName}>
-                    contact no:{order.catererId?.mobileNo}
+                    Event Time:{order.time}
                   </h4>
                   <h5 className={styles.catererName}>
                     address:{order.address}
@@ -291,7 +288,7 @@ const MyOrder = () => {
                 Order By: {selectedOrder.userId.firstName}{" "}
                 {selectedOrder.userId.lastName}
               </p>
-              <p>Contact number: {selectedOrder.userId.phone}</p>
+              <p>Event Time: {selectedOrder.time}</p>
               <p><span style={{fontWeight:'550'}}>address:</span> {selectedOrder.address}</p>
               <p>message: {selectedOrder.message}</p>
             </div>

@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import styles from "./CatererSearch.module.css";
 import menuImage from "../../assets/caterer/menu1.jpeg";
 import axios from "../../api/axios";
+import { CatererContext } from "../../CatererContext";
 
 function getCurrentUserLocation() {
   return new Promise((resolve, reject) => {
@@ -41,6 +42,7 @@ const CatererSearch = () => {
   const navigate = useNavigate();
   const autocompleteRef = useRef(null);
   const mapApiKey = "AIzaSyAUD63maRlEe3fqMDi4ZTrspkP_vVVgcGo";
+  const {selectedPeopleRange,setSelectedPeopleRange}=useContext(CatererContext)
 
   useEffect(() => {
     const fetchCaterers = async () => {
@@ -49,23 +51,38 @@ const CatererSearch = () => {
         console.log(lat, lng);
 
         const response = await axios.get(
-          `https://www.caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
+          `http://localhost:3000/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
         );
-        if (response.data.length > 0) {
-          setCaterers(response.data);
-          setFilteredCaterers(response.data);
+
+        const data = response.data;
+        if (Array.isArray(data) && data.length > 0) {
+          setCaterers(data);
+          setFilteredCaterers(data);
         } else {
-          const fallbackResponse = await axios.get(
-            "https://www.caterersnearme.in/api/caterer"
-          );
-          setCaterers(fallbackResponse.data.data);
-          setFilteredCaterers(fallbackResponse.data.data);
+          console.log("No nearby caterers found, fetching fallback data...");
+          fetchFallbackCaterers();
         }
       } catch (error) {
-        console.error("Error fetching caterers:", error);
-        setError(error.message);
+        console.error("Error fetching nearby caterers:", error);
+        fetchFallbackCaterers();
       } finally {
         setLoading(false);
+      }
+    };
+
+    const fetchFallbackCaterers = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/caterer"
+        );
+        const data = response.data.data;
+        if (Array.isArray(data)) {
+          setCaterers(data);
+          setFilteredCaterers(data);
+        }
+      } catch (error) {
+        console.error("Error fetching fallback caterers:", error);
+        setError("Unable to fetch caterers.");
       }
     };
 
@@ -79,7 +96,7 @@ const CatererSearch = () => {
 
     fetchCaterers();
     loadGoogleMapsScript();
-  }, []);
+  }, [radius]);
 
   const handleToggle = () => {
     setIsPureVeg(!isPureVeg);
@@ -107,7 +124,7 @@ const CatererSearch = () => {
   const fetchNearbyCaterers = async (lat, lng) => {
     try {
       const response = await axiosPrivate.get(
-        `https://www.caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
+        `http://localhost:3000/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
       );
       if (Array.isArray(response.data)) {
         setCaterers(response.data);
@@ -124,6 +141,7 @@ const CatererSearch = () => {
   const handleSearch = () => {
     if (isAddressSearch) {
       setIsAddressSearch(true);
+      handleFilterAndSort();
     } else {
       handleFilterAndSort();
     }
@@ -131,14 +149,9 @@ const CatererSearch = () => {
 
   const handleFilterAndSort = () => {
     let filtered = [...caterers];
+    
 
-    if (searchQuery) {
-      filtered = filtered.filter(
-        (caterer) =>
-          caterer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          caterer.address.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
+    
 
     if (foodType !== "all") {
       filtered = filtered.filter((caterer) =>
@@ -153,25 +166,34 @@ const CatererSearch = () => {
     } else if (sortOrder === "popularity") {
       filtered.sort((a, b) => b.minPrice - a.minPrice);
     }
-    if(isPureVeg===true){
-      filtered=filtered.filter(
-        (item) => !item.cateringType.includes('nonVeg')
-      );
-      console.log(filtered)
+
+    if(isPureVeg){
+      filtered=filtered.filter(caterer=>!caterer.cateringType.includes('nonVeg'))
     }
-    else if(isPureVeg===false){
-      filtered=caterers
-      console.log(filtered)
-    }
+
+    filtered = filtered.filter((caterer) => {
+      switch (selectedPeopleRange) {
+        case "10-25":
+          return caterer.dishesfor10_25?.length > 0;
+        case "25-50":
+          return caterer.dishesfor25_50?.length > 0;
+        case "50-100":
+          return caterer.dishesfor50_100?.length > 0;
+        case "100+":
+          return caterer.dishesforAbove100?.length > 0;
+        default:
+          return true;
+      }
+    });
 
     setFilteredCaterers(filtered);
     setCurrentPage(1);
   };
 
   useEffect(() => {
-    if (!isAddressSearch) {
+    
       handleFilterAndSort();
-    }
+    
   }, [searchQuery, sortOrder, foodType, caterers,isPureVeg]);
 
   const handleDetailClick = (id) => {
@@ -265,13 +287,29 @@ const CatererSearch = () => {
                 <button
                   onClick={handleToggle}
                   className={`${styles.buttonToggle} ${
-                    isPureVeg ? styles.noFilter:styles.pureVeg 
+                    isPureVeg ? styles.pureVeg : styles.noFilter
                   }`}
                 >
-                  {isPureVeg ? "Pure Veg" : "Veg Mode"}
+                  {isPureVeg ? "Pure Veg" : "No Filter"}
                 </button>
               </div>
             </div>
+            <div className={styles.filters}>
+          <div className={`${styles.filterItem} ${styles.peopleRange}`}>
+            <label htmlFor="people-range">Number of People: </label>
+            <select
+              id="people-range"
+              className={styles.filterDropdown}
+              value={selectedPeopleRange}
+              onChange={(e) => setSelectedPeopleRange(e.target.value)}
+            >
+              <option value="10-25">10-25</option>
+              <option value="25-50">25-50</option>
+              <option value="50-100">50-100</option>
+              <option value="100+">100+</option>
+            </select>
+          </div>
+        </div>
             </div>
             <div className={styles.resultsCount}>
               Showing {indexOfFirstItem + 1} -{" "}

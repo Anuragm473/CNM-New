@@ -8,9 +8,10 @@ export const CatererProvider = ({ children }) => {
   const [catererId, setCatererId] = useState("");
   const [isCaterer, setIsCaterer] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPeopleRange, setSelectedPeopleRange] = useState("10-25");
 
   return (
-    <CatererContext.Provider value={{ catererId, setCatererId, isCaterer, setIsCaterer,isModalOpen,setIsModalOpen }}>
+    <CatererContext.Provider value={{selectedPeopleRange,setSelectedPeopleRange, catererId, setCatererId, isCaterer, setIsCaterer,isModalOpen,setIsModalOpen }}>
       {children}
     </CatererContext.Provider>
   );
