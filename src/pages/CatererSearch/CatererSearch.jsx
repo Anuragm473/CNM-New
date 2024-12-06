@@ -177,7 +177,7 @@ const CatererSearch = () => {
         case "50-100":
           return caterer.dishesfor50_100?.length > 0;
         case "100+":
-          return caterer.dishesforAbove100?.length > 0;
+          return caterer.dishesforabove100?.length > 0;
         default:
           return true;
       }
