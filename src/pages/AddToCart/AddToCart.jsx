@@ -6,6 +6,7 @@ import DishSelection from "../../components/DishSelection/DishSelection";
 import styles from "./AddToCart.module.css";
 import Accordion from "../../components/Accordion/Accordion";
 import { useNavigate } from "react-router-dom";
+import { getFromLocalStorage, saveToLocalStorage } from "../../../utility";
 
 const AddToCart = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -20,7 +21,7 @@ const AddToCart = () => {
   const [duplicate,setDuplicate]=useState([])
 
   const navigate = useNavigate();
-  const cartData=JSON.parse(localStorage.getItem(`${dishId}`))
+  const cartData=getFromLocalStorage(`${dishId}`)
 
   useEffect(() => {
     
@@ -110,7 +111,7 @@ const AddToCart = () => {
     );
     setSelectedDishes(categoryData ? categoryData.dishes : []);
 
-    localStorage.setItem(dishId, JSON.stringify(storageObject));
+    saveToLocalStorage(dishId, storageObject);
   }, [storageObject, selectedCategory]);
 
   const handleCategorySelect = (category) => {

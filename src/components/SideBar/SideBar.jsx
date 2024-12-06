@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./SideBar.module.css";
 import Modal from "../Modal/Modal";
 import IncreaseQuantity from "../IncreaseQuantity/IncreaseQuantity";
+import { getFromLocalStorage } from "../../../utility";
 
 const SideBar = ({
   categories,
@@ -43,7 +44,7 @@ const SideBar = ({
         />
       </Modal>
       <div className={styles.category}>
-        <h3>Menu for {JSON.parse(localStorage.getItem("dishDetails")).name}</h3>
+        <h3>Menu for {getFromLocalStorage("dishDetails").name}</h3>
         <button className={styles.btn} onClick={openModal}>
           Add an Extra Item <span>&#43;</span>
         </button>

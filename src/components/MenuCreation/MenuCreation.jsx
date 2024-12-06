@@ -2,11 +2,11 @@ import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./MenuCreation.module.css";
 import { CatererContext } from "../../CatererContext";
-import { toastMessage } from "../../../utility";
+import { getFromLocalStorage, toastMessage } from "../../../utility";
 
 export default function MenuCreation({ setCurrentStep }) {
     const { catererId,setCatererId } = useContext(CatererContext);
-    setCatererId(JSON.parse(localStorage.getItem('user')).catererId)
+    setCatererId(getFromLocalStorage('user').catererId)
     const [menus, setMenus] = useState([
         {
             menuName: '',

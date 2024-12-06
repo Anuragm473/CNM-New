@@ -3,6 +3,7 @@ import styles from "./MyOrder.module.css";
 import menuImage from "../../assets/caterer/myorder.png";
 import Modal from "../../components/Modal/Modal";
 import Accordion from "../../components/Accordion/Accordion";
+import { getFromLocalStorage } from "../../../utility";
 
 const MyOrder = () => {
   const [orders, setOrders] = useState([]);
@@ -11,11 +12,10 @@ const MyOrder = () => {
   const [page, setPage] = useState(1); // State to track current page
   const [totalPages, setTotalPages] = useState(1); // State to track total pages
   const limit = 10000; // Number of orders per page
+  const userData = getFromLocalStorage("user");
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user"));
     let apiUrl = "";
-
     // Modify the URL based on user role and add pagination parameters (limit, page)
     if (userData.role.id == 1) {
       // Admin (role.id === 1): Fetch all orders
@@ -68,7 +68,9 @@ const MyOrder = () => {
       name: item.item,
       dishes: item.menuItem.map((menu, menuIndex) => `${menu}`),
     }));
+
   };
+  console.log(selectedOrder)
 
   return (
     <div className={styles.myOrderContainer}>
@@ -90,10 +92,10 @@ const MyOrder = () => {
                     Event Time:{order.time}
                   </h4>
                   <h5 className={styles.catererName}>
-                    address:{order.address}
+                    Address: {order.address}
                   </h5>
                   <h5 className={styles.catererName}>
-                    message:{order.message}
+                    Message: {order.message}
                   </h5>
                   <p>
                     Dish Items: {order.items.length} | Order Quantity:{" "}
@@ -119,7 +121,7 @@ const MyOrder = () => {
               </b>
               <p>
                 Order By : {order.userId?.firstName} {order.userId?.lastName} |
-                Contact No: {order.userId?.phone}
+                {userData.role.id==1 && order?.userId?.phone}
               </p>
             </div>
           </div>
@@ -136,6 +138,7 @@ const MyOrder = () => {
               <p>Order Quantity: {selectedOrder.dishQuantity}</p>
               <p>Amount: ₹{selectedOrder.totalAmount}</p>
               <p>Payment Status: {selectedOrder.paymentStatus}</p>
+              {userData.role.id==1 && <p>Caterer Number: {selectedOrder.catererId.mobileNo}</p>}
               <p>
                 Delivery Date:{" "}
                 {new Date(selectedOrder.deliveryDate).toLocaleDateString()}
@@ -148,8 +151,9 @@ const MyOrder = () => {
                 {selectedOrder.userId.lastName}
               </p>
               <p>Event Time: {selectedOrder.time}</p>
-              <p><span style={{fontWeight:'550'}}>address:</span> {selectedOrder.address}</p>
-              <p>message: {selectedOrder.message}</p>
+              <p><span style={{fontWeight:'550'}}>Address: </span> {selectedOrder.address}</p>
+              <p>Message: {selectedOrder.message}</p>
+              {userData.role.id==1 && <p>Customer Number: {selectedOrder.userId.phone}</p>}
             </div>
           </div>
 

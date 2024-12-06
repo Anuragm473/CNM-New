@@ -20,6 +20,8 @@
   max-width: 500px;
   width: 100%;
   overflow:scroll;
+  max-height:80vh;
+  scrollbar-width: none;
 }
 
 /* Close Button */

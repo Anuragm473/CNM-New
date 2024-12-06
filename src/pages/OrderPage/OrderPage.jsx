@@ -12,6 +12,7 @@ import CatererDetails from "../../components/OrderPageCatererDetails/CatererDeta
 import { CatererContext } from "../../CatererContext";
 import Spinner from "../../components/Spinner/Spinner";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { saveToLocalStorage } from "../../../utility";
 
 const OrderPage = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -47,7 +48,7 @@ const OrderPage = () => {
   if (catererId == "") {
     setCatererId(id);
   }
-  localStorage.setItem("catererId", JSON.stringify(id));
+  saveToLocalStorage("catererId", id);
 
   if (!catererData) {
     return <Spinner />;

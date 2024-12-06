@@ -42,7 +42,11 @@
 
 @media screen and (max-width: 768px) {
   .addtocart {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap:wrap;
+    font-size:0.6rem;
+    padding-left:2px;
+    padding-right:0;
   }
   .accordionContainer {
     width: 100%;

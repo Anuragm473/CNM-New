@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import styles from "./Personal.module.css";
 import axios from "axios";
 import { CatererContext } from "../../CatererContext";
-import { toastMessage } from "../../../utility";
+import { getFromLocalStorage, toastMessage } from "../../../utility";
 import { formatDate } from "../../../utility";
 
 export default function Personal({ setCurrentStep }) {
@@ -123,7 +123,7 @@ export default function Personal({ setCurrentStep }) {
   };
 
   useEffect(() => {
-    const storage = localStorage.getItem("catererData");
+    const storage = getFromLocalStorage("catererData");
     if (catererId === "" && storage) {
       setCatererId(JSON.parse(storage));
     }
@@ -132,7 +132,7 @@ export default function Personal({ setCurrentStep }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user = JSON.parse(localStorage.getItem("user"));
+        const user = getFromLocalStorage("user");
         const catererid = user.catererId;
         if (catererid) {
           const response = await axios.get(
@@ -154,7 +154,7 @@ export default function Personal({ setCurrentStep }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user=JSON.parse(localStorage.getItem('user'))
+      const user=getFromLocalStorage('user')
       const {catererId}=user
       const updatedFields = getUpdatedFields(formData, initial);
       const response = await axios.patch(

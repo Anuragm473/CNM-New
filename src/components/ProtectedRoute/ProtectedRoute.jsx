@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { CatererContext } from "../../CatererContext";
+import { getFromLocalStorage } from "../../../utility";
 
 const ProtectedRoute =({ children }) => {
   const {setIsModalOpen}=useContext(CatererContext)
-  const user = JSON.parse(localStorage.getItem("user"));
-  const catererId=JSON.parse(localStorage.getItem('dishDetails'))
+  const user = getFromLocalStorage("user");
+  const catererId=getFromLocalStorage('dishDetails')
   const id=catererId.catererId
 
   if (!user) {

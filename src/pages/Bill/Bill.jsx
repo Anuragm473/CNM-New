@@ -5,6 +5,7 @@ import { CatererContext } from "../../CatererContext";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { toast } from "react-toastify";
+import { getFromLocalStorage } from "../../../utility";
 
 const Bill = () => {
   const { selectedPeopleRange } = useContext(CatererContext);
@@ -50,8 +51,8 @@ const Bill = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedDishDetails = JSON.parse(localStorage.getItem("dishDetails"));
-    const cart = JSON.parse(localStorage.getItem(`${storedDishDetails.id}`));
+    const storedDishDetails = getFromLocalStorage("dishDetails");
+    const cart = getFromLocalStorage(`${storedDishDetails.id}`);
 
     if (cart) {
       setCartData(cart);
@@ -116,8 +117,8 @@ const Bill = () => {
         toast(`Please Enter Time`)
         return
       }
-      const dish = JSON.parse(localStorage.getItem("dishDetails"));
-      const user = JSON.parse(localStorage.getItem("user"));
+      const dish = getFromLocalStorage("dishDetails");
+      const user = getFromLocalStorage("user");
       const cartItem = cartData.map((item) => ({
         item: item.name,
         quantity: item.quantity,
@@ -126,7 +127,7 @@ const Bill = () => {
       const cartItems = cartItem.filter((cartItem) => cartItem.quantity !== 0);
 
       const myorder = {
-        catererId: JSON.parse(localStorage.getItem("catererId")),
+        catererId: getFromLocalStorage("catererId"),
         dishId: dish?.id || "",
         userId: user?.id || "",
         items: cartItems,

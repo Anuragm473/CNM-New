@@ -65,9 +65,22 @@
 
 @media screen and (max-width: 768px) {
   .sidebar {
-    width: 100%;
+    width: 60%;
+    font-size:0.6rem;
   }
   .btn{
     left:0;
+  }
+  .quantity{
+    padding:5px 10px;
+  }
+  .category{
+    font-size:0.7rem;
+  }
+  .btn{
+    font-size:0.6rem;
+  }
+  .btn>span{
+    font-size:0.8rem;
   }
 }

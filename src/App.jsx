@@ -8,6 +8,7 @@ import { CatererProvider } from "./CatererContext";
 import ForgotPass from "./components/ForgotPass/ForgotPass";
 import { ToastContainer } from "react-toastify";
 import ContactUs from "./components/ContactUs/ContactUs";
+import Profilepage from "./pages/ProfilePage/Profilepage";
 
 const CreateMenu = React.lazy(() => import("./pages/CreateMenu/CreateMenu"));
 const CatererDashboard = React.lazy(() =>
@@ -54,6 +55,14 @@ function App() {
           element: (
             <Suspense fallback={<Spinner />}>
               <ContactUs />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/profile",
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Profilepage />
             </Suspense>
           ),
         },

@@ -2,11 +2,12 @@ import React from "react";
 import styles from "./OrderPageDishes.module.css";
 import orderDish from "../../assets/icons/orderDish.png";
 import { useNavigate } from "react-router-dom";
+import { saveToLocalStorage } from "../../../utility";
 
 const OrderPageDishes = ({ dishes }) => {
   const navigate = useNavigate();
   const handleDishClick = (dish) => {
-    localStorage.setItem("dishDetails", JSON.stringify(dish));
+    saveToLocalStorage("dishDetails", dish);
     navigate(`/add-to-cart/${dish.id}`);
   };
 

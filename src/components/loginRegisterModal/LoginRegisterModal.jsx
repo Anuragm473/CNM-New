@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import useAuth from "../../hooks/useAuth";
 import styles from "./LoginRegisterModal.module.css";
 import { CatererContext } from "../../CatererContext";
-import { toastMessage } from "../../../utility";
+import { saveToLocalStorage, toastMessage } from "../../../utility";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -87,9 +87,9 @@ const LoginRegisterModal = ({
       const result = await response.json();
       setIsLoggedName(true);
       setFirstName(result.user.firstName);
-      localStorage.setItem("token", result.token); // Store tokens and user data in localStorage
-      localStorage.setItem("refreshToken", result.refreshToken);
-      localStorage.setItem("user", JSON.stringify(result.user));
+      saveToLocalStorage("token", result.token); // Store tokens and user data in localStorage
+      saveToLocalStorage("refreshToken", result.refreshToken);
+      saveToLocalStorage("user", result.user);
       setUser({ user: result.user, token: result.token }); // Set user state
 
       toastMessage("Login Successful!");

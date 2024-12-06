@@ -5,7 +5,7 @@ import LoginRegisterModal from "../loginRegisterModal/LoginRegisterModal";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { CatererContext } from "../../CatererContext";
-import { toastMessage } from "../../../utility";
+import { getFromLocalStorage, saveToLocalStorage, toastMessage } from "../../../utility";
 import find from "../../assets/images/find.png";
 import booking from "../../assets/images/booking1.png";
 import profile from "../../assets/images/profile.jpg";
@@ -22,7 +22,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = getFromLocalStorage("user");
     if (user) {
       setIsLoggedName(true);
       if (user.firstName) {
@@ -35,7 +35,7 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    const storedFirstName = localStorage.getItem("firstName");
+    const storedFirstName = getFromLocalStorage("firstName");
     if (storedFirstName && isLoggedName) {
       setFirstName(storedFirstName);
       setIsLoggedName(true);
@@ -86,7 +86,7 @@ const Header = () => {
     };
   }, [navigate, setIsCaterer]);
   if (catererId == "") {
-    setCatererId(JSON.parse(localStorage.getItem("catererId")));
+    setCatererId(getFromLocalStorage("catererId"));
   }
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -164,7 +164,7 @@ const Header = () => {
                     <span>Contact Us</span>
                   </li>
                 {isLoggedName && (
-                  <li className={styles.booking}>
+                  <li onClick={() => navigate("/profile")} className={styles.booking}>
                     <img className={styles.findImg} src={profile} />
                     <span>{firstName}</span>
                   </li>
@@ -216,7 +216,7 @@ const Header = () => {
                     <span>Contact Us</span>
                   </li>
           {isLoggedName && (
-            <li className={styles.booking}>
+            <li onClick={() => navigate("/profile")} className={styles.booking}>
               <img className={styles.findImg} src={profile} />
               <span>{firstName}</span>
             </li>
@@ -233,7 +233,7 @@ const Header = () => {
         firstName={firstName}
         setFirstName={(name) => {
           setFirstName(name);
-          localStorage.setItem("firstName", name);
+          saveToLocalStorage("firstName", name);
         }}
         setIsLoggedName={setIsLoggedName}
         isOpen={isModalOpen}
