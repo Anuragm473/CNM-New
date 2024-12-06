@@ -288,7 +288,7 @@ const CatererSearch = () => {
                     isPureVeg ? styles.pureVeg : styles.noFilter
                   }`}
                 >
-                  {isPureVeg ? "Pure Veg" : "No Filter"}
+                  {isPureVeg ? "Pure Veg" : "Veg Mode"}
                 </button>
               </div>
             </div>
