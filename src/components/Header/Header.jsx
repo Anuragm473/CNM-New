@@ -126,13 +126,13 @@ const Header = () => {
         </div>
         <div className={styles.hamburger}>
           <div className={styles.dropdown} data-dropdown>
-            <button className={styles.hamburgerBtn} data-dropdown-button>
+            <button name='menu button for navigating throug pages' className={styles.hamburgerBtn} data-dropdown-button>
               <i className="fa-solid fa-bars"></i>
             </button>
             <div className={styles.dropdownMenu}>
               <ul className={styles.navLinks1}>
                 <h5 className={styles.logoNumber}>
-                  <img src={callIcon} />
+                  <img src={callIcon} alt='call icon'/>
                   +919321291563
                 </h5>
                 {!isCaterer && (
@@ -140,7 +140,7 @@ const Header = () => {
                     className={styles.findCaterers}
                     onClick={() => navigate("/caterer")}
                   >
-                    <img className={styles.findImg} src={find} />
+                    <img alt='find caterers' className={styles.findImg} src={find} />
                     Find Caterers
                   </li>
                 )}
@@ -149,18 +149,18 @@ const Header = () => {
                     className={styles.booking}
                     onClick={() => navigate("/my-orders")}
                   >
-                    <img className={styles.findImg} src={booking} />
+                    <img alt='my bookings button' className={styles.findImg} src={booking} />
                     Bookings
                   </li>
                 )}
                 {!isLoggedName && (
                   <li className={styles.booking} onClick={openModal}>
-                    <img className={styles.findImg} src={profile} />
+                    <img alt='login register button' className={styles.findImg} src={profile} />
                     <span>Login/Register</span>
                   </li>
                 )}
                 <li className={styles.booking} onClick={()=>navigate('contactus')}>
-                    <img className={styles.findImg} src={contactus} />
+                    <img alt='contact us ' className={styles.findImg} src={contactus} />
                     <span>Contact Us</span>
                   </li>
                 {isLoggedName && (
@@ -171,7 +171,7 @@ const Header = () => {
                 )}
                 {isLoggedName && (
                   <li className={styles.booking} onClick={handleSignout}>
-                    <img className={styles.findImg} src={logout} />
+                    <img alt='signout button' className={styles.findImg} src={logout} />
                     <span>SignOut</span>
                   </li>
                 )}
@@ -181,7 +181,7 @@ const Header = () => {
         </div>
         <ul className={`${styles.navLinks2}`}>
           <h5 className={styles.logoNumber}>
-            <img src={callIcon} />
+            <img call='contact us' src={callIcon} />
             <a href="tel:+919321291563">
               <span>+919321291563</span>
             </a>
@@ -191,7 +191,7 @@ const Header = () => {
               className={styles.findCaterers}
               onClick={() => navigate("caterer")}
             >
-              <img className={styles.findImg} src={find} />
+              <img alt='fint caterers' className={styles.findImg} src={find} />
               <span>Find Caterers</span>
             </li>
           )}
@@ -200,24 +200,24 @@ const Header = () => {
               className={styles.booking}
               onClick={() => navigate("/my-orders")}
             >
-              <img className={styles.findImg} src={booking} />
+              <img alt='my bookings' className={styles.findImg} src={booking} />
               Bookings
             </li>
           )}
           {/* <li className={styles.navContact}>+91 123456789</li> */}
           {!isLoggedName && (
             <li className={styles.booking} onClick={openModal}>
-              <img className={styles.findImg} src={profile} />
+              <img alt='login register' className={styles.findImg} src={profile} />
               <span>Login/Register</span>
             </li>
           )}
           <li className={styles.booking} onClick={()=>navigate('contactus')}>
-                    <img className={styles.findImg} src={contactus} />
+                    <img alt='contact us' className={styles.findImg} src={contactus} />
                     <span>Contact Us</span>
                   </li>
           {isLoggedName && (
             <li onClick={() => navigate("/profile")} className={styles.booking}>
-              <img className={styles.findImg} src={profile} />
+              <img alt='user name' className={styles.findImg} src={profile} />
               <span>{firstName}</span>
             </li>
           )}

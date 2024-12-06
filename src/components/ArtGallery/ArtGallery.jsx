@@ -16,7 +16,7 @@ export default function ArtGallery() {
         <h1 className={styles.header}>The Art of Catering: A Gallery of Caterersnearme’s Menu Dishes</h1>
         <div className={styles.gridContainer}>
         <div className={styles.flexContainer}>
-            <img className={styles.flexImg} style={{height:'235px'}} src={img1} alt="dish image" />
+            <img className={styles.flexImg} style={{height:'235px'}} src={img1} alt="vada pav image" />
             <img className={styles.flexImg} style={{height:'420px'}} src={img2} alt="dish image" />
             <img className={styles.flexImg} style={{height:'420px'}} src={img3} alt="dish image" />
         </div>

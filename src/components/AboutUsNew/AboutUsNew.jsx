@@ -27,7 +27,7 @@ const AboutUsNew = () => {
           <img
             className={styles.aboutUsImage}
             src={aboutusimg}
-            alt="Catering"
+            alt="caterer serving meal"
           />
         </div>
       </div>

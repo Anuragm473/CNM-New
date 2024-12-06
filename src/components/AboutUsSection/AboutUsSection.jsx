@@ -20,7 +20,7 @@ const AboutUsSection = () => {
           <img
             className={styles.aboutUsImage1}
             src={coverimg}
-            alt="Catering"
+            alt="image representing about our busniess"
           />
         </div>
       </div>
