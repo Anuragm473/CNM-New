@@ -22,7 +22,7 @@ export default function Footer1() {
                     <a className={styles.footerlink1} href="https://www.linkedin.com/company/caterersnearme"><ion-icon className={styles.sociallinks} name="logo-linkedin"></ion-icon></a>
                 </li>
             </ul>
-            <p className={styles.copyright}>Copyright &copy; <span className={styles.year}>{curretDate}</span> by Caterersnearme, Inc. All rights reserved.</p>
+            <p className={styles.copyright}>All orders are fulfilled by the respective caterers. Caterersnearme.in is only a platform for selection of caterers and is not responsible for the quality or service provided by the caterers.</p>
         </div>
         <div className={styles.addresscol}>
             <p className={styles.footerheading}>Contact Us</p>
@@ -30,6 +30,7 @@ export default function Footer1() {
                 <p className={styles.address}>Atal Incubation Center, 1st Floor, NMIMS Management Building, Vile Parle West, Mumbai - 400056</p>
                 <a className={styles.footerlink} href="tel:+91 9321291563">+91 9321291563</a>
                 <a className={styles.footerlink} href="mailto:caterersnearme@gmail.com">caterersnearme@gmail.com</a>
+                <p className={styles.copyright}>Copyright &copy; <span className={styles.year}>{curretDate}</span> by Caterersnearme, Inc. All rights reserved.</p>
             </address>
         </div>
         <nav className={styles.navcol}>

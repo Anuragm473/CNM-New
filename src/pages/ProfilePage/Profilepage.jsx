@@ -104,7 +104,7 @@ const Profilepage = () => {
 
         <div className={styles.formGroup}>
           <label htmlFor="email" className={styles.label}>
-            Gmail
+            Email
           </label>
           <input
             type="email"

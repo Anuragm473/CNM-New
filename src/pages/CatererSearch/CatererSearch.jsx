@@ -285,7 +285,7 @@ const CatererSearch = () => {
                 <button
                   onClick={handleToggle}
                   className={`${styles.buttonToggle} ${
-                    isPureVeg ? styles.pureVeg : styles.noFilter
+                    isPureVeg ?  styles.noFilter:styles.pureVeg
                   }`}
                 >
                   {isPureVeg ? "Pure Veg" : "Veg Mode"}

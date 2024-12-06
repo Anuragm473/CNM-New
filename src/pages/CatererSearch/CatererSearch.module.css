@@ -303,7 +303,6 @@ select:hover {
 .catererUpperLeft{
   padding: 0.2rem;
   display: flex;
-  flex-wrap: wrap;
 }
 
 .catererText{

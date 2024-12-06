@@ -56,7 +56,7 @@ export default function ContactUs() {
 
         <p className={styles.paragraph}>Meals starting at Rs 99/- Per Person</p>
 
-        <p className={styles.paragraph}>For Orders and Enquires Call or Whatsapp us on +91 9321291563 or fill the form below.</p>
+        <p className={styles.paragraph}>For Orders and Enquires Call or Whatsapp us on   +91 9321291563 or fill the form to the right.</p>
 
           <p className={styles.paragraph}>Looking forward to providing you a delightful experience!</p>
       </div>
@@ -68,7 +68,7 @@ export default function ContactUs() {
               name="firstName"
               value={formData.firstName}
               onChange={handleInputChange}
-              placeholder="First name (required)"
+              placeholder="First Name (Required)"
               required
               className={styles.input}
             />
@@ -77,7 +77,7 @@ export default function ContactUs() {
               name="lastName"
               value={formData.lastName}
               onChange={handleInputChange}
-              placeholder="Last name (required)"
+              placeholder="Last Name (Required)"
               required
               className={styles.input}
             />
@@ -87,7 +87,7 @@ export default function ContactUs() {
             name="contact"
             value={formData.contact}
             onChange={handleInputChange}
-            placeholder="Contact Number (required)"
+            placeholder="Contact Number (Required)"
             required
             className={styles.input}
           />
@@ -96,12 +96,12 @@ export default function ContactUs() {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            placeholder="Your email (required)"
+            placeholder="Your Email (Required)"
             required
             className={styles.input}
           />
           <textarea
-            name="message"
+            name="Message"
             value={formData.message}
             onChange={handleInputChange}
             placeholder="Message"

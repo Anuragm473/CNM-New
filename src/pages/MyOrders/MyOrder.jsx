@@ -89,7 +89,7 @@ const MyOrder = () => {
                     {order.catererId?.name}
                   </h2>
                   <h4 className={styles.catererName}>
-                    Event Time:{order.time}
+                    Event Time: {order.time}
                   </h4>
                   <h5 className={styles.catererName}>
                     Address: {order.address}
@@ -103,7 +103,8 @@ const MyOrder = () => {
                   </p>
                   <div className={styles.paymentStatus}>
                     <p>Amount: ₹{order.totalAmount}</p>
-                    <p>Payment status: {order.paymentStatus}</p>
+                    {/* <p>Payment status: {order.paymentStatus}</p> */}
+                    <p>Order Status: Pending</p>
                   </div>
                 </div>
               </div>
@@ -117,11 +118,11 @@ const MyOrder = () => {
             <div className={styles.orderFooter}>
               <b>
                 Delivery Date:{" "}
-                {new Date(order.deliveryDate).toLocaleDateString()}
+                {new Date(order.deliveryDate).toLocaleDateString('en-GB')}
               </b>
               <p>
-                Order By : {order.userId?.firstName} {order.userId?.lastName} |
-                {userData.role.id==1 && order?.userId?.phone}
+                Order By : {order.userId?.firstName} {order.userId?.lastName}
+                {userData.role.id==1 &&`| ${order?.userId?.phone}`}
               </p>
             </div>
           </div>
