@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import styles from "./Personal.module.css";
 import axios from "axios";
 import { CatererContext } from "../../CatererContext";
-import { getFromLocalStorage, toastMessage } from "../../../utility";
+import { getFromLocalStorage, saveToLocalStorage, toastMessage } from "../../../utility";
 import { formatDate } from "../../../utility";
 
 export default function Personal({ setCurrentStep }) {
@@ -122,6 +122,16 @@ export default function Personal({ setCurrentStep }) {
     });
   };
 
+  const handleCheckboxChangeCatering = (e) => {
+    const { value, checked } = e.target;
+    setFormData((prevState) => {
+      const updatedCuisines = checked
+        ? [...prevState.cateringType, value]
+        : prevState.cateringType.filter((cuisine) => cuisine !== value);
+      return { ...prevState, cateringType: updatedCuisines };
+    });
+  };
+
   useEffect(() => {
     const storage = getFromLocalStorage("catererData");
     if (catererId === "" && storage) {
@@ -134,6 +144,7 @@ export default function Personal({ setCurrentStep }) {
       try {
         const user = getFromLocalStorage("user");
         const catererid = user.catererId;
+        console.log(user)
         if (catererid) {
           const response = await axios.get(
             `https://www.caterersnearme.in/api/caterer/${catererid}`
@@ -157,10 +168,20 @@ export default function Personal({ setCurrentStep }) {
       const user=getFromLocalStorage('user')
       const {catererId}=user
       const updatedFields = getUpdatedFields(formData, initial);
-      const response = await axios.patch(
-        `https://www.caterersnearme.in/api/caterer/${catererId}`,
-        updatedFields
-      );
+      if(catererId){
+        const response = await axios.patch(
+          `https://www.caterersnearme.in/api/caterer/${catererId}`,
+          updatedFields
+        );
+      }else{
+        const response = await axios.post(
+          `https://www.caterersnearme.in/api/caterer`,
+          updatedFields
+        );
+        const catererResponse=await axios.patch(`https://www.caterersnearme.in/api/users/${user.id}`,{catererId:response.data.id})
+        saveToLocalStorage('user',{...user,catererId:response.data.id})
+      }
+      
       toastMessage("Updated successfully!");
       setCurrentStep(2);
     } catch (error) {
@@ -170,13 +191,23 @@ export default function Personal({ setCurrentStep }) {
 
   const getUpdatedFields = (formData, initialState) => {
     let updatedFields = {};
-    Object.keys(formData).forEach((key) => {
-      if (JSON.stringify(formData[key]) !== JSON.stringify(initialState[key])) {
-        updatedFields[key] = formData[key];
-      }
-    });
+  
+    // If initialState is provided, compare formData with it
+    if (initialState) {
+      Object.keys(formData).forEach((key) => {
+        // Check for differences between formData and initialState
+        if (JSON.stringify(formData[key]) !== JSON.stringify(initialState[key])) {
+          updatedFields[key] = formData[key];
+        }
+      });
+    } else {
+      // If no initialState, return the entire formData
+      updatedFields = { ...formData };
+    }
+  
     return updatedFields;
   };
+  
 
   return (
     <form className={styles.catererForm} onSubmit={handleSubmit}>
@@ -297,7 +328,7 @@ export default function Personal({ setCurrentStep }) {
           <input
             type="checkbox"
             value="veg"
-            onChange={handleCheckboxChange}
+            onChange={handleCheckboxChangeCatering}
             checked={formData?.cateringType?.includes("veg")}
           />{" "}
           <label>Veg</label>
@@ -306,7 +337,7 @@ export default function Personal({ setCurrentStep }) {
           <input
             type="checkbox"
             value="nonVeg"
-            onChange={handleCheckboxChange}
+            onChange={handleCheckboxChangeCatering}
             checked={formData?.cateringType?.includes("nonVeg")}
           />{" "}
           <label>Non Veg</label>
@@ -315,7 +346,7 @@ export default function Personal({ setCurrentStep }) {
           <input
             type="checkbox"
             value="jain"
-            onChange={handleCheckboxChange}
+            onChange={handleCheckboxChangeCatering}
             checked={formData?.cateringType?.includes("jain")}
           />{" "}
           <label>Jain</label>

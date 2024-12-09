@@ -414,8 +414,12 @@ select:hover {
   .filterDropdown{
     padding:0.4rem 0.3rem;
   }
+  .catererUpperLeft{
+    flex-direction:column;
+  }
   .filters{
     padding:1rem 0.3rem;
+    flex-wrap:wrap;
   }
   .resultsCount{
     text-align:center;
@@ -454,13 +458,23 @@ select:hover {
   .filterDropdown{
     padding:0.4rem 0;
   }
+  .filterItem{
+    margin:0 0.2rem 0 0;
+    padding:0
+  }
+  .containerToggle{
+    padding:0;
+  }
+  .filterDropdown{
+    width:6rem;
+  }
 }
 @media(max-width:335px){
   .filterDropdown{
     padding:0.4rem 0;
   }
   .filterItem{
-    margin-right:0.8rem;
+    margin-right:0.3rem;
   }
   .afterHeader{
     padding:0.5rem;

@@ -56,7 +56,7 @@ const OrderPage = () => {
 
   const catererName = catererData.name;
   const serviceStartYear = new Date(
-    catererData.dishes[0].createdAt
+    catererData.createdAt
   ).getFullYear();
   let dishes
   switch(selectedPeopleRange){

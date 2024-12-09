@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./OrderPageDishes.module.css";
 import orderDish from "../../assets/icons/orderDish.png";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +6,13 @@ import { saveToLocalStorage } from "../../../utility";
 
 const OrderPageDishes = ({ dishes }) => {
   const navigate = useNavigate();
+  const [hoveredDish, setHoveredDish] = useState(null); // Track the hovered dish
+
   const handleDishClick = (dish) => {
     saveToLocalStorage("dishDetails", dish);
     navigate(`/add-to-cart/${dish.id}`);
   };
-
+  console.log(dishes)
   return (
     <div className={styles.orderPageDishes}>
       <h3>Provided Dishes</h3>
@@ -20,6 +22,8 @@ const OrderPageDishes = ({ dishes }) => {
             className={styles.dish}
             key={index}
             onClick={() => handleDishClick(dish)}
+            onMouseEnter={() => setHoveredDish(dish.id)} // Set hovered dish on mouse enter
+            onMouseLeave={() => setHoveredDish(null)} // Clear hovered dish on mouse leave
           >
             <div className={styles.imageContainer}>
               <img
@@ -38,7 +42,15 @@ const OrderPageDishes = ({ dishes }) => {
               {dish.dishType.toLowerCase() === "veg" ? "Veg" : "Non-Veg"}
             </span>
             <h3>{dish.price}</h3>
-            <p>{dish.name}</p>
+
+            {/* Show the dish name as an overlay on hover */}
+            {/* <div className={styles.hoverNameContainer}>
+              {hoveredDish === dish.id && (
+                <ul className={styles.hoverName}>{dish.items.map(item=>
+                  <li className={styles.name} key={item.id}>{item.item}</li>
+                )}</ul>
+              )}
+            </div> */}
           </div>
         ))}
       </div>

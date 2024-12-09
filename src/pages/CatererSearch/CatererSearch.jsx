@@ -5,6 +5,7 @@ import styles from "./CatererSearch.module.css";
 import menuImage from "../../assets/caterer/menu1.jpeg";
 import axios from "../../api/axios";
 import { CatererContext } from "../../CatererContext";
+import { toast } from "react-toastify";
 
 function getCurrentUserLocation() {
   return new Promise((resolve, reject) => {
@@ -102,11 +103,16 @@ const CatererSearch = () => {
   };
 
   const initAutocomplete = () => {
-    autocompleteRef.current = new window.google.maps.places.Autocomplete(
-      document.getElementById("unified-search-input"),
-      { types: ["geocode"] }
-    );
-    autocompleteRef.current.addListener("place_changed", handlePlaceSelect);
+      autocompleteRef.current = new window.google.maps.places.Autocomplete(
+        document.getElementById("unified-search-input"),
+        {
+          types: ["establishment"], // This includes apartments, buildings, gardens, etc.
+          componentRestrictions: { country: "in" }, // Restrict results to India (use your desired country code)
+        }
+      );
+    
+      autocompleteRef.current.addListener("place_changed", handlePlaceSelect);
+    
   };
 
   const handlePlaceSelect = () => {
@@ -179,7 +185,7 @@ const CatererSearch = () => {
         case "100+":
           return caterer.dishesforabove100?.length > 0;
         default:
-          return true;
+          return caterer.dishesfor10_25?.length>0;
       }
     });
 
@@ -194,6 +200,10 @@ const CatererSearch = () => {
   }, [searchQuery, sortOrder, foodType, caterers,isPureVeg,selectedPeopleRange]);
 
   const handleDetailClick = (id) => {
+    if(selectedPeopleRange===""){
+      toast('Select Proper number of People to proceed')
+      return
+    }
     navigate(`/caterer/${id}`);
   };
 
@@ -301,6 +311,7 @@ const CatererSearch = () => {
               value={selectedPeopleRange}
               onChange={(e) => setSelectedPeopleRange(e.target.value)}
             >
+              <option value="">default</option>
               <option value="10-25">10-25</option>
               <option value="25-50">25-50</option>
               <option value="50-100">50-100</option>

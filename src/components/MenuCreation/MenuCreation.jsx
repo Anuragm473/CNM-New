@@ -128,6 +128,17 @@ export default function MenuCreation({ setCurrentStep }) {
         return JSON.stringify(menu1) === JSON.stringify(menu2);
     };
 
+    const handleRemoveItem = (menuIndex, menuType, itemIndex) => {
+      const newMenus = [...menus]; // Create a copy of the current menus state
+      if (newMenus[menuIndex].menuData[menuType]) {
+        // Remove the item at the specified index
+        newMenus[menuIndex].menuData[menuType].splice(itemIndex, 1);
+        // Update the state with the modified menu
+        setMenus(newMenus);
+      }
+    };
+    
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
