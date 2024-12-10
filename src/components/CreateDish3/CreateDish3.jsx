@@ -4,7 +4,7 @@ import axios from "axios";
 import { CatererContext } from "../../CatererContext";
 import { toastMessage } from "../../../utility";
 
-export default function CreateDish3() {
+export default function CreateDish3({ dishes, setPackageData, menuData }) {
   const { catererId } = useContext(CatererContext);
   const [deleted, setDeleted] = useState([]);
   const [packages, setPackages] = useState([]);
@@ -17,29 +17,29 @@ export default function CreateDish3() {
     async function fetchInitialData() {
       try {
         const [menuResponse, catererResponse] = await Promise.all([
-          fetch("https://www.caterersnearme.in/api/Menus?limit=100000"),
-          axios.get(`https://www.caterersnearme.in/api/caterer/${catererId}`)
+          fetch(`https://www.caterersnearme.in/api/Menus/caterer/${catererId}`),
+          axios.get(`https://www.caterersnearme.in/api/caterer/${catererId}`),
         ]);
 
         const menuData = await menuResponse.json();
-        const catererdishes = menuData.data.filter(
-          (dish) => dish.catererId === catererId
-        );
-        setCatererDish(catererdishes);
-
+        console.log(menuData);
+        setCatererDish(menuData);
         const catererData = catererResponse.data;
         setCategoryType(catererData.cateringType || []);
-        setDishData(catererData.dishesfor50_100 || []);
-        setPackages(
-          (catererData.dishesfor50_100 || []).map((dish) => ({
-            ...dish,
-            items: dish.items.map((item) => ({
-              ...item,
-              price: Number(item.price),
-              quantity: Number(item.quantity),
+        setDishData(dishes || []);
+        setPackageData((prev) => {
+          return {
+            ...prev,
+            dishesfor50_100: (dishes || []).map((dish) => ({
+              ...dish,
+              items: dish.items.map((item) => ({
+                ...item,
+                price: Number(item.price),
+                quantity: Number(item.quantity),
+              })),
             })),
-          }))
-        );
+          };
+        });
       } catch (error) {
         console.error("Error fetching initial data:", error);
       }
@@ -48,16 +48,40 @@ export default function CreateDish3() {
   }, [catererId]);
 
   const handlePackageChange = (index, event) => {
-    const updatedPackages = [...packages];
+    const updatedPackages = [...dishes];
     updatedPackages[index][event.target.name] =
       event.target.name === "price"
         ? Number(event.target.value)
         : event.target.value;
-    setPackages(updatedPackages);
+    setPackageData((prev) => {
+      return { ...prev, dishesfor50_100: updatedPackages };
+    });
+  };
+
+  const copyMenuToPackage = (packageIndex) => {
+    const updatedPackages = [...dishes];
+    const existingItems = updatedPackages[packageIndex].items.map(
+      (item) => item.item
+    );
+    const newMenuItems = menuData
+      .filter((menu) => !existingItems.includes(menu.item))
+      .map((menu) => ({
+        item: menu.item,
+        price: menu.price || 0,
+        quantity: 1,
+      }));
+
+    if (newMenuItems.length > 0) {
+      updatedPackages[packageIndex].items.push(...newMenuItems);
+      setPackageData((prev) => ({
+        ...prev,
+        dishesfor10_25: updatedPackages,
+      }));
+    }
   };
 
   const handleDishChange = (packageIndex, dishIndex, event) => {
-    const updatedPackages = [...packages];
+    const updatedPackages = [...dishes];
     const selectedDish = catererDish.find(
       (dish) => dish.name === event.target.value
     );
@@ -68,46 +92,59 @@ export default function CreateDish3() {
     if (event.target.name === "item" && selectedDish) {
       updatedPackages[packageIndex].items[dishIndex].id = selectedDish.id; // Store the dish's ID
     }
-    setPackages(updatedPackages);
+    setPackageData((prev) => {
+      return { ...prev, dishesfor50_100: updatedPackages };
+    });
   };
 
   const addDish = (packageIndex) => {
-    const updatedPackages = [...packages];
+    const updatedPackages = [...dishes];
     updatedPackages[packageIndex].items.push({
       id: "",
       item: "",
       price: 0,
       quantity: "",
     });
-    setPackages(updatedPackages);
+    setPackageData((prev) => {
+      return { ...prev, dishesfor50_100: updatedPackages };
+    });
   };
 
   const removeDish = (packageIndex, dishIndex) => {
-    const updatedPackages = [...packages];
+    const updatedPackages = [...dishes];
     updatedPackages[packageIndex].items.splice(dishIndex, 1); // Remove the dish
-    setPackages(updatedPackages);
+    setPackageData((prev) => {
+      return { ...prev, dishesfor50_100: updatedPackages };
+    });
   };
 
   const addPackage = () => {
-    setPackages([
-      ...packages,
-      {
-        name: "",
-        price: 0,
-        dishType: "",
-        items: [{ id: "", item: "", price: 0, quantity: "" }],
-      },
-    ]);
+    setPackageData((prev) => {
+      return {
+        ...prev,
+        dishesfor50_100: [
+          ...dishes,
+          {
+            name: "",
+            price: 0,
+            dishType: "",
+            items: [{ id: "", item: "", price: 0, quantity: "" }],
+          },
+        ],
+      };
+    });
   };
 
   const removePackage = (packageIndex) => {
-    const updatedPackages = [...packages];
+    const updatedPackages = [...dishes];
     const packageToRemove = updatedPackages[packageIndex];
     if (packageToRemove && packageToRemove.id !== undefined) {
       setDeleted((prev) => [...prev, packageToRemove.id]); // Add the `id` to deleted list
     }
     updatedPackages.splice(packageIndex, 1);
-    setPackages(updatedPackages);
+    setPackageData((prev) => {
+      return { ...prev, dishesfor50_100: updatedPackages };
+    });
   };
 
   async function SubmitForm(e) {
@@ -116,11 +153,13 @@ export default function CreateDish3() {
     try {
       if (deleted.length > 0) {
         await Promise.all(
-          deleted.map((id) => axios.delete(`https://www.caterersnearme.in/api/dishes/${id}`))
+          deleted.map((id) =>
+            axios.delete(`https://www.caterersnearme.in/api/dishes/${id}`)
+          )
         );
       }
 
-      const updateDish = packages.filter((pkg) => {
+      const updateDish = dishes.filter((pkg) => {
         const existingPackage = dishData.find((dish) => dish.id === pkg.id);
         return (
           !existingPackage ||
@@ -161,22 +200,30 @@ export default function CreateDish3() {
       );
 
       if (newdishes.length > 0) {
-        const res=await axios.patch(`https://www.caterersnearme.in/api/caterer/${catererId}`, {
-          dishesfor50_100: [...dishData.map(el=>el.id), ...newdishes.map(el=>el.id)],
-        });
+        const res = await axios.patch(
+          `https://www.caterersnearme.in/api/caterer/${catererId}`,
+          {
+            dishesfor50_100: [
+              ...dishData.map((el) => el.id),
+              ...newdishes.map((el) => el.id),
+            ],
+          }
+        );
       }
 
       toastMessage("Packages submitted successfully!");
     } catch (error) {
       console.error("Error submitting form:", error);
-      toastMessage("There was an error submitting the packages. Please try again.");
+      toastMessage(
+        "There was an error submitting the packages. Please try again."
+      );
     }
   }
 
   return (
     <>
       <form className={styles.formContainer}>
-        {packages.map((pkg, pkgIndex) => (
+        {dishes.map((pkg, pkgIndex) => (
           <div key={pkgIndex} className={styles.package}>
             <h3>Package {pkgIndex + 1}</h3>
             <div className={styles.inputGroup}>
@@ -264,6 +311,16 @@ export default function CreateDish3() {
                   className={`${styles.removeButton} ${styles.redButton}`}
                 >
                   Remove Dish
+                </button>
+                <button
+                  type="button"
+                  onClick={() => copyMenuToPackage(pkgIndex)}
+                  className={`${styles.addButton} ${styles.blueButton}`}
+                  disabled={catererDish.every((menu) =>
+                    pkg.items.some((item) => item.item === menu.name)
+                  )}
+                >
+                  Copy Menu to Package
                 </button>
               </div>
             ))}

@@ -311,7 +311,7 @@ const CatererSearch = () => {
               value={selectedPeopleRange}
               onChange={(e) => setSelectedPeopleRange(e.target.value)}
             >
-              <option value="">default</option>
+              <option value="">Default</option>
               <option value="10-25">10-25</option>
               <option value="25-50">25-50</option>
               <option value="50-100">50-100</option>

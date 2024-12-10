@@ -44,13 +44,13 @@ const OrderPageDishes = ({ dishes }) => {
             <h3>{dish.price}</h3>
 
             {/* Show the dish name as an overlay on hover */}
-            {/* <div className={styles.hoverNameContainer}>
+            <div className={styles.hoverNameContainer}>
               {hoveredDish === dish.id && (
                 <ul className={styles.hoverName}>{dish.items.map(item=>
-                  <li className={styles.name} key={item.id}>{item.item}</li>
+                  <li className={styles.name} key={item.id}>{item.item}: <span className={styles.quantity}>{item.quantity}</span></li>
                 )}</ul>
               )}
-            </div> */}
+            </div>
           </div>
         ))}
       </div>

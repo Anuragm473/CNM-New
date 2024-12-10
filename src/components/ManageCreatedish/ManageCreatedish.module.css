@@ -1,0 +1,78 @@
+/* styles.module.css */
+
+/* General Table Styling */
+.tableContainer {
+    margin: 20px auto;
+    max-width: 800px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    text-align: left;
+  }
+  
+  /* Header Styling */
+  .table thead {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .table th {
+    padding: 12px;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  /* Row Styling */
+  .table tbody tr {
+    transition: background-color 0.3s ease;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Input Styling */
+  .table input[type='number'] {
+    width: 80px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  /* Button Styling */
+  .table button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin-right: 5px;
+  }
+  
+  .table button:hover {
+    background-color: #45a049;
+  }
+  
+  .table button:active {
+    background-color: #3e8e41;
+  }
+  

@@ -51,7 +51,9 @@
 .dish:hover .hoverNameContainer {
   opacity: 1; /* Show on hover */
 }
-
+.quantity{
+  text-align:end;
+}
 .hoverName {
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
