@@ -5,7 +5,6 @@ import { CatererContext } from "../../CatererContext";
 import { toastMessage } from "../../../utility";
 
 export default function CreateDish1({ dishes, setPackageData, menuData }) {
-  console.log(dishes);
   const { catererId } = useContext(CatererContext);
   const [deleted, setDeleted] = useState([]);
   const [catererDish, setCatererDish] = useState([]);
@@ -22,7 +21,6 @@ export default function CreateDish1({ dishes, setPackageData, menuData }) {
         ]);
 
         const menuData = await menuResponse.json();
-        console.log(menuData);
         setCatererDish(menuData);
         const catererData = catererResponse.data;
         setCategoryType(catererData.cateringType || []);
@@ -66,6 +64,7 @@ export default function CreateDish1({ dishes, setPackageData, menuData }) {
     const newMenuItems = menuData
       .filter((menu) => !existingItems.includes(menu.item))
       .map((menu) => ({
+        id:menu.id,
         item: menu.item,
         price: menu.price || 0,
         quantity: 1,
@@ -169,6 +168,7 @@ export default function CreateDish1({ dishes, setPackageData, menuData }) {
 
       const results = await Promise.all(
         updateDish.map(async (pkg) => {
+          console.log(updateDish,pkg)
           if (pkg.id) {
             const updatedPackage = await axios.patch(
               `https://www.caterersnearme.in/api/dishes/${pkg.id}`,

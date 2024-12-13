@@ -32,7 +32,6 @@ export default function ContactUs() {
       templateParams,
       import.meta.env.VITE_EMAILJS_USER_ID)
       .then((response) => {
-        console.log('Email sent successfully!', response.status, response.text);
         toast('Message sent successfully!'); // Notify user
         setFormData({
           firstName: "",

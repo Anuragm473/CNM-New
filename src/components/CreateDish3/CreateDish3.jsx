@@ -22,7 +22,6 @@ export default function CreateDish3({ dishes, setPackageData, menuData }) {
         ]);
 
         const menuData = await menuResponse.json();
-        console.log(menuData);
         setCatererDish(menuData);
         const catererData = catererResponse.data;
         setCategoryType(catererData.cateringType || []);

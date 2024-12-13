@@ -27,6 +27,7 @@ const AddToCart = () => {
     
     const fetchDishData = async () => {
       try {
+        console.log(dishId)
         const dishResponse = await axiosPrivate.get(`/dishes/${dishId}`);
         const dish = dishResponse.data;
         setDishData(dish);
@@ -35,7 +36,7 @@ const AddToCart = () => {
           const itemIds = dish.items.map((item) => item.id);
 
           const menuPromises = itemIds.map((id) =>
-            axiosPrivate.get(`https://www.caterersnearme.in/api/menus/${id}`)
+            axiosPrivate.get(`/menus/${id}`)
           );
 
           const menusResponses = await Promise.all(menuPromises);

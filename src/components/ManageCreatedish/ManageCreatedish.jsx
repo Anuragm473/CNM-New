@@ -21,6 +21,7 @@ export default function ManageCreatedish() {
         );
         setMenuData(
           menuResponse.data.map((menu) => ({
+            id:menu.id,
             item: menu.name,
             price: 0,
             quantity: 1,
@@ -50,7 +51,6 @@ export default function ManageCreatedish() {
   const handleMenuPriceChange = (index, value) => {
     const updatedMenuData = [...menuData];
     updatedMenuData[index].price = Number(value);
-    console.log(updatedMenuData)
     setMenuData(updatedMenuData);
   };
 
