@@ -90,3 +90,23 @@
 .submitButton:hover {
   background-color: #0056b3;
 }
+@media(max-width:927px){
+  .container{
+    flex-direction:column-reverse;
+    align-items:center;
+  }
+  .formContainer{
+    width:100%;
+  }
+  .description{
+    max-width:100%;
+  }
+}
+@media(max-width:483px){
+  .row{
+    flex-direction:column;
+  }
+  .description{
+    font-size:1rem;
+  }
+}
