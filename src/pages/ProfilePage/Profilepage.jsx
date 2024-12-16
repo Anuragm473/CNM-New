@@ -13,6 +13,10 @@ const Profilepage = () => {
     userId: "",
   });
 
+  useEffect(()=>{
+    document.title='Birthday Party Catering Services Near Me'
+  },[])
+
   useEffect(()=>{async function getData(){
     const {id}=getFromLocalStorage("user");
     let user=await axios.get(`https://www.caterersnearme.in/api/users/${id}`)

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AboutUsSection from "../../components/AboutUsSection/AboutUsSection";
 // import Ourspeciality1 from "../../components/OurSpeciality1/OurSpeciality1";
 import useAuth from "../../hooks/useAuth";
@@ -14,6 +14,10 @@ import TestimonialSection from "../../components/TestimonialSecton/TestimonialSe
 
 const HomePage = () => {
   const { user } = useAuth();
+
+  useEffect(()=>{
+    document.title = "Find the Best Caterers Near Me for Every Occasion";
+  },[])
 
 
   if (user.user) {

@@ -98,6 +98,10 @@ const CatererSearch = () => {
     loadGoogleMapsScript();
   }, [radius]);
 
+  useEffect(()=>{
+    document.title='Top-Rated Caterers in Mumbai'
+  },[])
+
   const handleToggle = () => {
     setIsPureVeg(!isPureVeg);
   };

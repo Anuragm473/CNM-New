@@ -39,6 +39,10 @@ const MyOrder = () => {
       .catch((error) => console.error("Error fetching orders:", error.message));
   }, [page]); // Re-fetch when page changes
 
+  useEffect(()=>{
+    document.title='Hire the Best Caterers Near Me'
+  },[])
+
   // // Pagination handlers
   // const handleNextPage = () => {
   //   if (page < totalPages) {
@@ -138,7 +142,7 @@ const MyOrder = () => {
               <h3>Order Summary:</h3>
               <p>Order Quantity: {selectedOrder.dishQuantity}</p>
               <p>Amount: ₹{selectedOrder.totalAmount}</p>
-              <p>Payment Status: {selectedOrder.paymentStatus}</p>
+              <p>Order Status: {selectedOrder.paymentStatus}</p>
               {userData.role.id==1 && <p>Caterer Number: {selectedOrder.catererId.mobileNo}</p>}
               <p>
                 Delivery Date:{" "}

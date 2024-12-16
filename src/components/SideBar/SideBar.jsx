@@ -59,7 +59,7 @@ const SideBar = ({
             <div className={styles.category}>
               {category}{" "}
               <span className={styles.quantity}>
-                Select any {storageObject[index]?.quantity || 0}
+                {storageObject[index]?.quantity>0?`Select any ${storageObject[index]?.quantity || 0}`:`Add an Item` }
               </span>
             </div>
           </li>

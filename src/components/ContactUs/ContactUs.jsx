@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ContactUs.module.css';
 import emailjs from 'emailjs-com';
 import { toast } from 'react-toastify';
@@ -16,6 +16,10 @@ export default function ContactUs() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  useEffect(()=>{
+    document.title='Expert Sangeet Catering Services'
+  },[])
 
   const handleSubmit = (e) => {
     e.preventDefault();

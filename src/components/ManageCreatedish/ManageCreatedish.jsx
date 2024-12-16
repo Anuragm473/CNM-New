@@ -6,10 +6,12 @@ import CreateDish4 from "../CreateDish4/CreateDish4";
 import styles from "./ManageCreatedish.module.css";
 import { CatererContext } from "../../CatererContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function ManageCreatedish() {
   const { catererId } = useContext(CatererContext);
   const [menuData, setMenuData] = useState([]);
+  const [initialMenuData, setInitialMenuData] = useState([]); // Initial state for comparison
   const [packageData, setPackageData] = useState(null);
 
   useEffect(() => {
@@ -17,16 +19,16 @@ export default function ManageCreatedish() {
       try {
         // Fetch menu data
         const menuResponse = await axios.get(
-          `https://www.caterersnearme.in/api/Menus/caterer/${catererId}`
+          `https://www.caterersnearme.in/api/menus/caterer/${catererId}`
         );
-        setMenuData(
-          menuResponse.data.map((menu) => ({
-            id:menu.id,
-            item: menu.name,
-            price: 0,
-            quantity: 1,
-          }))
-        );
+        const formattedMenuData = menuResponse.data.map((menu) => ({
+          id: menu.id,
+          item: menu.name,
+          price: menu.price,
+          quantity: 1,
+        }));
+        setMenuData(formattedMenuData);
+        setInitialMenuData(JSON.parse(JSON.stringify(formattedMenuData))); // Deep copy for comparison
 
         // Fetch package data
         const catererResponse = await axios.get(
@@ -52,6 +54,38 @@ export default function ManageCreatedish() {
     const updatedMenuData = [...menuData];
     updatedMenuData[index].price = Number(value);
     setMenuData(updatedMenuData);
+  };
+
+  // Submit changes (PATCH request for updated menu items)
+  const handleSubmit = async () => {
+    try {
+      const updatedItems = menuData.filter((menu, index) => {
+        return menu.price !== initialMenuData[index].price;
+      });
+
+      if (updatedItems.length === 0) {
+        toast("No changes detected.");
+        return;
+      }
+
+      const patchRequests = updatedItems.map((item) => {
+        console.log(item)
+        return axios.patch(
+          `https://www.caterersnearme.in/api/menus/${item.id}`,
+          { price: item.price }
+        );
+      });
+
+      const response=await Promise.all(patchRequests);
+      console.log(response)
+
+      // Update initialMenuData to reflect the latest state
+      setInitialMenuData(JSON.parse(JSON.stringify(menuData)));
+      toast("Changes saved successfully!");
+    } catch (error) {
+      console.error("Error submitting changes:", error);
+      toast("Failed to save changes. Please try again.");
+    }
   };
 
   return (
@@ -83,6 +117,10 @@ export default function ManageCreatedish() {
           </tbody>
         </table>
       </div>
+
+      <button className={styles.submitButton} onClick={handleSubmit}>
+        Submit Changes
+      </button>
 
       {packageData && (
         <div>

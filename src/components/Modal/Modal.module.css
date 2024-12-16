@@ -5,7 +5,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0,0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,6 +20,7 @@
   width: 100%;
   overflow:scroll;
   max-height:80vh;
+  z-index:10;
   scrollbar-width: none;
 }
 

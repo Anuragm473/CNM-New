@@ -22,6 +22,10 @@ const OrderPage = () => {
 
   const [catererData, setCatererData] = useState(null);
 
+  useEffect(()=>{
+    document.title='Caterers Near Me for Christmas Dinner'
+  },[])
+
   useEffect(() => {
     const fetchCatererData = async () => {
       try {
