@@ -19,7 +19,7 @@ export default function ManageCreatedish() {
       try {
         // Fetch menu data
         const menuResponse = await axios.get(
-          `https://www.caterersnearme.in/api/menus/caterer/${catererId}`
+          `http://localhost:3000/api/menus/caterer/${catererId}`
         );
         const formattedMenuData = menuResponse.data.map((menu) => ({
           id: menu.id,
@@ -32,7 +32,7 @@ export default function ManageCreatedish() {
 
         // Fetch package data
         const catererResponse = await axios.get(
-          `https://www.caterersnearme.in/api/caterer/${catererId}`
+          `http://localhost:3000/api/caterer/${catererId}`
         );
         const data = catererResponse.data;
         setPackageData({
@@ -71,7 +71,7 @@ export default function ManageCreatedish() {
       const patchRequests = updatedItems.map((item) => {
         console.log(item)
         return axios.patch(
-          `https://www.caterersnearme.in/api/menus/${item.id}`,
+          `http://localhost:3000/api/menus/${item.id}`,
           { price: item.price }
         );
       });

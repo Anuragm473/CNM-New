@@ -16,7 +16,7 @@ const HomePage = () => {
   const { user } = useAuth();
 
   useEffect(()=>{
-    document.title = "Find the Best Caterers Near Me for Every Occasion";
+    document.title = "Caterersnearme - Find the Best Caterers Near Me for Every Occasion";
   },[])
 
 

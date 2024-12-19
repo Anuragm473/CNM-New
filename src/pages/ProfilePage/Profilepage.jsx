@@ -19,7 +19,7 @@ const Profilepage = () => {
 
   useEffect(()=>{async function getData(){
     const {id}=getFromLocalStorage("user");
-    let user=await axios.get(`https://www.caterersnearme.in/api/users/${id}`)
+    let user=await axios.get(`http://localhost:3000/api/users/${id}`)
     user=user.data
     setUserData(prev=>{
         return {...prev,userId:user.id,firstName:user.firstName,lastName:user.lastName,phone:user.phone,email:user.email}})
@@ -44,7 +44,7 @@ const Profilepage = () => {
 
     try {
       const response = await axios.patch(
-        `https://www.caterersnearme.in/api/users/${userId}`,
+        `http://localhost:3000/api/users/${userId}`,
         updatedData
       );
       toast("Profile updated successfully!");

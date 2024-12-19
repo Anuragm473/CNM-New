@@ -136,6 +136,56 @@ h2{
   padding: 10px 20px;
   margin: 0 10px;
   cursor: pointer;
+
+}
+
+.statusButtons{
+  margin-top:10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.paymentStatus p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0.2rem 0;
+  color: #555;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.acceptButton,
+.rejectButton {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+}
+
+.acceptButton {
+  background-color: #4caf50; /* Green */
+  color: white;
+}
+
+.rejectButton {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+.acceptButton:hover {
+  background-color: #45a049;
+}
+
+.rejectButton:hover {
+  background-color: #e53935;
 }
 
 .pageButton:disabled {

@@ -39,9 +39,11 @@ const Bill = () => {
   const axiosPrivate = useAxiosPrivate();
   const [cartData, setCartData] = useState([]);
   const [dishDetails, setDishDetails] = useState(null);
-  const [dishQuantity, setDishQuantity] = useState(numberOfPeople.min);
+  const [dishQuantity, setDishQuantity] = useState(0);
+  const [jainNumber, setJainNumber] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [couponCode, setCouponCode] = useState("");
+  const [showJainInput, setShowJainInput] = useState(false);
   const [discount, setDiscount] = useState(0);
   const [deliveryDate, setDeliveryDate] = useState("");
   const [deliveryTime, setDeliveryTime] = useState(""); // State for time input
@@ -49,6 +51,8 @@ const Bill = () => {
   const [address, setAddress] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  const catererId=getFromLocalStorage("catererId")
 
   useEffect(() => {
     const storedDishDetails = getFromLocalStorage("dishDetails");
@@ -92,6 +96,24 @@ const Bill = () => {
     }
   };
 
+  const handleJainNumberChange = (e) => {
+    const value = e.target.value;
+    if (
+      value === "" ||
+      (Number(value) > 0 && Number.isInteger(Number(value)))
+    ) {
+      setJainNumber(value);
+    }
+  };
+
+
+  const handleCheckboxChange = () => {
+    setShowJainInput((prev) => !prev);
+    if (!showJainInput) {
+      setJainNumber(0); // Reset the jainNumber when checkbox is unchecked
+    }
+  };
+
   const handleCouponChange = (e) => {
     setCouponCode(e.target.value);
   };
@@ -107,7 +129,7 @@ const Bill = () => {
 
   const handleOrder = async () => {
     try {
-      if(dishQuantity<numberOfPeople.min || dishQuantity>numberOfPeople.max){
+      if((Number(dishQuantity)+Number(jainNumber))<numberOfPeople.min || (Number(dishQuantity)+Number(jainNumber))>numberOfPeople.max){
         toast(`Please select number of people between ${numberOfPeople.min} to ${numberOfPeople.max}`)
         return
       }else if(!address){
@@ -127,15 +149,16 @@ const Bill = () => {
       const cartItems = cartItem.filter((cartItem) => cartItem.quantity !== 0);
 
       const myorder = {
-        catererId: getFromLocalStorage("catererId"),
+        catererId:catererId,
         dishId: dish?.id || "",
         userId: user?.id || "",
         items: cartItems,
         totalAmount: Number(totalPrice),
         dishQuantity: Number(dishQuantity) || 1,
-        paymentStatus: "Accepted",
+        paymentStatus: "Pending",
         address,
         message,
+        jainNumber:Number(jainNumber) || 0,
         orderDate: new Date().toISOString(),
         deliveryDate,
         time: `${deliveryTime} ${timePeriod}`,
@@ -144,10 +167,17 @@ const Bill = () => {
         },
       };
 
-      const response = await axiosPrivate.post(
-        "https://www.caterersnearme.in/api/orders",
+      await axiosPrivate.post(
+        "http://localhost:3000/api/orders",
         myorder
       );
+      const response=await axiosPrivate.get(`/users/caterer/${catererId}`)
+      console.log(response.data)
+      await axiosPrivate.post('/users/send-email',{ 
+        recipient:response.data.email,
+        subject:"New Order",
+        message:`You have a new order from caterersnearme`
+    })
       toast('Order Placed Successfully')
       navigate("/my-orders");
     } catch (error) {
@@ -250,6 +280,26 @@ const Bill = () => {
                 }
               />
             </div>
+            <div className={styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              id="jainCheckbox"
+              checked={showJainInput}
+              onChange={(e) => setShowJainInput(e.target.checked)}
+            />
+            <label htmlFor="jainCheckbox">Include Jain Food?</label>
+          </div>
+          {showJainInput && (
+            <div className={styles.dishQuantity}>
+              <h3  style={{ margin: "0", marginBottom: "5px" }}>Number Of People Jain:</h3>
+              <input
+              className={styles.dishQuantityInput}
+                type="number"
+                value={jainNumber}
+                onChange={handleJainNumberChange}
+              />
+            </div>
+          )}
             <div className={styles.addAnItem}>
               <h3>Dish Price: {dishDetails?.price || 0}</h3>
             </div>

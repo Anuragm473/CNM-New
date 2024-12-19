@@ -17,8 +17,8 @@ export default function CreateDish2({ dishes, setPackageData, menuData }) {
     async function fetchInitialData() {
       try {
         const [menuResponse, catererResponse] = await Promise.all([
-          fetch(`https://www.caterersnearme.in/api/Menus/caterer/${catererId}`),
-          axios.get(`https://www.caterersnearme.in/api/caterer/${catererId}`),
+          fetch(`http://localhost:3000/api/Menus/caterer/${catererId}`),
+          axios.get(`http://localhost:3000/api/caterer/${catererId}`),
         ]);
 
         const menuData = await menuResponse.json();
@@ -153,7 +153,7 @@ export default function CreateDish2({ dishes, setPackageData, menuData }) {
       if (deleted.length > 0) {
         await Promise.all(
           deleted.map((id) =>
-            axios.delete(`https://www.caterersnearme.in/api/dishes/${id}`)
+            axios.delete(`http://localhost:3000/api/dishes/${id}`)
           )
         );
       }
@@ -170,7 +170,7 @@ export default function CreateDish2({ dishes, setPackageData, menuData }) {
         updateDish.map(async (pkg) => {
           if (pkg.id) {
             const updatedPackage = await axios.patch(
-              `https://www.caterersnearme.in/api/dishes/${pkg.id}`,
+              `http://localhost:3000/api/dishes/${pkg.id}`,
               {
                 items: pkg.items.map((item) => ({
                   ...item,
@@ -186,7 +186,7 @@ export default function CreateDish2({ dishes, setPackageData, menuData }) {
             return updatedPackage.data;
           } else {
             const newPackage = await axios.post(
-              `https://www.caterersnearme.in/api/dishes`,
+              `http://localhost:3000/api/dishes`,
               { ...pkg, catererId }
             );
             return { ...newPackage.data, _id: newPackage.data.id };
@@ -200,7 +200,7 @@ export default function CreateDish2({ dishes, setPackageData, menuData }) {
 
       if (newdishes.length > 0) {
         const res = await axios.patch(
-          `https://www.caterersnearme.in/api/caterer/${catererId}`,
+          `http://localhost:3000/api/caterer/${catererId}`,
           {
             dishesfor25_50: [
               ...dishData.map((el) => el.id),
