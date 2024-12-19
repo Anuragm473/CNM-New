@@ -168,7 +168,7 @@ const Bill = () => {
       };
 
       await axiosPrivate.post(
-        "http://localhost:3000/api/orders",
+        "https://www.caterersnearme.in/api/orders",
         myorder
       );
       const response=await axiosPrivate.get(`/users/caterer/${catererId}`)
