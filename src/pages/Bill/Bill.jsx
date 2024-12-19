@@ -129,7 +129,7 @@ const Bill = () => {
 
   const handleOrder = async () => {
     try {
-      if((Number(dishQuantity)+Number(jainNumber))<numberOfPeople.min || (Number(dishQuantity)+Number(jainNumber))>numberOfPeople.max){
+      if(Number(dishQuantity)<numberOfPeople.min || Number(dishQuantity)>numberOfPeople.max){
         toast(`Please select number of people between ${numberOfPeople.min} to ${numberOfPeople.max}`)
         return
       }else if(!address){
@@ -137,6 +137,9 @@ const Bill = () => {
         return
       }else if(!deliveryTime || !timePeriod){
         toast(`Please Enter Time`)
+        return
+      }else if(Number(jainNumber)>Number(dishQuantity)){
+        toast(`Jain number should be less then total number`)
         return
       }
       const dish = getFromLocalStorage("dishDetails");
@@ -177,6 +180,11 @@ const Bill = () => {
         recipient:response.data.email,
         subject:"New Order",
         message:`You have a new order from caterersnearme`
+    })
+      await axiosPrivate.post('/users/send-email',{ 
+        recipient:'caterersnearme@gmail.com',
+        subject:"New Order",
+        message:`A order from is booked for caterer:${response.data.name}`
     })
       toast('Order Placed Successfully')
       navigate("/my-orders");
