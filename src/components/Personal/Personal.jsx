@@ -147,7 +147,7 @@ export default function Personal({ setCurrentStep }) {
         console.log(user)
         if (catererid) {
           const response = await axios.get(
-            `https://www.caterersnearme.in/api/caterer/${catererid}`
+            `http://localhost:3000/api/caterer/${catererid}`
           );
           let data = response.data;
           data.inServiceFrom = formatDate(data.inServiceFrom);
@@ -170,15 +170,15 @@ export default function Personal({ setCurrentStep }) {
       const updatedFields = getUpdatedFields(formData, initial);
       if(catererId){
         const response = await axios.patch(
-          `https://www.caterersnearme.in/api/caterer/${catererId}`,
+          `http://localhost:3000/api/caterer/${catererId}`,
           updatedFields
         );
       }else{
         const response = await axios.post(
-          `https://www.caterersnearme.in/api/caterer`,
+          `http://localhost:3000/api/caterer`,
           updatedFields
         );
-        const catererResponse=await axios.patch(`https://www.caterersnearme.in/api/users/${user.id}`,{catererId:response.data.id})
+        const catererResponse=await axios.patch(`http://localhost:3000/api/users/${user.id}`,{catererId:response.data.id})
         saveToLocalStorage('user',{...user,catererId:response.data.id})
       }
       

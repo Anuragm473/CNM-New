@@ -6,6 +6,8 @@ import menuImage from "../../assets/caterer/menu1.jpeg";
 import axios from "../../api/axios";
 import { CatererContext } from "../../CatererContext";
 import { toast } from "react-toastify";
+import { saveToLocalStorage } from "../../../utility";
+import StarRating from "../../components/startRating/StarRating"
 
 function getCurrentUserLocation() {
   return new Promise((resolve, reject) => {
@@ -51,7 +53,7 @@ const CatererSearch = () => {
         const { lat, lng } = await getCurrentUserLocation();
 
         const response = await axios.get(
-          `https://www.caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
+          `http://localhost:3000/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
         );
 
         const data = response.data;
@@ -73,7 +75,7 @@ const CatererSearch = () => {
     const fetchFallbackCaterers = async () => {
       try {
         const response = await axios.get(
-          "https://www.caterersnearme.in/api/caterer"
+          "http://localhost:3000/api/caterer"
         );
         const data = response.data.data;
         if (Array.isArray(data)) {
@@ -132,7 +134,7 @@ const CatererSearch = () => {
   const fetchNearbyCaterers = async (lat, lng) => {
     try {
       const response = await axiosPrivate.get(
-        `https://www.caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
+        `http://localhost:3000/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
       );
       if (Array.isArray(response.data)) {
         setCaterers(response.data);
@@ -313,7 +315,9 @@ const CatererSearch = () => {
               id="people-range"
               className={styles.filterDropdown}
               value={selectedPeopleRange}
-              onChange={(e) => setSelectedPeopleRange(e.target.value)}
+              onChange={(e) => {
+                saveToLocalStorage('numberOfPeople',e.target.value)
+                setSelectedPeopleRange(e.target.value)}}
             >
               <option value="">Default</option>
               <option value="10-25">10-25</option>
@@ -360,6 +364,7 @@ const CatererSearch = () => {
                     </div>
                     {caterer.minPrice !== undefined &&
                       caterer.maxPrice !== undefined && (
+                        <div className={styles.rating}>
                         <div className={styles.cardPrice}>
                           <p>
                             <b>Price: </b>
@@ -367,6 +372,8 @@ const CatererSearch = () => {
                               ₹{caterer.minPrice} - ₹{caterer.maxPrice}
                             </i>
                           </p>
+                        </div>
+                        <StarRating size={14} defaultRating={caterer.averageRating || 0}/>
                         </div>
                       )}
                   </div>

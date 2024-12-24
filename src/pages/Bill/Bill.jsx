@@ -8,7 +8,10 @@ import { toast } from "react-toastify";
 import { getFromLocalStorage } from "../../../utility";
 
 const Bill = () => {
-  const { selectedPeopleRange } = useContext(CatererContext);
+  const { selectedPeopleRange,setSelectedPeopleRange } = useContext(CatererContext);
+  if(!selectedPeopleRange){
+    setSelectedPeopleRange(getFromLocalStorage('numberOfPeople'))
+  }
   let numberOfPeople;
   switch (selectedPeopleRange) {
     case "10-25":
@@ -39,7 +42,7 @@ const Bill = () => {
   const axiosPrivate = useAxiosPrivate();
   const [cartData, setCartData] = useState([]);
   const [dishDetails, setDishDetails] = useState(null);
-  const [dishQuantity, setDishQuantity] = useState(0);
+  const [dishQuantity, setDishQuantity] = useState(numberOfPeople.min);
   const [jainNumber, setJainNumber] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [couponCode, setCouponCode] = useState("");
@@ -171,7 +174,7 @@ const Bill = () => {
       };
 
       await axiosPrivate.post(
-        "https://www.caterersnearme.in/api/orders",
+        "http://localhost:3000/api/orders",
         myorder
       );
       const response=await axiosPrivate.get(`/users/caterer/${catererId}`)
