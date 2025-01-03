@@ -1,0 +1,35 @@
+.container{
+    border-radius:12px;
+    padding:2rem 1rem 1rem 1rem;
+    background-color:white;
+    color:black;
+    text-align:center;
+    max-width:17.3rem;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+}
+.heading{
+    font-weight:500;
+    font-size:1.31rem;
+    line-height:2.1rem;
+    margin:0;
+}
+.image{
+    width:15rem;
+}
+.arrowContainer{
+    display:flex;
+    justify-content:end;
+}
+.paragrapg{
+    font-size:1rem;
+    line-height:1.62rem;
+    margin:0;
+    padding:0.7rem 0.5rem 1rem 0.5rem;
+}
+.blueCircle{
+    background-color:#0F1CC6;
+    padding:0.8rem;
+    border-radius:50%;
+    color:#fff;
+    font-size:1.3rem;
+}

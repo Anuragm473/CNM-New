@@ -3,11 +3,11 @@ import styles from "./CatererInfo.module.css";
 
 const CatererInfo = ({ info, serviceSpecialist }) => {
   return (
-    <div className={styles.catererInfo}>
-      <h3>Caterer Info</h3>
-      <p>{info}</p>
-      <h3>Service Specialist</h3>
-      <p>{serviceSpecialist}</p>
+    <div className={styles.caterInfo}>
+      <h3 className={styles.catererInfo}>Caterer Information.</h3>
+      <p className={styles.info}>{info}</p>
+      <h3 className={styles.catererInfo}>Service Specialist</h3>
+      <p className={styles.info}>{serviceSpecialist}</p>
     </div>
   );
 };

@@ -3,25 +3,37 @@
   padding: 10px 0 0 0;
 }
 .container{
-  background-color: #f8f9fa;
-  padding:10px;
+  color:#333;
+  background-color: #fff;
+  padding:10px 10px 10px 0;
+  position:relative;
 }
 .quantity {
   border-radius: 10px;
   padding: 9px 14px;
   max-width: 100%;
-  background-color: #ffc107;
+  background-color: #fff;
   display: flex;
-  color:#333;
+  font-size:12px;
+  color:#282828;
   justify-content: center;
   align-items: center;
 }
+.notselected>.category>.name{
+  opacity:0.75;
+}
 .steps{
   width:100%;
-  font-size:1.6rem;
-  font-weight:900;
-  padding:10px 0;
-  border-bottom:1px solid #888;
+  font-size:1.5rem;
+  font-weight:500;
+  font-family:'poppins';
+  display:inline-block;
+  color:#282828;
+  margin:0;
+  height:4rem;
+  display:flex;
+  align-items:center;
+  border-bottom:1px solid #28282829 ;
 }
 .btn {
   background-color: #f8f9fa;
@@ -31,14 +43,15 @@
   border: none;
   font-size: 12px;
   border-radius: 10px;
-  position:relative;
-  left:165%;
+  position:absolute;
+  left:200%;
+  top:6%;
+  min-width:9rem;
 }
 .btn>span{
   font-size:20px;
 }
 .category {
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,15 +64,15 @@
 }
 
 .sidebar li {
-  background-color: #f8f9fa;
+  background-color: #E8EAFE;
   padding: 10px;
   cursor: pointer;
+  margin:12px 0;
 }
 
 .sidebar li.selected {
-  background-color: #fad03d;
-  border-radius:4px;
-  color:#333;
+  background-color: #0F1CC6;
+  color:#fff;
   font-weight:400;
 }
 

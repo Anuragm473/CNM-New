@@ -1,14 +1,33 @@
 .cuisinesOffered {
   width: 100%;
-  background-color: #f9f9f9;
-  padding: 20px;
+  padding:20px 0;
   box-sizing: border-box;
   border-radius: 20px;
+  max-width:71rem;
+  margin:0 auto;
 }
-
+.cuisinesOffered h3{
+  font-family:'poppins';
+  color:#282828;
+  font-weight:600;
+  font-size:30px;
+}
+.cuisines{
+  display:flex;
+  flex-wrap:wrap;
+  gap:3rem;
+  max-width:60rem;
+}
 .cuisine {
   display: flex;
   gap: 10px;
   align-items: center;
   margin: 5px 0;
+}
+.cuisine span{
+  font-family:'poppins';
+  font-size:19px;
+  font-weight:500;
+  color:#282828;
+  opacity:0.57;
 }

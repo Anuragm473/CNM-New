@@ -2,18 +2,12 @@
   display: flex;
   width: 100%;
   align-items: center;
-  background-color: var(--whiteColor);
-  border: 1px solid var(--borderColor);
-  border-radius: 20px;
+  background-color: #424DF81F;
+  height:413px;
   padding-top: 20px;
   padding-bottom: 20px;
 }
 
-.card h3,
-.card p {
-  margin: 0;
-  padding: 0;
-}
 
 .imageContainer {
   width: 100px;
@@ -26,10 +20,39 @@
   margin-left: 3rem;
   margin-right: 3rem;
 }
+.header{
+  font-weight:500;
+  font-size:2.2rem;
+  margin:0 0 0.5rem 0;
+}
+.rating,.tagline,.header.taglines{
+  color:#282828;
+  font-family:'poppins';
+}
+.rating{
+  font-size:1.3rem;
+  font-weight:500;
+  display:flex;
+  gap:0.5rem;
+}
+.tagline{
+  font-weight:420;
+  font-size:1rem;
+  color:#282828;
+  margin:0 0 0.3rem 0;
+}
+.taglines{
+  font-weight:420;
+  font-size:1rem;
+  color:#282828;
+  margin:0 0 1rem 0;
+}
 .catererInfo{
   display:flex;
   flex-direction:column;
   gap:0.5rem;
+  width:71rem;
+  margin:0 auto;
 }
 .image {
   left: 0;

@@ -30,7 +30,7 @@ const SideBar = ({
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.steps}>Step-1</div>
+      <h3 className={styles.steps}>Menu for {getFromLocalStorage("dishDetails").name}</h3>
       <div className={styles.container}>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <IncreaseQuantity
@@ -44,7 +44,6 @@ const SideBar = ({
         />
       </Modal>
       <div className={styles.category}>
-        <h3>Menu for {getFromLocalStorage("dishDetails").name}</h3>
         <button className={styles.btn} onClick={openModal}>
           Add an Extra Item <span>&#43;</span>
         </button>
@@ -53,11 +52,11 @@ const SideBar = ({
         {categories.map((category, index) => (
           <li
             key={index}
-            className={selectedCategory === category ? styles.selected : ""}
+            className={selectedCategory === category ? styles.selected : styles.notselected}
             onClick={() => onCategorySelect(category)}
           >
             <div className={styles.category}>
-              {category}{" "}
+              <span className={styles.name}>{category}{" "}</span>
               <span className={styles.quantity}>
                 {storageObject[index]?.quantity>0?`Select any ${storageObject[index]?.quantity || 0}`:`Add an Item` }
               </span>

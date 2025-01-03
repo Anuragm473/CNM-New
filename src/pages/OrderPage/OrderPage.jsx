@@ -22,9 +22,6 @@ const OrderPage = () => {
 
   const [catererData, setCatererData] = useState(null);
 
-  useEffect(()=>{
-    document.title='Caterers Near Me for Christmas Dinner'
-  },[])
 
   useEffect(() => {
     const fetchCatererData = async () => {
@@ -85,26 +82,25 @@ const OrderPage = () => {
   const cateringType = catererData.cateringType.join(", ");
   const serviceLocation = catererData.address;
   const reviews = catererData.review;
+  const rating = catererData.averageRating
 
   return (
+    <>
+    <Helmet>
+    <title>Caterers Near Me: View Details, Menus, and Reviews</title>
+    <meta name="description" content="Explore detailed profiles of caterers on CaterersNearMe. View menus, services, reviews, and contact info to choose the perfect catering for your event." />
+    <meta name="keywords" content="caterer details, catering services profile, view caterer menu, catering reviews, event catering options, wedding catering services, hire caterers, local catering" />
+    </Helmet>
     <div className={styles.orderPage}>
-      <CatererDetails />
       <div className={styles.mainSection}>
         <div className={styles.mainSectionLeft}>
           <Card
             catererName={catererName}
             tagline="Flavors that bring people together, crafted with care"
             serviceStartYear={serviceStartYear}
+            rating={rating}
           />
-          <OrderPageDishes dishes={dishes} />
-          <CatererInfo
-            info={catererInfo}
-            serviceSpecialist={serviceSpecialist}
-          />
-          <CuisinesOffered cuisines={cuisines} />
-          <Reviews reviews={reviews} />
-        </div>
-        <div className={styles.mainSectionRight}>
+          <div className={styles.mainSectionRight}>
           <CatererSummary
             serviceStartDate={serviceStartDate}
             capacity={capacity}
@@ -113,8 +109,17 @@ const OrderPage = () => {
           />
           {/* <Map /> */}
         </div>
+          <CatererInfo
+            info={catererInfo}
+            serviceSpecialist={serviceSpecialist}
+          />
+          <OrderPageDishes dishes={dishes} />
+          <CuisinesOffered cuisines={cuisines} />
+          <Reviews reviews={reviews} />
+        </div>
       </div>
     </div>
+    </>
   );
 };
 

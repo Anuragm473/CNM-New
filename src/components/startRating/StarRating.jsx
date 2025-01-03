@@ -71,9 +71,12 @@ export default function StarRating({
         ))}
       </div>
       <p style={textStyle}>
-        {messages.length === maxRating
-          ? messages[tempRating ? tempRating - 1 : rating - 1]
-          : tempRating || rating || ""}
+      {
+  messages.length === maxRating
+    ? messages[tempRating ? (Number(tempRating) - 1).toFixed(1) : (Number(rating) - 1).toFixed(1)]
+    : (tempRating || rating ? Number(tempRating || rating).toFixed(1) : "")
+}
+
       </p>
     </div>
   );

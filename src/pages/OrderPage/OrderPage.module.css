@@ -1,25 +1,25 @@
 .mainSection {
   display: flex;
   gap: 1rem;
-  padding: 10px;
+  width:100%;
   height: fit-content;
-  margin-top: 15vh;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  color:#333;
 }
 
 .mainSectionLeft {
-  width: 65%;
+  width: 100%;
 }
 
 .mainSectionRight {
-  width: 30%;
-  background-color: lightcoral;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
+  margin:0 auto;
+  max-width:71rem;
 }
 
 @media (max-width: 1200px) {

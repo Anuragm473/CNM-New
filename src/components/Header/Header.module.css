@@ -3,8 +3,10 @@
   justify-content: space-between;
   align-items: center;
   height: auto;
-  padding: 1rem 3rem 1rem 1rem;
-  background-color:#fdf2e9;
+  padding: 0 3rem 0 1rem;
+  background-color:white;
+  max-width:86rem;
+  margin:0 auto;
 }
 
 .navLinks2{
@@ -16,6 +18,7 @@
   font-size:1.125rem;
   font-weight:500;
   align-items:center;
+  margin:0;
 }
 
 .logo {
@@ -39,19 +42,42 @@
   height: 2.8rem;
   margin-left:1rem;
   background-color:#f3801a;
-  border-radius:2px;
+  border-radius:6px;
   width:4.4rem;
 }
-
+.userImg{
+  color:#0C18B9;
+  font-size:1.1rem;
+}
+.service{
+  border:none;
+  padding:0 0.5rem;
+  font-family:'poppins';
+  font-size:1rem;
+  color:#222222;
+  pointer:cursor;
+}
+.create{
+  font-size:1rem;
+  background-color:#070E6A;
+  border:none;
+  color:#fff;
+  padding:0.8rem 1.2rem;
+  border-radius:1.3rem;
+  font-weight:400;
+  pointer:cursor;
+}
 .logoNumber{
-  font-size: 1.12rem;
-  font-weight:500;
-  color:#333;
+  font-size: 1.1rem;
+  font-weight:400;
+  font-family:'poppins';
+  color:#222;
   display:flex;
   align-items:center;
+  padding-right:5rem;
 }
 .logoText {
-  font-size: 20px;
+  font-size: 1.5rem;
   font-weight: 500;
   color: #444;
   cursor: pointer;
@@ -59,6 +85,8 @@
   align-items:center;
   gap:1rem;
   justify-content:center;
+  line-height:1.2rem;
+  letter-spacing:-1px;
 }
 
 .navLinks1{
@@ -70,6 +98,7 @@
   gap: 20px;
   list-style: none;
   color: black;
+  z-index:100;
 }
 
 .navLogin,
@@ -106,6 +135,9 @@
   display:flex;
   align-items:center;
   gap:5px;
+  font-family:'poppins';
+  font-size:1.1rem;
+  font-weight:400;
   flex-direction:row;
   justify-content:center
 }

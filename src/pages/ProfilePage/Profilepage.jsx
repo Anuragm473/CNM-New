@@ -13,9 +13,6 @@ const Profilepage = () => {
     userId: "",
   });
 
-  useEffect(()=>{
-    document.title='Birthday Party Catering Services Near Me'
-  },[])
 
   useEffect(()=>{async function getData(){
     const {id}=getFromLocalStorage("user");
@@ -54,6 +51,12 @@ const Profilepage = () => {
   };
 
   return (
+    <>
+    <Helmet>
+    <title>Caterers Near Me: View, Edit and Manage Your Profile</title>
+    <meta name="description" content="Manage your catering profile effortlessly on CaterersNearMe. Update details, showcase services, and attract more customers. Streamline your business today!" />
+    <meta name="keywords" content="catering profile management, caterers admin dashboard, manage catering services, catering business tools, update catering profile, attract catering clients" />
+    </Helmet>
     <div className={styles.container}>
       <div className={styles.imageContainer}>
         <img src={userImage} alt="User" className={styles.image} />
@@ -126,6 +129,7 @@ const Profilepage = () => {
         </button>
       </form>
     </div>
+    </>
   );
 };
 

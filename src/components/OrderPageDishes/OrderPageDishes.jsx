@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./OrderPageDishes.module.css";
-import orderDish from "../../assets/icons/orderDish.png";
+import orderDish from "../../assets/images/dish.webp";
 import { useNavigate } from "react-router-dom";
 import { saveToLocalStorage } from "../../../utility";
 
@@ -15,7 +15,6 @@ const OrderPageDishes = ({ dishes }) => {
   console.log(dishes)
   return (
     <div className={styles.orderPageDishes}>
-      <h3>Provided Dishes</h3>
       <div className={styles.dishes}>
         {dishes?.map((dish, index) => (
           <div
@@ -31,7 +30,7 @@ const OrderPageDishes = ({ dishes }) => {
                 src={dish.imageUrl || orderDish}
                 alt="dish image"
               />
-            </div>
+            
             <span
               className={
                 dish.dishType.toLowerCase() === "veg"
@@ -41,7 +40,8 @@ const OrderPageDishes = ({ dishes }) => {
             >
               {dish.dishType.toLowerCase() === "veg" ? "Veg" : "Non-Veg"}
             </span>
-            <h3>{dish.price}</h3>
+            <h3 className={styles.price}>{dish.price}</h3>
+
 
             {/* Show the dish name as an overlay on hover */}
             <div className={styles.hoverNameContainer}>
@@ -50,6 +50,7 @@ const OrderPageDishes = ({ dishes }) => {
                   <li className={styles.name} key={item.id}>{item.item}: <span className={styles.quantity}>{item.quantity}</span></li>
                 )}</ul>
               )}
+            </div>
             </div>
           </div>
         ))}

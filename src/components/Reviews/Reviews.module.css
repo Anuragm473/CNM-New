@@ -1,0 +1,17 @@
+.reviews{
+    max-width:71rem;
+    margin:0 auto;
+}
+.heading{
+    font-family:'poppins';
+  color:#282828;
+  font-weight:600;
+  font-size:30px;
+  padding-top:1rem;
+}
+.reviewContainer{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1rem;
+    margin-bottom:2rem;
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './ContactUs.module.css';
 import emailjs from 'emailjs-com';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -16,10 +17,6 @@ export default function ContactUs() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  useEffect(()=>{
-    document.title='Expert Sangeet Catering Services'
-  },[])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,6 +49,11 @@ export default function ContactUs() {
 
   return (
     <>
+    <Helmet>
+    <title>Caterers Near Me: Reach Us or Request a Callback</title>
+    <meta name="description" content="Contact us today to book the best catering services in Mumbai! Reach out for personalized menus, corporate catering, or festive dinner parties." />
+    <meta name="keywords" content="catering services in Mumbai, catering services India" />
+    </Helmet>
     <h1 className={styles.heading}>Contact Us</h1>
     <div className={styles.container}>
       <div className={styles.description}>

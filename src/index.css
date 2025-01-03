@@ -20,8 +20,9 @@ body {
   padding: none;
   box-sizing: border-box;
   margin: 0;
-  font-family: "Rubik", sans-serif;
+  font-family: Poppins;
   font-weight: 400;
+  color:#FFFFFF;
   font-style: normal;
 }
 

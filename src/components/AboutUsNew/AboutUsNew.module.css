@@ -1,17 +1,17 @@
 .mainContainer{
-  background-color:#fdf2e9;
   width:100%;
 }
 .container{
-  max-width:87.25rem;
+  max-width:71rem;
   margin:0 auto;
-  padding:5rem 0;
+  padding:3rem 0;
   
 }
 .container h1{
   text-align: center;
   font-size:2.2rem;
   margin:0;
+  color:#181818;
   padding-bottom:1rem;
   font-weight: 600;
 }
@@ -24,23 +24,19 @@
 }
 .aboutUsSection {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  max-width:87.25rem;
+  padding: 10px 0;
+  max-width:71rem;
   margin:0 auto;
 }
 
 .aboutUsRight {
-  width: 50%;
   order: 1;
 }
 .aboutUsLeft {
-  padding: 2rem;
-  width: 50%;
+  padding: 2rem 2rem 2rem 0;
+  max-width:27rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
   order: 2;
 }
@@ -50,7 +46,7 @@
   color: #fff;
   font-weight: 500;
   border-radius: 9px;
-  background-color: #e67e22;
+  background-color: #070E6A;
   border: none;
   border-radius: 0.5rem;
 }
@@ -60,9 +56,20 @@
 
 .aboutUsLeft h1,
 .aboutUsLeft p {
-  color: #333;
+  color: #000;
 }
-
+.aboutUsLeft h1{
+  weight:500;
+  font-size:1.9rem;
+  text-align:start;
+  letter-spacing:0.2px;
+  word-spacing:2px;
+}
+.aboutUsLeft p{
+  font-size:1.11rem;
+  letter-spacing:0.2px;
+  word-spacing:2px;
+}
 .aboutUsImageContainer {
   width: 80%;
   max-height:32.75rem;
@@ -71,7 +78,7 @@
 
 .aboutUsImage {
   width: 100%;
-  max-height:32.75rem;
+  max-height:20rem;
   border-radius:9px;
 }
 
@@ -83,7 +90,12 @@
   margin-top: 1rem;
   height: 2rem;
 }
-
+.review{
+  display:flex;
+  max-width:71rem;
+  gap:2rem;
+  margin:0 auto;
+}
 @media screen and (max-width: 968px) {
   .aboutUsSection {
     flex-direction: column;

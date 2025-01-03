@@ -8,7 +8,17 @@ const CuisinesOffered = ({ cuisines }) => {
       <div className={styles.cuisines}>
         {cuisines.map((cuisine, index) => (
           <div className={styles.cuisine} key={index}>
-            <i className="fa-solid fa-utensils"></i>
+            <div style={{
+    width: "10px", // Adjust the size of the dot
+    height: "10px",
+    backgroundColor: "#020FB7B2", // Dot color
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "white", // Icon color
+    fontSize: "24px", // Adjust icon size
+  }}></div>
             <span>{cuisine}</span>
           </div>
         ))}

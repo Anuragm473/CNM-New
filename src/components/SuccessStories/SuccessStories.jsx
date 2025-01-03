@@ -15,36 +15,50 @@ const SuccessStories = () => {
   const successStories = [
     {
       image: img1,
+      description:'Simple Juice Recipes to boost your immune system',
+      occasion:'Party'
     //   name: 'Apolline Deo',
     //  title: 'Head Chef'
     },
     {
       image: img2,
+      description:'Simple Juice Recipes to boost your immune system',
+      occasion:'Party'
     //   name: 'Robart Parker',
     //   title: 'Executive Chef'
     },
     {
       image: img3,
+      description:'Simple Juice Recipes to boost your immune system',
+      occasion:'Party'
     //   name: 'Cathenna Sudh',
     //   title: 'Kitchen Porter'
     },
     {
       image: img4,
+      description:'Simple Juice Recipes to boost your immune system',
+      occasion:'Party'
     //   name: 'Cathenna Sudh',
     //   title: 'Kitchen Porter'
     },
     {
       image: img66,
+      description:'Simple Juice Recipes to boost your immune system',
+      occasion:'Party'
     //   name: 'Cathenna Sudh',
     //   title: 'Kitchen Porter'
     },
     {
       image: img7,
+      description:'Simple Juice Recipes to boost your immune system',
+      occasion:'Party'
     //   name: 'Cathenna Sudh',
     //   title: 'Kitchen Porter'
     },
     {
       image: img8,
+      description:'Simple Juice Recipes to boost your immune system',
+      occasion:'Party'
     //   name: 'Cathenna Sudh',
     //   title: 'Kitchen Porter'
     }
@@ -57,6 +71,8 @@ const SuccessStories = () => {
           {/* <h3>- Our Stories -</h3> */}
           <h2>- Taste, Trust, and Triumph: Our Event Journey -</h2>
         </div>
+        <div className={styles.container}>
+        <h3 className={styles.latest}>Latest</h3>
         <Carousel
           showArrows={true}
           showStatus={false}
@@ -87,12 +103,18 @@ const SuccessStories = () => {
           {successStories.map((story, index) => (
             <div key={index} className={styles.storyCard}>
               <img src={story.image} alt={`Success Story - ${story.name}`} />
-              <h4 className={styles.storyName}>{story.name}</h4>
-              <span className={styles.storyTitle}>{story.title}</span>
+              <h4 className={styles.storyName}>{story.occasion}</h4>
+              <span className={styles.storyTitle}>{story.description}</span>
             </div>
           ))}
         </Carousel>
+        </div>
       </div>
+      <div className={styles.contactusContainer}>
+            <h1 className={styles.mainHeading}>Ready to Get Started?</h1>
+            <p className={styles.para}>The purpose of a FAQ is generally to provide information on frequent questions or concerns.</p>
+            <button className={styles.contact}>Contact us</button>
+        </div>
     </section>
   );
 };

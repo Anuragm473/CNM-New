@@ -2,14 +2,17 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import styles from "./CatererSearch.module.css";
-import menuImage from "../../assets/caterer/menu1.jpeg";
+// import menuImage from "../../assets/caterer/menu1.jpeg";
+import menuImage from "../../assets/images/searchcaterer.jpeg";
 import axios from "../../api/axios";
 import { CatererContext } from "../../CatererContext";
 import { toast } from "react-toastify";
 import { saveToLocalStorage } from "../../../utility";
 import StarRating from "../../components/startRating/StarRating"
+import searchIcon from "../../assets/images/search.svg"
+import { Helmet } from "react-helmet";
 
-function getCurrentUserLocation() {
+export function getCurrentUserLocation() {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -28,16 +31,11 @@ function getCurrentUserLocation() {
 }
 
 const CatererSearch = () => {
-  const [caterers, setCaterers] = useState([]);
-  const [filteredCaterers, setFilteredCaterers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("default");
   const [isPureVeg, setIsPureVeg] = useState(false);
   const [foodType, setFoodType] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-  const [radius, setRadius] = useState(15);
-  const [isAddressSearch, setIsAddressSearch] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -45,7 +43,7 @@ const CatererSearch = () => {
   const navigate = useNavigate();
   const autocompleteRef = useRef(null);
   const mapApiKey = import.meta.env.VITE_GOOGLE_MAPS_KEY;
-  const {selectedPeopleRange,setSelectedPeopleRange}=useContext(CatererContext)
+  const {radius,setRadius,caterers,setCaterers,filteredCaterers,setFilteredCaterers,selectedPeopleRange,setSelectedPeopleRange,searchQuery,setSearchQuery,isAddressSearch,setIsAddressSearch}=useContext(CatererContext)
 
   useEffect(() => {
     const fetchCaterers = async () => {
@@ -100,9 +98,6 @@ const CatererSearch = () => {
     loadGoogleMapsScript();
   }, [radius]);
 
-  useEffect(()=>{
-    document.title='Top-Rated Caterers in Mumbai'
-  },[])
 
   const handleToggle = () => {
     setIsPureVeg(!isPureVeg);
@@ -158,10 +153,6 @@ const CatererSearch = () => {
 
   const handleFilterAndSort = () => {
     let filtered = [...caterers];
-    
-
-    
-
     if (foodType !== "all") {
       filtered = filtered.filter((caterer) =>
         caterer.cuisinesOffered.some(
@@ -228,62 +219,85 @@ const CatererSearch = () => {
 
   return (
     <>
+    <Helmet>
+    <title>Caterers Near Me: Discover Top-Rated Caterers Near You for Weddings, Parties & Events</title>
+    <meta name="description" content="Find the best caterers near you on CaterersNearMe. Browse profiles, compare reviews, and book trusted catering services for any occasion with ease" />
+    <meta name="keywords" content="find caterers near me, best catering services, compare caterers, book catering services, event caterers, wedding catering, local caterers, catering reviews" />
+    </Helmet>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h5>Find and filter caterers!</h5>
-        </div>
-        <div className={styles.afterHeader}>
-          <div className={styles.searchBar}>
-            <input
-              id="unified-search-input"
-              type="text"
-              placeholder="Enter Event's Location"
-              className={styles.searchInput}
-              value={searchQuery}
+          <div>
+        <h3 className={styles.mainheader}>Welcome to Caterersnearme!</h3>
+        <div className={styles.inputFeilds}>
+        <input
+        id="unified-search-input"
+          type="text"
+          placeholder="Select Your Location"
+          className={styles.inputFeild}
+          value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
                 setIsAddressSearch(false);
               }}
-            />
-            {/* <label>Radius(km) </label>
-            <input
-              type="number"
-              placeholder="Radius (km)"
-              className={styles.radiusInput}
-              value={radius}
-              onChange={(e) => setRadius(e.target.value)}
-            /> */}
-            <button className={styles.searchButton} onClick={handleSearch}>
-              <i className="fa fa-search" aria-hidden="true"></i> Search
-            </button>
-          </div>
+        />
+        <select
+          className={styles.inputFeild}
+          value={selectedPeopleRange}
+              onChange={(e) => {
+                saveToLocalStorage('numberOfPeople',e.target.value)
+                setSelectedPeopleRange(e.target.value)}}
+        >
+          <option value="">Select Number Of People</option>
+          <option value="10-25">10 to 25 People</option>
+          <option value="25-50">25 to 50 People</option>
+          <option value="50-100">50 to 100 People</option>
+          <option value="100+">100+ People</option>
+        </select>
+        <button onClick={()=>handleSearch()} className={styles.searchButton}>
+          <span className={styles.searchIcon}><img src={searchIcon} alt='search icon'/></span>
+          <span>SEARCH</span>
+        </button>
+        </div>
+      </div>
+        </div>
+        <div className={styles.afterHeader}>
 
-          <h4>There are {filteredCaterers?.length} caterers for you!</h4>
+          <div className={styles.empty}>There are {filteredCaterers?.length} caterers for you!</div>
 
           <div className={styles.options}>
             <div className={styles.filters}>
+            <div className={`${styles.filterItem} ${styles.foodType}`}>
+              <div className={styles.containerToggle}>
+                <button
+                  onClick={handleToggle}
+                  className={`${styles.buttonToggle} ${
+                    isPureVeg ?  styles.noFilter:styles.pureVeg
+                  }`}
+                >
+                  {isPureVeg ? "Pure Veg" : "Veg Mode"}
+                </button>
+              </div>
+            </div>
               <div className={`${styles.filterItem} ${styles.sortBy}`}>
-                <label htmlFor="sort">Sort By: </label>
                 <select
                   id="sort"
                   className={styles.filterDropdown}
                   value={sortOrder}
                   onChange={(e) => setSortOrder(e.target.value)}
                 >
-                  <option value="default">Default</option>
+                  <option value="default">Sort By:</option>
                   <option value="rating">Price: Low-High</option>
                   <option value="popularity">Price: High-Low</option>
                 </select>
               </div>
               <div className={`${styles.filterItem} ${styles.foodType}`}>
-                <label htmlFor="food-type">Cuisine Type: </label>
                 <select
                   id="food-type"
                   className={styles.filterDropdown}
                   value={foodType}
                   onChange={(e) => setFoodType(e.target.value)}
                 >
-                  <option value="all">All</option>
+                  <option value="all">Cuisine Type:</option>
                   <option value="North Indian">North Indian</option>
                   <option value="South Indian">South Indian</option>
                   <option value="Gujarati">Gujarati</option>
@@ -296,42 +310,6 @@ const CatererSearch = () => {
                   <option value="Maharashtrian">Maharashtrian</option>
                 </select>
               </div>
-              <div className={`${styles.filterItem} ${styles.foodType}`}>
-              <div className={styles.containerToggle}>
-                <button
-                  onClick={handleToggle}
-                  className={`${styles.buttonToggle} ${
-                    isPureVeg ?  styles.noFilter:styles.pureVeg
-                  }`}
-                >
-                  {isPureVeg ? "Pure Veg" : "Veg Mode"}
-                </button>
-              </div>
-            </div>
-            <div className={styles.filters}>
-          <div className={`${styles.filterItem} ${styles.peopleRange}`}>
-            <label htmlFor="people-range">Number of People: </label>
-            <select
-              id="people-range"
-              className={styles.filterDropdown}
-              value={selectedPeopleRange}
-              onChange={(e) => {
-                saveToLocalStorage('numberOfPeople',e.target.value)
-                setSelectedPeopleRange(e.target.value)}}
-            >
-              <option value="">Default</option>
-              <option value="10-25">10-25</option>
-              <option value="25-50">25-50</option>
-              <option value="50-100">50-100</option>
-              <option value="100+">100+</option>
-            </select>
-          </div>
-        </div>
-            </div>
-            <div className={styles.resultsCount}>
-              Showing {indexOfFirstItem + 1} -{" "}
-              {Math.min(indexOfLastItem, filteredCaterers?.length)} of{" "}
-              {filteredCaterers?.length} results
             </div>
           </div>
 
@@ -340,7 +318,6 @@ const CatererSearch = () => {
               currentCaterers.map((caterer) => (
                 <div key={caterer.id} className={styles.catererCard}>
                   <div className={styles.catererDetails}>
-                    <div className={styles.catererUpper}>
                       <div className={styles.catererUpperLeft}>
                         <img
                           src={menuImage}
@@ -348,11 +325,23 @@ const CatererSearch = () => {
                           className={styles.catererImage}
                         />
                         <div className={styles.catererText}>
-                          <h3>{caterer.name}</h3>
-                          <p>{caterer.address}</p>
+                          <h3 className={styles.catererName}>{caterer.name}</h3>
+                          <p className={styles.catererAddress}>{caterer.address}</p>
                           <p>{caterer.cateringType.join(", ").toUpperCase()}</p>
+                          {caterer.minPrice !== undefined &&
+                      caterer.maxPrice !== undefined && (
+                        <div className={styles.rating}>
+                        <div className={styles.cardPrice}>
+                          <div className={styles.cardprice}>
+                            <b>Price From</b>
+                            <i>
+                              {caterer.minPrice}-{caterer.maxPrice}
+                            </i>
+                          </div>
                         </div>
-                      </div>
+                        <StarRating size={18} defaultRating={caterer.averageRating || 0}/>
+                        </div>
+                      )}
                       <div className={styles.catererUpperRight}>
                         <button
                           className={styles.detailsButton}
@@ -361,22 +350,9 @@ const CatererSearch = () => {
                           Details
                         </button>
                       </div>
+                        </div>
+                      </div>
                     </div>
-                    {caterer.minPrice !== undefined &&
-                      caterer.maxPrice !== undefined && (
-                        <div className={styles.rating}>
-                        <div className={styles.cardPrice}>
-                          <p>
-                            <b>Price: </b>
-                            <i>
-                              ₹{caterer.minPrice} - ₹{caterer.maxPrice}
-                            </i>
-                          </p>
-                        </div>
-                        <StarRating size={14} defaultRating={caterer.averageRating || 0}/>
-                        </div>
-                      )}
-                  </div>
                 </div>
               ))
             ) : (

@@ -23,6 +23,7 @@ const AddToCart = () => {
   const navigate = useNavigate();
   const cartData=getFromLocalStorage(`${dishId}`)
 
+
   useEffect(() => {
     
     const fetchDishData = async () => {
@@ -162,7 +163,14 @@ const AddToCart = () => {
 
 
   return (
+    <>
+    <Helmet>
+    <title>Select Your Menu and Celebrate with Caterers Near Me</title>
+    <meta name="description" content="Select and manage your catering orders easily on CaterersNearMe. Choose services, customize menus, and finalize bookings seamlessly for your events." />
+    <meta name="keywords" content="select catering orders, customize catering menu, event catering services, choose caterer services, catering order management, catering booking options" />
+    </Helmet>
     <div className={styles.addtocartContainer}>
+      <div className={styles.line}></div>
       <div className={styles.addtocart}>
         <SideBar
         duplicate={duplicate}
@@ -181,8 +189,7 @@ const AddToCart = () => {
           selectedCategory={selectedCategory}
         />
         <div className={styles.accordionContainer}>
-        <div className={styles.steps}>Step-3</div>
-          <h3>Preview Your Order</h3>
+        <div className={styles.steps}><h3 className={styles.heading}>Preview Your Order</h3></div>
           <Accordion data={storageObject} />
         </div>
       </div>
@@ -196,6 +203,7 @@ const AddToCart = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 

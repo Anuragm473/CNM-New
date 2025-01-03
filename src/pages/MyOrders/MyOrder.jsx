@@ -44,9 +44,6 @@ const MyOrder = () => {
       .catch((error) => console.error("Error fetching orders:", error.message));
   }, [page]); // Re-fetch when page changes
 
-  useEffect(() => {
-    document.title = "Hire the Best Caterers Near Me";
-  }, []);
 
   const openModal = (order) => {
     setSelectedOrder(order);
@@ -147,6 +144,12 @@ const MyOrder = () => {
   };
 
   return (
+    <>
+    <Helmet>
+    <title>My Orders: Track and Review with Caterers Near Me</title>
+    <meta name="description" content="Track and manage your catering orders seamlessly on CaterersNearMe. Stay updated, view details, and ensure top-notch service for your customers!" />
+    <meta name="keywords" content="catering order management, track catering orders, my orders catering, catering service dashboard, order tracking for caterers, manage catering bookings" />
+    </Helmet>
     <div className={styles.myOrderContainer}>
       {orders?.map((order) => (
         <div key={order.id} className={styles.orderCard}>
@@ -238,7 +241,7 @@ const MyOrder = () => {
                     </div>
                   )}
                 {order.paymentStatus === "Delivered" &&
-                  userData.role.id !== "2" && !order.reviewId && (
+                  userData.role.id == "2" && !order.reviewId && (
                     <div className={styles.statusButtons}>
                       <button
                         className={styles.rejectButton}
@@ -265,7 +268,7 @@ const MyOrder = () => {
       ))}
 
       <Modal isOpen={isModalOpenRate} onClose={closeModalRate}>
-        <h2>Rate Your Order</h2>
+        <h2 style={{color:'#333',textAlign:'center'}}>Rate Your Order</h2>
         <div className={styles.ratingContainer}>
           <StarRating selectedStars={rating} onSetRating={setRating} change={true} size={40}/>
           <textarea
@@ -282,14 +285,14 @@ const MyOrder = () => {
 
       {selectedOrder && (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <h2>Order Details:</h2>
+          <h2 style={{color:'#333'}}>Order Details:</h2>
 
           <div className={styles.modalUpper}>
             <div className={styles.OrderSummary}>
-              <h3>Order Summary:</h3>
-              <p>Order Quantity: {selectedOrder.dishQuantity}</p>
+              <h3 style={{color:'#333'}}>Order Summary:</h3>
+              <p style={{color:'#333'}}>Order Quantity: {selectedOrder.dishQuantity}</p>
               {selectedOrder.jainNumber && (
-                <p>Order Quantity for jain: {selectedOrder.jainNumber}</p>
+                <p style={{color:'#333'}}>Order Quantity for jain: {selectedOrder.jainNumber}</p>
               )}
               <p>Amount: ₹{selectedOrder.totalAmount}</p>
               <p>Order Status: {selectedOrder.paymentStatus}</p>
@@ -323,6 +326,7 @@ const MyOrder = () => {
         </Modal>
       )}
     </div>
+    </>
   );
 };
 

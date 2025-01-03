@@ -8,9 +8,10 @@ import { toast } from "react-toastify";
 import { getFromLocalStorage } from "../../../utility";
 
 const Bill = () => {
-  const { selectedPeopleRange,setSelectedPeopleRange } = useContext(CatererContext);
-  if(!selectedPeopleRange){
-    setSelectedPeopleRange(getFromLocalStorage('numberOfPeople'))
+  const { selectedPeopleRange, setSelectedPeopleRange } =
+    useContext(CatererContext);
+  if (!selectedPeopleRange) {
+    setSelectedPeopleRange(getFromLocalStorage("numberOfPeople"));
   }
   let numberOfPeople;
   switch (selectedPeopleRange) {
@@ -55,7 +56,7 @@ const Bill = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const catererId=getFromLocalStorage("catererId")
+  const catererId = getFromLocalStorage("catererId");
 
   useEffect(() => {
     const storedDishDetails = getFromLocalStorage("dishDetails");
@@ -109,7 +110,6 @@ const Bill = () => {
     }
   };
 
-
   const handleCheckboxChange = () => {
     setShowJainInput((prev) => !prev);
     if (!showJainInput) {
@@ -132,18 +132,23 @@ const Bill = () => {
 
   const handleOrder = async () => {
     try {
-      if(Number(dishQuantity)<numberOfPeople.min || Number(dishQuantity)>numberOfPeople.max){
-        toast(`Please select number of people between ${numberOfPeople.min} to ${numberOfPeople.max}`)
-        return
-      }else if(!address){
-        toast(`Please Enter Addreess before proceding further`)
-        return
-      }else if(!deliveryTime || !timePeriod){
-        toast(`Please Enter Time`)
-        return
-      }else if(Number(jainNumber)>Number(dishQuantity)){
-        toast(`Jain number should be less then total number`)
-        return
+      if (
+        Number(dishQuantity) < numberOfPeople.min ||
+        Number(dishQuantity) > numberOfPeople.max
+      ) {
+        toast(
+          `Please select number of people between ${numberOfPeople.min} to ${numberOfPeople.max}`
+        );
+        return;
+      } else if (!address) {
+        toast(`Please Enter Addreess before proceding further`);
+        return;
+      } else if (!deliveryTime || !timePeriod) {
+        toast(`Please Enter Time`);
+        return;
+      } else if (Number(jainNumber) > Number(dishQuantity)) {
+        toast(`Jain number should be less then total number`);
+        return;
       }
       const dish = getFromLocalStorage("dishDetails");
       const user = getFromLocalStorage("user");
@@ -155,7 +160,7 @@ const Bill = () => {
       const cartItems = cartItem.filter((cartItem) => cartItem.quantity !== 0);
 
       const myorder = {
-        catererId:catererId,
+        catererId: catererId,
         dishId: dish?.id || "",
         userId: user?.id || "",
         items: cartItems,
@@ -164,7 +169,7 @@ const Bill = () => {
         paymentStatus: "Pending",
         address,
         message,
-        jainNumber:Number(jainNumber) || 0,
+        jainNumber: Number(jainNumber) || 0,
         orderDate: new Date().toISOString(),
         deliveryDate,
         time: `${deliveryTime} ${timePeriod}`,
@@ -173,27 +178,24 @@ const Bill = () => {
         },
       };
 
-      await axiosPrivate.post(
-        "http://localhost:3000/api/orders",
-        myorder
-      );
-      const response=await axiosPrivate.get(`/users/caterer/${catererId}`)
-      console.log(response.data)
-      await axiosPrivate.post('/users/send-email',{ 
-        recipient:response.data.email,
-        subject:"New Order",
-        message:`You have a new order from caterersnearme`
-    })
-      await axiosPrivate.post('/users/send-email',{ 
-        recipient:'caterersnearme@gmail.com',
-        subject:"New Order",
-        message:`A order from is booked for caterer:${response.data.name}`
-    })
-      toast('Order Placed Successfully')
+      await axiosPrivate.post("http://localhost:3000/api/orders", myorder);
+      const response = await axiosPrivate.get(`/users/caterer/${catererId}`);
+      console.log(response.data);
+      await axiosPrivate.post("/users/send-email", {
+        recipient: response.data.email,
+        subject: "New Order",
+        message: `You have a new order from caterersnearme`,
+      });
+      await axiosPrivate.post("/users/send-email", {
+        recipient: "caterersnearme@gmail.com",
+        subject: "New Order",
+        message: `A order from is booked for caterer:${response.data.name}`,
+      });
+      toast("Order Placed Successfully");
       navigate("/my-orders");
     } catch (error) {
       console.error("Order submission failed:", error);
-      toast('Something went wrong')
+      toast("Something went wrong");
     }
   };
 
@@ -201,27 +203,24 @@ const Bill = () => {
   const today = new Date().toISOString().split("T")[0];
 
   return (
+    <>
+    <Helmet>
+    <title>Seamless Booking with Caterers Near Me – Review and Proceed</title>
+    <meta name="description" content="Place your catering orders effortlessly on CaterersNearMe. Customize menus, provide event details, and book professional catering services in minutes." />
+    <meta name="keywords" content="place catering orders, book catering services, event catering booking, customize catering menu, hire caterers, catering order process, online catering orders" />
+    </Helmet>
     <div className={styles.billContainer}>
+      <div className={styles.line}></div>
       <div className={styles.mainHeading}>
-        <h2 style={{ margin: "0", marginBottom: "10px" }}>Order Summary</h2>
+        <h2 className={styles.mainHeader}>Order Summary</h2>
       </div>
       <div className={styles.mainBill}>
-        <div className={styles.billLeft}>
-          <div className={styles.leftHeading}>
-            <h3 style={{ margin: "0", marginBottom: "5px" }}>Dish Details:</h3>
-          </div>
-          <Accordion data={cartData} />
-        </div>
         <div className={styles.billRight}>
           <div className={styles.rightHeading}>
-            <h3 style={{ marginTop: "10px", marginBottom: "20px" }}>
-              Order Summary:
-            </h3>
             <div className={styles.deliveryDate}>
-              <h3 style={{ margin: "0", marginBottom: "5px" }}>Event Date</h3>
+              <h3 className={styles.head}>Event Date</h3>
               <input
                 value={deliveryDate}
-                style={{ margin: "0", marginBottom: "15px" }}
                 onChange={(e) => setDeliveryDate(e.target.value)}
                 className={styles.deliveryDateInput}
                 type="date"
@@ -229,26 +228,26 @@ const Bill = () => {
               />
             </div>
             <div className={styles.deliveryTime}>
-              <h3 style={{ margin: "0", marginBottom: "5px" }}>Event Time</h3>
-              <input
-                value={deliveryTime}
-                onChange={(e) => setDeliveryTime(e.target.value)}
-                className={styles.deliveryTimeInput}
-                type="time"
-              />
-              <select
-                value={timePeriod}
-                onChange={(e) => setTimePeriod(e.target.value)}
-                className={styles.timePeriodSelect}
-              >
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
+              <h3 className={styles.head}>Event Time</h3>
+              <div className={styles.eventTime}>
+                <input
+                  value={deliveryTime}
+                  onChange={(e) => setDeliveryTime(e.target.value)}
+                  className={styles.deliveryTimeInput}
+                  type="time"
+                />
+                <select
+                  value={timePeriod}
+                  onChange={(e) => setTimePeriod(e.target.value)}
+                  className={styles.timePeriodSelect}
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
             </div>
             <div className={styles.address}>
-              <h3 style={{ margin: "0", marginBottom: "10px" }}>
-                Event Address
-              </h3>
+              <h3 className={styles.head}>Event Address</h3>
               <textarea
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
@@ -257,7 +256,7 @@ const Bill = () => {
               />
             </div>
             <div className={styles.message}>
-              <h3 style={{ margin: "0", marginBottom: "10px" }}>Message</h3>
+              <h3 className={styles.head}>Message</h3>
               <textarea
                 value={message}
                 onChange={(e) => {
@@ -265,7 +264,7 @@ const Bill = () => {
                     setMessage(e.target.value);
                   }
                 }}
-                className={styles.messaegInput}
+                className={styles.deliveryAddressInput}
                 max={250}
                 placeholder="Enter Any Special Instructions"
               />
@@ -274,9 +273,7 @@ const Bill = () => {
               </p>
             </div>
             <div className={styles.dishQuantity}>
-              <h3 style={{ margin: "0", marginBottom: "5px" }}>
-                Number Of People:
-              </h3>
+              <h3 className={styles.head}>Number Of People:</h3>
               <input
                 className={styles.dishQuantityInput}
                 type="number"
@@ -292,64 +289,81 @@ const Bill = () => {
               />
             </div>
             <div className={styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              id="jainCheckbox"
-              checked={showJainInput}
-              onChange={(e) => setShowJainInput(e.target.checked)}
-            />
-            <label htmlFor="jainCheckbox">Include Jain Food?</label>
-          </div>
-          {showJainInput && (
-            <div className={styles.dishQuantity}>
-              <h3  style={{ margin: "0", marginBottom: "5px" }}>Number Of People Jain:</h3>
               <input
-              className={styles.dishQuantityInput}
-                type="number"
-                value={jainNumber}
-                onChange={handleJainNumberChange}
+                type="checkbox"
+                id="jainCheckbox"
+                checked={showJainInput}
+                onChange={(e) => setShowJainInput(e.target.checked)}
               />
+              <label htmlFor="jainCheckbox">Include Jain Food?</label>
             </div>
-          )}
+            {showJainInput && (
+              <div className={styles.dishQuantity1}>
+                <h3 className={styles.head1}>Number Of People Jain:</h3>
+                <input
+                  className={styles.dishQuantityInput}
+                  type="number"
+                  value={jainNumber}
+                  onChange={handleJainNumberChange}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+        <div className={styles.billLeft}>
+          <Accordion data={cartData} />
+          <div className={styles.container}>
             <div className={styles.addAnItem}>
-              <h3>Dish Price: {dishDetails?.price || 0}</h3>
-            </div>
-            <div className={styles.totalPrice}>
               <h3>
-                Add On Item Price:{" "}
-                {cartData.reduce(
-                  (sum, item) => sum + item.price * item.addon,
-                  0
-                )}
+                <span>Dish Price:</span>
+                <span> {dishDetails?.price || 0}</span>
               </h3>
             </div>
             <div className={styles.totalPrice}>
               <h3>
-                Final Per Dish Price:{" "}
-                {dishDetails
-                  ? dishDetails.price +
-                    cartData.reduce(
-                      (sum, item) => sum + item.price * item.addon,
-                      0
-                    )
-                  : 0}
+                <span>Add On Item Price: </span>
+                <span>
+                  {cartData.reduce(
+                    (sum, item) => sum + item.price * item.addon,
+                    0
+                  )}
+                </span>
               </h3>
             </div>
             <div className={styles.totalPrice}>
               <h3>
-                Final Price:{" "}
-                {dishDetails
-                  ? (dishDetails.price +
+                <span>Final Per Dish Price: </span>
+                <span>
+                  {dishDetails
+                    ? dishDetails.price +
                       cartData.reduce(
                         (sum, item) => sum + item.price * item.addon,
                         0
-                      )) *
-                    (dishQuantity || 1)
-                  : 0}
+                      )
+                    : 0}
+                </span>
               </h3>
             </div>
             <div className={styles.totalPrice}>
-              <h3>Total: {totalPrice.toFixed(2)}</h3>
+              <h3>
+                <span>Final Price: </span>
+                <span>
+                  {dishDetails
+                    ? (dishDetails.price +
+                        cartData.reduce(
+                          (sum, item) => sum + item.price * item.addon,
+                          0
+                        )) *
+                      (dishQuantity || 1)
+                    : 0}
+                </span>
+              </h3>
+            </div>
+            <div className={styles.totalPrice}>
+              <h3>
+                <span>Total:</span>
+                <span> {totalPrice.toFixed(2)}</span>
+              </h3>
             </div>
             <div className={styles.couponCode}>
               <input
@@ -367,13 +381,19 @@ const Bill = () => {
                 Apply
               </button>
             </div>
-            <button className={styles.placeOrder} onClick={handleOrder}>
-              Place Order
-            </button>
           </div>
         </div>
       </div>
+      <div className={styles.btn}>
+        <button
+          className={`${styles.placeOrder} ${styles.couponButton}`}
+          onClick={handleOrder}
+        >
+          Place Order
+        </button>
+      </div>
     </div>
+    </>
   );
 };
 

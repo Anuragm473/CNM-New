@@ -10,7 +10,7 @@ import find from "../../assets/images/find.png";
 import booking from "../../assets/images/booking1.png";
 import profile from "../../assets/images/profile.jpg";
 import logout from "../../assets/images/logout.jpg";
-import callIcon from "../../assets/images/callicon.png";
+import callIcon from "../../assets/images/callicon.svg";
 import contactus from "../../assets/images/contactus.png";
 
 const Header = () => {
@@ -132,7 +132,7 @@ const Header = () => {
             <div className={styles.dropdownMenu}>
               <ul className={styles.navLinks1}>
                 <h5 className={styles.logoNumber}>
-                  <img src={callIcon} alt='call icon'/>
+                  <img className={styles.callIcon} src={callIcon} alt='call icon'/>
                   +919321291563
                 </h5>
                 {!isCaterer && (
@@ -140,7 +140,7 @@ const Header = () => {
                     className={styles.findCaterers}
                     onClick={() => navigate("/caterer")}
                   >
-                    <img alt='find caterers' className={styles.findImg} src={find} />
+                    {/* <img alt='find caterers' className={styles.findImg} src={find} /> */}
                     Find Caterers
                   </li>
                 )}
@@ -149,13 +149,13 @@ const Header = () => {
                     className={styles.booking}
                     onClick={() => navigate("/my-orders")}
                   >
-                    <img alt='my bookings button' className={styles.findImg} src={booking} />
+                    {/* <img alt='my bookings button' className={styles.findImg} src={booking} /> */}
                     Bookings
                   </li>
                 )}
                 {!isLoggedName && (
                   <li className={styles.booking} onClick={openModal}>
-                    <img alt='login register button' className={styles.findImg} src={profile} />
+                    <span className={styles.userImg}><ion-icon name="person"></ion-icon></span>
                     <span>Login/Register</span>
                   </li>
                 )}
@@ -171,7 +171,7 @@ const Header = () => {
                 )}
                 {isLoggedName && (
                   <li className={styles.booking} onClick={handleSignout}>
-                    <img alt='signout button' className={styles.findImg} src={logout} />
+                    {/* <img alt='signout button' className={styles.findImg} src={logout} /> */}
                     <span>SignOut</span>
                   </li>
                 )}
@@ -180,13 +180,16 @@ const Header = () => {
           </div>
         </div>
         <ul className={`${styles.navLinks2}`}>
+          <select className={styles.service}>
+            <option>Service Categories</option>
+          </select>
           <h5 className={styles.logoNumber}>
             <img call='contact us' src={callIcon} />
             <a href="tel:+919321291563">
               <span>+919321291563</span>
             </a>
           </h5>
-          {!isCaterer && (
+          {/* {!isCaterer && (
             <li
               className={styles.findCaterers}
               onClick={() => navigate("caterer")}
@@ -194,36 +197,41 @@ const Header = () => {
               <img alt='fint caterers' className={styles.findImg} src={find} />
               <span>Find Caterers</span>
             </li>
-          )}
+          )} */}
           {isLoggedName && (
             <li
               className={styles.booking}
               onClick={() => navigate("/my-orders")}
             >
-              <img alt='my bookings' className={styles.findImg} src={booking} />
+              {/* <img alt='my bookings' className={styles.findImg} src={booking} /> */}
               Bookings
             </li>
           )}
           {/* <li className={styles.navContact}>+91 123456789</li> */}
           {!isLoggedName && (
             <li className={styles.booking} onClick={openModal}>
-              <img alt='login register' className={styles.findImg} src={profile} />
-              <span>Login/Register</span>
+              <span className={styles.userImg}><ion-icon name="person"></ion-icon></span>
+              <span>Log in</span>
+            </li>
+          )}
+          {!isLoggedName && (
+            <li className={styles.create} onClick={openModal}>
+              <span>Create an Account</span>
             </li>
           )}
           <li className={styles.booking} onClick={()=>navigate('contactus')}>
-                    <img alt='contact us' className={styles.findImg} src={contactus} />
-                    <span>Contact Us</span>
+                    
+                    <span>Contact us</span>
                   </li>
           {isLoggedName && (
             <li onClick={() => navigate("/profile")} className={styles.booking}>
-              <img alt='user name' className={styles.findImg} src={profile} />
-              <span>{firstName}</span>
+              {/* <img alt='user name' className={styles.findImg} src={profile} /> */}
+              <span>Profile</span>
             </li>
           )}
           {isLoggedName && (
             <li className={styles.booking} onClick={handleSignout}>
-              <img className={styles.findImg} src={logout} />
+              {/* <img className={styles.findImg} src={logout} /> */}
               <span>SignOut</span>
             </li>
           )}
