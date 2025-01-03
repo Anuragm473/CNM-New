@@ -7,6 +7,7 @@ import { getFromLocalStorage } from "../../../utility";
 import { toast } from "react-toastify";
 import { axiosPrivate } from "../../api/axios";
 import StarRating from "../../components/startRating/StarRating";
+import { Helmet } from "react-helmet";
 
 const MyOrder = () => {
   const [orders, setOrders] = useState([]);
@@ -25,13 +26,13 @@ const MyOrder = () => {
     // Modify the URL based on user role and add pagination parameters (limit, page)
     if (userData.role.id == 1) {
       // Admin (role.id === 1): Fetch all orders
-      apiUrl = `http://localhost:3000/api/orders?limit=${limit}&page=${page}`;
+      apiUrl = `https://www.caterersnearme.in/api/orders?limit=${limit}&page=${page}`;
     } else if (userData.role.id == 2) {
       // Caterer (role.id === 2): Fetch orders for that particular caterer
-      apiUrl = `http://localhost:3000/api/orders?filters=[{"userId":"${userData.id}"}]&limit=${limit}&page=${page}`;
+      apiUrl = `https://www.caterersnearme.in/api/orders?filters=[{"userId":"${userData.id}"}]&limit=${limit}&page=${page}`;
     } else if (userData.role.id == 3) {
       // User (role.id === 3): Fetch orders for that particular user
-      apiUrl = `http://localhost:3000/api/orders?filters=[{"catererId":"${userData.catererId}"}]&limit=${limit}&page=${page}`;
+      apiUrl = `https://www.caterersnearme.in/api/orders?filters=[{"catererId":"${userData.catererId}"}]&limit=${limit}&page=${page}`;
     }
 
     // Fetch orders from the API
@@ -114,11 +115,10 @@ const MyOrder = () => {
     const updatedOrders = orders.map((order) =>
       order.id === orderId ? { ...order, paymentStatus: status } : order
     );
-    console.log(updatedOrders);
     setOrders(updatedOrders);
 
     // Here you would also want to make an API call to update the order status in your backend
-    fetch(`http://localhost:3000/api/orders/${orderId}`, {
+    fetch(`https://www.caterersnearme.in/api/orders/${orderId}`, {
       method: "PATCH",
       body: JSON.stringify({ paymentStatus: status }),
       headers: {
@@ -127,7 +127,6 @@ const MyOrder = () => {
     })
       .then((response) => response.json())
       .then(() => {
-        console.log(`Order ${orderId} status updated to ${status}`);
         if (status !== "Pending") {
           const order = updatedOrders.find((order) => order.id === orderId);
           sendOrderStatusEmail(order.userId.email, status, order);

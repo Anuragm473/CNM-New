@@ -20,7 +20,7 @@ export default function MenuCreation({ setCurrentStep }) {
     useEffect(() => {
       const fetchCateringTypes = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/api/caterer/${catererId}`);
+          const response = await axios.get(`https://www.caterersnearme.in/api/caterer/${catererId}`);
           const fetchedCateringTypes = response.data.cateringType || [];
           setCateringTypes(fetchedCateringTypes);
     
@@ -43,7 +43,7 @@ export default function MenuCreation({ setCurrentStep }) {
     
       const fetchMenuData = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/api/menus/caterer/${catererId}`);
+          const response = await axios.get(`https://www.caterersnearme.in/api/menus/caterer/${catererId}`);
           const data = response.data;
           const fetchedMenus = data?.map(menu => ({
               id: menu.id,
@@ -145,7 +145,7 @@ export default function MenuCreation({ setCurrentStep }) {
     try {
       // Delete menus
       for (const id of deletedMenuIds) {
-        await axios.delete(`http://localhost:3000/api/menus/${id}`);
+        await axios.delete(`https://www.caterersnearme.in/api/menus/${id}`);
        
       }
 
@@ -166,7 +166,7 @@ export default function MenuCreation({ setCurrentStep }) {
         if (menu.id) {
           const originalMenu = initialMenus.find(m => m.id === menu.id);
           if (!isMenuDataEqual(menu, originalMenu)) {
-            const response = await axios.patch(`http://localhost:3000/api/menus/${menu.id}`, payload);
+            const response = await axios.patch(`https://www.caterersnearme.in/api/menus/${menu.id}`, payload);
           
             return response.status >= 200 && response.status < 300;
           } else {
@@ -174,7 +174,7 @@ export default function MenuCreation({ setCurrentStep }) {
             return true;
           }
         } else {
-          const response = await axios.post('http://localhost:3000/api/menus', payload);
+          const response = await axios.post('https://www.caterersnearme.in/api/menus', payload);
           
           return response.status >= 200 && response.status < 300;
         }

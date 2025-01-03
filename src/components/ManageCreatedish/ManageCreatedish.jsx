@@ -19,7 +19,7 @@ export default function ManageCreatedish() {
       try {
         // Fetch menu data
         const menuResponse = await axios.get(
-          `http://localhost:3000/api/menus/caterer/${catererId}`
+          `https://www.caterersnearme.in/api/menus/caterer/${catererId}`
         );
         const formattedMenuData = menuResponse.data.map((menu) => ({
           id: menu.id,
@@ -32,7 +32,7 @@ export default function ManageCreatedish() {
 
         // Fetch package data
         const catererResponse = await axios.get(
-          `http://localhost:3000/api/caterer/${catererId}`
+          `https://www.caterersnearme.in/api/caterer/${catererId}`
         );
         const data = catererResponse.data;
         setPackageData({
@@ -69,15 +69,13 @@ export default function ManageCreatedish() {
       }
 
       const patchRequests = updatedItems.map((item) => {
-        console.log(item)
         return axios.patch(
-          `http://localhost:3000/api/menus/${item.id}`,
+          `https://www.caterersnearme.in/api/menus/${item.id}`,
           { price: item.price }
         );
       });
 
       const response=await Promise.all(patchRequests);
-      console.log(response)
 
       // Update initialMenuData to reflect the latest state
       setInitialMenuData(JSON.parse(JSON.stringify(menuData)));

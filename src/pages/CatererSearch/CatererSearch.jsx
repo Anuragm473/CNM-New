@@ -51,7 +51,7 @@ const CatererSearch = () => {
         const { lat, lng } = await getCurrentUserLocation();
 
         const response = await axios.get(
-          `http://localhost:3000/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
+          `https://www.caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
         );
 
         const data = response.data;
@@ -59,7 +59,6 @@ const CatererSearch = () => {
           setCaterers(data);
           setFilteredCaterers(data);
         } else {
-          console.log("No nearby caterers found, fetching fallback data...");
           fetchFallbackCaterers();
         }
       } catch (error) {
@@ -73,7 +72,7 @@ const CatererSearch = () => {
     const fetchFallbackCaterers = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/caterer"
+          "https://www.caterersnearme.in/api/caterer"
         );
         const data = response.data.data;
         if (Array.isArray(data)) {
@@ -129,7 +128,7 @@ const CatererSearch = () => {
   const fetchNearbyCaterers = async (lat, lng) => {
     try {
       const response = await axiosPrivate.get(
-        `http://localhost:3000/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
+        `https://www.caterersnearme.in/api/caterer/nearby?lat=${lat}&lng=${lng}&radius=${radius}`
       );
       if (Array.isArray(response.data)) {
         setCaterers(response.data);

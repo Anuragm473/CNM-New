@@ -11,7 +11,7 @@ const Reviews = ({ reviews }) => {
       try {
         const responses = await Promise.all(
           reviews.map((id) =>
-            axios.get(`http://localhost:3000/api/reviews/${id}`)
+            axios.get(`https://www.caterersnearme.in/api/reviews/${id}`)
           )
         );
         setReviewData(responses.map((response) => response.data)); // Extract data from responses
@@ -22,7 +22,6 @@ const Reviews = ({ reviews }) => {
 
     fetchReviews();
   }, [reviews]); // Add reviews as a dependency to re-run when `reviews` changes
-  console.log(reviewData)
 
   return (
     <div className={styles.reviews}>

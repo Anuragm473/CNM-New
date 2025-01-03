@@ -7,6 +7,7 @@ import styles from "./AddToCart.module.css";
 import Accordion from "../../components/Accordion/Accordion";
 import { useNavigate } from "react-router-dom";
 import { getFromLocalStorage, saveToLocalStorage } from "../../../utility";
+import { Helmet } from "react-helmet";
 
 const AddToCart = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -28,7 +29,6 @@ const AddToCart = () => {
     
     const fetchDishData = async () => {
       try {
-        console.log(dishId)
         const dishResponse = await axiosPrivate.get(`/dishes/${dishId}`);
         const dish = dishResponse.data;
         setDishData(dish);

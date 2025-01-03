@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { toast } from "react-toastify";
 import { getFromLocalStorage } from "../../../utility";
+import { Helmet } from "react-helmet";
 
 const Bill = () => {
   const { selectedPeopleRange, setSelectedPeopleRange } =
@@ -178,9 +179,8 @@ const Bill = () => {
         },
       };
 
-      await axiosPrivate.post("http://localhost:3000/api/orders", myorder);
+      await axiosPrivate.post("https://www.caterersnearme.in/api/orders", myorder);
       const response = await axiosPrivate.get(`/users/caterer/${catererId}`);
-      console.log(response.data);
       await axiosPrivate.post("/users/send-email", {
         recipient: response.data.email,
         subject: "New Order",

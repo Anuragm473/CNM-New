@@ -16,8 +16,8 @@ export default function CreateDish1({ dishes, setPackageData, menuData }) {
     async function fetchInitialData() {
       try {
         const [menuResponse, catererResponse] = await Promise.all([
-          fetch(`http://localhost:3000/api/Menus/caterer/${catererId}`),
-          axios.get(`http://localhost:3000/api/caterer/${catererId}`),
+          fetch(`https://www.caterersnearme.in/api/Menus/caterer/${catererId}`),
+          axios.get(`https://www.caterersnearme.in/api/caterer/${catererId}`),
         ]);
 
         const menuData = await menuResponse.json();
@@ -153,7 +153,7 @@ export default function CreateDish1({ dishes, setPackageData, menuData }) {
       if (deleted.length > 0) {
         await Promise.all(
           deleted.map((id) =>
-            axios.delete(`http://localhost:3000/api/dishes/${id}`)
+            axios.delete(`https://www.caterersnearme.in/api/dishes/${id}`)
           )
         );
       }
@@ -168,10 +168,9 @@ export default function CreateDish1({ dishes, setPackageData, menuData }) {
 
       const results = await Promise.all(
         updateDish.map(async (pkg) => {
-          console.log(updateDish,pkg)
           if (pkg.id) {
             const updatedPackage = await axios.patch(
-              `http://localhost:3000/api/dishes/${pkg.id}`,
+              `https://www.caterersnearme.in/api/dishes/${pkg.id}`,
               {
                 items: pkg.items.map((item) => ({
                   ...item,
@@ -187,7 +186,7 @@ export default function CreateDish1({ dishes, setPackageData, menuData }) {
             return updatedPackage.data;
           } else {
             const newPackage = await axios.post(
-              `http://localhost:3000/api/dishes`,
+              `https://www.caterersnearme.in/api/dishes`,
               { ...pkg, catererId }
             );
             return { ...newPackage.data, _id: newPackage.data.id };
@@ -201,7 +200,7 @@ export default function CreateDish1({ dishes, setPackageData, menuData }) {
 
       if (newdishes.length > 0) {
         const res = await axios.patch(
-          `http://localhost:3000/api/caterer/${catererId}`,
+          `https://www.caterersnearme.in/api/caterer/${catererId}`,
           {
             dishesfor10_25: [
               ...dishData.map((el) => el.id),

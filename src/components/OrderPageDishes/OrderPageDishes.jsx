@@ -12,7 +12,6 @@ const OrderPageDishes = ({ dishes }) => {
     saveToLocalStorage("dishDetails", dish);
     navigate(`/add-to-cart/${dish.id}`);
   };
-  console.log(dishes)
   return (
     <div className={styles.orderPageDishes}>
       <div className={styles.dishes}>

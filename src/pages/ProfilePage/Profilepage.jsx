@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "./Profilepage.module.css";
 import { getFromLocalStorage } from "../../../utility";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const Profilepage = () => {
   const [userData, setUserData] = useState({
@@ -16,7 +17,7 @@ const Profilepage = () => {
 
   useEffect(()=>{async function getData(){
     const {id}=getFromLocalStorage("user");
-    let user=await axios.get(`http://localhost:3000/api/users/${id}`)
+    let user=await axios.get(`https://www.caterersnearme.in/api/users/${id}`)
     user=user.data
     setUserData(prev=>{
         return {...prev,userId:user.id,firstName:user.firstName,lastName:user.lastName,phone:user.phone,email:user.email}})
@@ -41,7 +42,7 @@ const Profilepage = () => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:3000/api/users/${userId}`,
+        `https://www.caterersnearme.in/api/users/${userId}`,
         updatedData
       );
       toast("Profile updated successfully!");
